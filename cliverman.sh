@@ -1,5 +1,13 @@
 #!/bin/bash
 
+if [ "$#" -eq 2 ]; then
+    if [ "$1" == "list" ]; then
+        ./src/list.sh "$2"
+        exit 0
+    fi
+    exit 0
+fi
+
 cat <<'ASCII_ART'
    _____ _ _                                      
   / ____| (_)                                     
@@ -29,3 +37,4 @@ echo "  cliverman list local"
 echo "  cliverman uninstall node:14.17.0"
 echo "  cliverman remove node:14.17.0"
 echo ""
+
