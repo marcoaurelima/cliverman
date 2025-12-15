@@ -1,7 +1,7 @@
 #!/bin/bash
 
-if [ "$#" -eq 2 ]; then
-    if [ "$1" == "list" ]; then
+if [[ "$#" -eq 2 ]]; then
+    if [[ "$1" == "list" ]]; then
         ./src/list.sh "$2"
         exit 0
     fi
