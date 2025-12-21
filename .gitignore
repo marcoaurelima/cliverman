@@ -1,2 +1,9 @@
-/temp
-/bin
+temp/*
+!temp/.gitkeep
+
+bin/*
+!bin/.gitkeep
+
+shims/*
+!shims/.gitkeep
+!shims/cliverman

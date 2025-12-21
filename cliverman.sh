@@ -4,6 +4,9 @@ if [[ "$#" -eq 2 ]]; then
     if [[ "$1" == "list" ]]; then
         ./src/list.sh "$2"
         exit 0
+    elif [[ "$1" == "install" ]]; then 
+        ./src/install.sh "$2"
+        exit 0
     fi
     exit 0
 fi
