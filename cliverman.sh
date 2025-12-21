@@ -7,6 +7,9 @@ if [[ "$#" -eq 2 ]]; then
     elif [[ "$1" == "install" ]]; then 
         ./src/install.sh "$2"
         exit 0
+    elif [[ "$1" == "use" ]]; then 
+        ./src/use.sh "$2"
+        exit 0
     fi
     exit 0
 fi

@@ -1,7 +1,8 @@
 #!/bin/bash
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 
 # Sanitizar (remoção de escapes)
-input="${1//$'\r'/}" 
+readonly input="${1//$'\r'/}" 
 
 IFS=":" read -r name version <<< "$input"
-./src/tools/${name}/install.sh ${name} ${version}
+$SCRIPT_DIR/tools/${name}/install.sh ${name} ${version}
