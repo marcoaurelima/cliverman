@@ -5,4 +5,4 @@ SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 readonly input="${1//$'\r'/}" 
 
 IFS=":" read -r name version <<< "$input"
-$SCRIPT_DIR/tools/${name}/install.sh ${name} ${version}
+$SCRIPT_DIR/runtimes/${name}/install.sh ${name} ${version}

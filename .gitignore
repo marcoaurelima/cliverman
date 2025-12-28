@@ -1,8 +1,8 @@
 temp/*
 !temp/.gitkeep
 
-bin/*
-!bin/.gitkeep
+installs/*
+!installs/.gitkeep
 
 shims/*
 !shims/.gitkeep
@@ -10,3 +10,5 @@ shims/*
 
 src/current_versions/*
 !src/current_versions/.gitkeep
+
+testes.sh
