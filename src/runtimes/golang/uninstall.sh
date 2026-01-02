@@ -4,9 +4,6 @@ readonly name="$1"
 readonly version="${2:-"all"}"
 
 uninstall_all() {
-  echo -e "\033[31m ${name}:all\033[0m"
-  exit 1
-  
   # Apagar todos os arquivos de instalação do runtime especificado
   rm -rf "./installs/${name}"
 
@@ -17,6 +14,7 @@ uninstall_all() {
   local shim_alias=$(< "./src/runtimes/${name}/alias.txt")
   rm -f "./shims/${shim_alias}"
 
+  echo -e "\033[31m ${name}:all\033[0m"
 }
 
 uninstall_version() {
