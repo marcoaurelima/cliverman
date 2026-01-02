@@ -7,7 +7,8 @@ readonly installs_path="${HOME}/.cliverman/installs/${name}/${version}"
 readonly temp_path="${HOME}/.cliverman/temp/${name}_${version}.tar.gz"
 
 # Baixar para pasta temporaria de downloads
-wget ${url} -O ${temp_path}
+# wget -q --show-progress ${url} -O ${temp_path}
+curl -L --progress-bar -o ${temp_path} ${url}
 
 echo -n "Verificando checksum: "
 
