@@ -17,3 +17,5 @@ tar -xzf ${temp_path} -C ${installs_path}
 
 # Remover arquivos temporarios
 rm -f ${temp_path}
+
+echo -e "\033[32m ${name}:${version}"
