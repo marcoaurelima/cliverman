@@ -2,6 +2,10 @@
 
 search_runtime() {
   name="$1"
+  if ! ./src/available.sh "${name}"; then
+    echo "Runtime não disponível."
+    return 1
+  fi
   ./src/runtimes/"${name}"/search.sh
 }
 
