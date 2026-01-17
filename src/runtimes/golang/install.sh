@@ -6,11 +6,13 @@ readonly url="$(./src/runtimes/${name}/url.sh ${version})"
 readonly installs_path="${HOME}/.cliverman/installs/${name}/${version}"
 readonly temp_path="${HOME}/.cliverman/temp/${name}_${version}.tar.gz"
 
+echo "[1/3] Baixando ${name} v${version}"
+echo "      [${url}]"
 # Baixar para pasta temporaria de downloads
 # wget -q --show-progress ${url} -O ${temp_path}
 curl -L --progress-bar -o ${temp_path} ${url}
 
-echo -n "Verificando checksum: "
+echo -n "[2/3] Verificando checksum: "
 
 # Checar o checksum do arquivo baixado
 readonly checksum=$(./src/runtimes/${name}/checksum.sh ${version})
@@ -22,9 +24,10 @@ if ! echo "${checksum}  ${temp_path}" | sha256sum -c --status -; then
   rm -f ${temp_path}
   exit 1
   else
-    echo -e "\033[32mOK\033[0m" 
+    echo -e "\033[32mPASS\033[0m" 
 fi
 
+echo "[3/3] Instalando ${name} v${version}"
 # Criar pasta para binários da ferramenta
 mkdir -p ${installs_path}
 
@@ -34,4 +37,4 @@ tar -xzf ${temp_path} -C ${installs_path}
 # Remover arquivos temporarios
 rm -f ${temp_path}
 
-echo -e "\033[32m ${name}:${version}"
+echo -e "\033[32m ${name} v${version} instalado com sucesso!"
