@@ -8,6 +8,20 @@ readonly installs_path="${HOME}/.cliverman/installs/${name}/${version}"
 readonly temp_path="${HOME}/.cliverman/temp/${name}_${version}.tar.gz"
 
 step_0() {
+  # Verificar se a versão requerida já está instalada
+  if [[ -d "${installs_path}" ]]; then
+    echo -en "\033[96m ${name} v${version} já está instalado. Deseja reinstalar? [s/N] "
+    read response
+    if [[ $response != "s" && $response != "S" ]]; then
+      echo -e "  Cancelado. Nada foi modificado." 
+      exit 1
+      else
+        echo "  Reinstalando..."
+    fi
+  fi
+  echo -en "\033[0m"
+
+
   # Verificar se a URL (após redirecionamentos) retorna HTTP 200 OK
   echo -n "[0/3] Verificando disponibilidade de ${name} v${version} "
 
@@ -19,7 +33,7 @@ step_0() {
 
   if [ "$http_code" -ne 200 ]; then
    echo -e "\033[33mUNAVAILABLE\033[0m"
-   echo -e "\033[31m  Versão não encontrada (HTTP $http_code)  Abortando...\033[0m"
+   echo -e "\033[31m  Versão não encontrada (HTTP $http_code)\n   Abortando...\033[0m"
    exit 1
    else
      echo -e "\033[32mAVAILABLE\033[0m"
