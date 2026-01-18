@@ -8,6 +8,13 @@ IFS=":" read -r name version <<< "$input"
 # Alias para nomear shim (exemplo: golang -> go)
 readonly alias=$(< ./src/runtimes/${name}/alias.txt)
 
+# Verificar se a versão solicitada está instalada
+readonly path="./installs/${name}/${version}"
+if [[ ! -d "$path" ]]; then
+ echo -e "\033[33m A versão ${version} ainda não foi instalada no sistema" 
+ echo -e "  Use \`cliverman install ${name}:${version}\` para instalar." 
+fi
+
 # Substituuir __VERSION__ pela versão solicitada
 shim_script=$(sed "s#__VERSION__#${version}#g" ./src/runtimes/${name}/shim.sh)
 
