@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -e
 
 GO_BIN="__INSTALLS_PATH__/golang/__VERSION__/go/bin/go"

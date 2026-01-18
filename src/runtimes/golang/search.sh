@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -e
 
 get_all_versions() {
   readonly url_versions="https://go.dev/dl/?mode=json&include=all"

@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -e
 
 get_go_url() {
   local url_base="https://go.dev/dl/go"

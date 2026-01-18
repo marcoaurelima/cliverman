@@ -1,5 +1,5 @@
-#!/bin/bash
-# SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+#!/usr/bin/env bash
+set -e
 
 # Sanitizar (remoção de escapes)
 readonly input="${1//$'\r'/}"

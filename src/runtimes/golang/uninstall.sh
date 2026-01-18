@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -e
 
 readonly name="$1"
 readonly version="${2:-"all"}"

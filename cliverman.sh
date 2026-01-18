@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -e
 
 # Carregar variáveis de ambiente do Cliverman
 source ~/.cliverman/config/config.sh

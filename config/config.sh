@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -e
 
 if [[ -z "${CLIVERMAN_PATH}" ]]; then
   export CLIVERMAN_PATH="${HOME}/.cliverman" 
