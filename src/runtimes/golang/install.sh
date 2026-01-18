@@ -7,13 +7,12 @@ readonly url="$(./src/runtimes/${name}/url.sh ${version})"
 readonly installs_path="${HOME}/.cliverman/installs/${name}/${version}"
 readonly temp_path="${HOME}/.cliverman/temp/${name}_${version}.tar.gz"
 
-step_0() {
+initial_verifications() {
   # Verificar se name e version estão vazios
   if [[ -z "${version}" ]]; then
     echo -e "\033[33m Versão não especificada.\033[0m"
     echo -e "  Nada foi alterado."
     exit 1
-
   fi
 
   # Verificar se a versão requerida já está instalada
@@ -28,9 +27,10 @@ step_0() {
     fi
   fi
   echo -en "\033[0m"
+}
 
-
-  # Verificar se a URL (após redirecionamentos) retorna HTTP 200 OK
+step_0() {
+   # Verificar se a URL (após redirecionamentos) retorna HTTP 200 OK
   echo -n "[0/3] Verificando disponibilidade de ${name} v${version} "
 
   http_code=$(curl --head --silent --location \
@@ -90,6 +90,7 @@ step_3() {
   echo -e "\033[32m ${name} v${version} instalado com sucesso!"
 }
 
+initial_verifications
 step_0
 step_1
 step_2
