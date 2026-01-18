@@ -8,12 +8,20 @@ readonly installs_path="${HOME}/.cliverman/installs/${name}/${version}"
 readonly temp_path="${HOME}/.cliverman/temp/${name}_${version}.tar.gz"
 
 step_0() {
+  # Verificar se name e version estão vazios
+  if [[ -z "${version}" ]]; then
+    echo -e "\033[33m Versão não especificada.\033[0m"
+    echo -e "  Nada foi alterado."
+    exit 1
+
+  fi
+
   # Verificar se a versão requerida já está instalada
   if [[ -d "${installs_path}" ]]; then
-    echo -en "\033[96m ${name} v${version} já está instalado. Deseja reinstalar? [s/N] "
+    echo -en "\033[96m ${name} v${version} já está instalado. Deseja reinstalar? [s/N] \033[0m"
     read response
     if [[ $response != "s" && $response != "S" ]]; then
-      echo -e "  Cancelado. Nada foi modificado." 
+      echo "  Nada foi alterado." 
       exit 1
       else
         echo "  Reinstalando..."
