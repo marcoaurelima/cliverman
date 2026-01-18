@@ -1,5 +1,5 @@
 #!/bin/bash
-SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+# SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 
 # Sanitizar (remoção de escapes)
 readonly input="${1//$'\r'/}" 
@@ -14,10 +14,10 @@ fi
 IFS=":" read -r name version <<< "$input"
 
 # Verificar se o name corresponde a um runtime disponível
-if ! "$SCRIPT_DIR/available.sh" "${name}"; then
+if ! "${CLIVERMAN_SRC_PATH}/available.sh" "${name}"; then
   echo -e "\033[33m Runtime [${name}] não instalado ou desconhecido.\033[0m"
   echo -e "  Nada foi alterado."
   exit 1
 fi
 
-$SCRIPT_DIR/runtimes/${name}/install.sh ${name} ${version}
+${CLIVERMAN_RUNTIMES_PATH}/${name}/install.sh ${name} ${version}

@@ -3,9 +3,9 @@ set -euo pipefail
 
 readonly name="$1"
 readonly version="$2"
-readonly url="$(./src/runtimes/${name}/url.sh ${version})"
-readonly installs_path="${HOME}/.cliverman/installs/${name}/${version}"
-readonly temp_path="${HOME}/.cliverman/temp/${name}_${version}.tar.gz"
+readonly url="$(${CLIVERMAN_RUNTIMES_PATH}/${name}/url.sh ${version})"
+readonly installs_path="${CLIVERMAN_INSTALLS_PATH}/${name}/${version}"
+readonly temp_path="${CLIVERMAN_TEMP_PATH}/${name}_${version}.tar.gz"
 
 initial_verifications() {
   # Verificar se name e version estão vazios
@@ -62,7 +62,7 @@ step_2() {
   echo -n "[2/3] Verificando checksum "
 
   # Checar o checksum do arquivo baixado
-  readonly checksum=$(./src/runtimes/${name}/checksum.sh ${version})
+  readonly checksum=$(${CLIVERMAN_RUNTIMES_PATH}/${name}/checksum.sh ${version})
 
   if ! echo "${checksum}  ${temp_path}" | sha256sum -c --status -; then
    echo -e "\033[31mERROR"

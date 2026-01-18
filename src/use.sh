@@ -1,5 +1,5 @@
 #!/bin/bash
-SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+# SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 
 # Sanitizar (remoção de escapes)
 readonly input="${1//$'\r'/}"
@@ -14,23 +14,26 @@ fi
 IFS=":" read -r name version <<< "$input"
 
 # Alias para nomear shim (exemplo: golang -> go)
-readonly alias=$(< ./src/runtimes/${name}/alias.txt)
+readonly alias=$(< ${CLIVERMAN_RUNTIMES_PATH}/${name}/alias.txt)
 
 # Verificar se a versão solicitada está instalada
-readonly path="./installs/${name}/${version}"
+readonly path="${CLIVERMAN_INSTALLS_PATH}/${name}/${version}"
 if [[ ! -d "$path" ]]; then
  echo -e "\033[33m A versão ${version} ainda não foi instalada no sistema" 
  echo -e "  Use \`cliverman install ${name}:${version}\` para instalar." 
  exit 1
 fi
 
-# Substituir __VERSION__ pela versão solicitada
-shim_script=$(sed "s#__VERSION__#${version}#g" ./src/runtimes/${name}/shim.sh)
+# Substituir __VERSION__ e __INSTALLS_PATH__ no script de shim
+shim_script=$(sed \
+-e "s#__INSTALLS_PATH__#${CLIVERMAN_INSTALLS_PATH}#g" \
+-e "s#__VERSION__#${version}#g" \
+${CLIVERMAN_RUNTIMES_PATH}/${name}/shim.sh)
 
 # Criar arquivo de shim com permissão de execução
-install -D -m 0755 /dev/stdin "${HOME}/.cliverman/shims/${alias}" <<< "$shim_script"
+install -D -m 0755 /dev/stdin "${CLIVERMAN_SHIMS_PATH}/${alias}" <<< "$shim_script"
 
 # Salvar a versão atual em arquivo
-echo "$version" > $SCRIPT_DIR/../installs/current_versions/${name}
+echo "$version" > ${CLIVERMAN_INSTALLS_PATH}/current_versions/${name}
 
 echo -e "\033[32m ${name} v${version}"

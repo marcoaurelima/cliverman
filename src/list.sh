@@ -5,7 +5,7 @@ current_versions_path="./installs/current_versions"
 list_all() {
   # Iterar sobre os arquivos do path e retirar a extensão do arquivo
   shopt -s nullglob
-  for file in "$current_versions_path"/*; do
+  for file in "${CLIVERMAN_CURR_VERSIONS_PATH}"/*; do
     local name="${file##*/}"
     if [[ -n ${name} ]]; then
       echo "· ${name%.*}"
@@ -16,15 +16,15 @@ list_all() {
 
 list_runtime() {
   local name=$1
-  local installs_path="./installs/${name}"
-  local current_version_path="./${current_versions_path}/${name}"
+  local install_path="${CLIVERMAN_INSTALLS_PATH}/${name}"
+  local current_version_path="${CLIVERMAN_CURR_VERSIONS_PATH}/${name}"
   local current_version
   if [[ -f ${current_version_path} ]]; then
     current_version=$(< "${current_version_path}") 
   fi
 
   shopt -s nullglob
-  mapfile -t folders < <(printf "%s\n" "$installs_path"/* | sort -V)
+  mapfile -t folders < <(printf "%s\n" "$install_path"/* | sort -V)
   for folder in "${folders[@]}"; do
     local folder_name="${folder##*/}"
     if [[ -z ${folder_name} ]]; then

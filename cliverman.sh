@@ -1,23 +1,25 @@
 #!/bin/bash
 
+# Carregar variáveis de ambiente do Cliverman
+source ~/.cliverman/config/config.sh
+
 if [[ "$#" -eq 2 ]]; then
     if [[ "$1" == "list" ]]; then
-        ./src/list.sh "$2"
+        ${CLIVERMAN_SRC_PATH}/list.sh "$2"
         exit 0
     elif [[ "$1" == "install" ]]; then 
-        ./src/install.sh "$2"
+        ${CLIVERMAN_SRC_PATH}/install.sh "$2"
         exit 0
     elif [[ "$1" == "use" ]]; then 
-        ./src/use.sh "$2"
+        ${CLIVERMAN_SRC_PATH}/use.sh "$2"
         exit 0
     elif [[ "$1" == "search" ]]; then
-        ./src/search.sh "$2"
+        ${CLIVERMAN_SRC_PATH}/search.sh "$2"
         exit 0
     elif [[ "$1" == "uninstall" ]]; then
-        ./src/uninstall.sh "$2"
+        ${CLIVERMAN_SRC_PATH}/uninstall.sh "$2"
         exit 0
     fi
-    exit 0
 fi
 
 cat <<'ASCII_ART'
