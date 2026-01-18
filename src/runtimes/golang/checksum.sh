@@ -6,7 +6,7 @@ get_checksum() {
   local arch="${3:-"amd64"}"
 
   curl -fsSL "https://go.dev/dl/?mode=json&include=all" |  
-  jq -r --arg filename "go$version.$os-$arch.tar.gz" \
+  jq -r --arg filename "go${version}.${os}-${arch}.tar.gz" \
                        '.[].files[] | 
                         select(.filename == $filename) | 
                         .sha256'

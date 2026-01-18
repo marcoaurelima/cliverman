@@ -7,7 +7,7 @@ get_go_url() {
   local arch="${3:-amd64}"
   local format="tar.gz"
   
-  echo "${url_base}${version}.${os}-$arch.${format}"
+  echo "${url_base}${version}.${os}-${arch}.${format}"
 }
 
 get_go_url $1
