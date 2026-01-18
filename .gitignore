@@ -1,15 +1,15 @@
-temp/*
 !temp/.gitkeep
+temp/*
 
-installs/*
 !installs/.gitkeep
+installs/*
 
-shims/*
 !shims/.gitkeep
 !shims/cliverman
+shims/*
 
-installs/current_versions/*
 !installs/current_versions/.gitkeep
+installs/current_versions/*
 
 testes.sh
 checklist.txt
