@@ -3,6 +3,14 @@ SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 
 # Sanitizar (remoção de escapes)
 readonly input="${1//$'\r'/}"
+
+# Verificar se a informação vem no formato `name:version`
+if [[ "${input}" != *":"* ]]; then
+  echo -e "\033[33m Versão não especificada. Use padrão \`nome:versão\` \033[0m"
+  echo -e "  Nada foi alterado."
+  exit 1
+fi
+
 IFS=":" read -r name version <<< "$input"
 
 # Alias para nomear shim (exemplo: golang -> go)
