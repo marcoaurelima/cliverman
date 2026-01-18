@@ -13,9 +13,7 @@ fi
 
 IFS=":" read -r name version <<< "$input"
 
-# readonly avaliable=("$SCRIPT_DIR/avaliable.sh" "${name}")
-# Verificar se o name corresponde a um runtime jṕa disponível pela aplicação
-# readonly path_name="${HOME}/.cliverman/runtimes/${name}"
+# Verificar se o name corresponde a um runtime disponível
 if ! "$SCRIPT_DIR/available.sh" "${name}"; then
   echo -e "\033[33m Runtime [${name}] não instalado ou desconhecido.\033[0m"
   echo -e "  Nada foi alterado."

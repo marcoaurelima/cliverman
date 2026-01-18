@@ -15,7 +15,7 @@ if [[ ! -d "$path" ]]; then
  echo -e "  Use \`cliverman install ${name}:${version}\` para instalar." 
 fi
 
-# Substituuir __VERSION__ pela versão solicitada
+# Substituir __VERSION__ pela versão solicitada
 shim_script=$(sed "s#__VERSION__#${version}#g" ./src/runtimes/${name}/shim.sh)
 
 # Criar arquivo de shim com permissão de execução
@@ -23,3 +23,5 @@ install -D -m 0755 /dev/stdin "${HOME}/.cliverman/shims/${alias}" <<< "$shim_scr
 
 # Salvar a versão atual em arquivo
 echo "$version" > $SCRIPT_DIR/../src/current_versions/${name}.txt
+
+echo -e "\033[32m ${name} v${version}"
