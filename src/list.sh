@@ -1,6 +1,6 @@
 #!/bin/bash
 
-current_versions_path="./src/current_versions"
+current_versions_path="./installs/current_versions"
 
 list_all() {
   # Iterar sobre os arquivos do path e retirar a extensão do arquivo
@@ -17,7 +17,7 @@ list_all() {
 list_runtime() {
   local name=$1
   local installs_path="./installs/${name}"
-  local current_version_path="./${current_versions_path}/${name}.txt"
+  local current_version_path="./${current_versions_path}/${name}"
   local current_version
   if [[ -f ${current_version_path} ]]; then
     current_version=$(< "${current_version_path}") 

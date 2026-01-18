@@ -8,7 +8,7 @@ uninstall_all() {
   rm -rf "./installs/${name}"
 
   # Apagar o arquivo current version do runtime especificado
-  rm -f "./src/current_versions/${name}.txt"
+  rm -f "./installs/current_versions/${name}.txt"
 
   # Apagar o shim do runtime especificado
   local shim_alias=$(< "./src/runtimes/${name}/alias.txt")
@@ -19,7 +19,7 @@ uninstall_all() {
 
 uninstall_version() {
   # Verificar se a versão definida é versão atual
-  local current_version_path="./src/current_versions/${name}.txt"
+  local current_version_path="./installs/current_versions/${name}"
   local current_version
   if [[ -f "${current_version_path}" ]]; then
     current_version=$(< "${current_version_path}")
@@ -28,7 +28,7 @@ uninstall_version() {
   if [[ "$current_version" == "${version}" ]]; then
     local shim_alias=$(< "./src/runtimes/${name}/alias.txt")
     rm -f "./shims/${shim_alias}"
-    rm -f "./src/current_versions/${name}.txt"
+    rm -f "./installs/current_versions/${name}"
   fi
   
   rm -rf "./installs/${name}/${version}"

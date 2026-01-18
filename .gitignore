@@ -8,8 +8,8 @@ shims/*
 !shims/.gitkeep
 !shims/cliverman
 
-src/current_versions/*
-!src/current_versions/.gitkeep
+installs/current_versions/*
+!installs/current_versions/.gitkeep
 
 testes.sh
 checklist.txt

@@ -21,6 +21,7 @@ readonly path="./installs/${name}/${version}"
 if [[ ! -d "$path" ]]; then
  echo -e "\033[33m A versão ${version} ainda não foi instalada no sistema" 
  echo -e "  Use \`cliverman install ${name}:${version}\` para instalar." 
+ exit 1
 fi
 
 # Substituir __VERSION__ pela versão solicitada
@@ -30,6 +31,6 @@ shim_script=$(sed "s#__VERSION__#${version}#g" ./src/runtimes/${name}/shim.sh)
 install -D -m 0755 /dev/stdin "${HOME}/.cliverman/shims/${alias}" <<< "$shim_script"
 
 # Salvar a versão atual em arquivo
-echo "$version" > $SCRIPT_DIR/../src/current_versions/${name}.txt
+echo "$version" > $SCRIPT_DIR/../installs/current_versions/${name}
 
 echo -e "\033[32m ${name} v${version}"
