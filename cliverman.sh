@@ -25,11 +25,13 @@ fi
 
 cat <<'ASCII_ART'
    _____ _ _                                      
-  / ____| (_)                                     
+  / ____| (_)                                    
  | |    | |___   _____ _ __ _ __ ___   __ _ _ __  
  | |    | | \ \ / / _ \ '__| '_ ` _ \ / _` | '_ \ 
  | |____| | |\ V /  __/ |  | | | | | | (_| | | | |
-  \_____|_|_| \_/ \___|_|  |_| |_| |_|\__,_|_| |_|                                                                                   
+  \_____|_|_| \_/ \___|_|  |_| |_| |_|\__,_|_| |_|  
+               Gerenciador de runtimes universal  
+
 ASCII_ART
 
 echo "Como usar:"
@@ -54,4 +56,5 @@ echo "  cliverman list nodejs"
 echo "  cliverman uninstall nodejs:14.17.0"
 echo "  cliverman remove nodejs:14.17.0"
 echo ""
+echo -e "\033[93m github.com/marcoaurelima/cliverman ✨"
 
