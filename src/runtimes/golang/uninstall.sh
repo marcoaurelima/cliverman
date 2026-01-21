@@ -14,7 +14,7 @@ uninstall_all() {
   # Apagar o shim do runtime especificado
   local shim_alias=$(< "${CLIVERMAN_RUNTIMES_PATH}/${name}/alias.txt")
   rm -f "${CLIVERMAN_SHIMS_PATH}/${shim_alias}"
-  echo -e "\033[31m ${name}:all\033[0m"
+  echo -e "\033[91m ${name}:all\033[0m"
 }
 
 uninstall_version() {
@@ -33,7 +33,7 @@ uninstall_version() {
 
   rm -rf "${CLIVERMAN_INSTALLS_PATH}/${name}/${version}"
 
-  echo -e "\033[31m ${name}:${version}\033[0m"
+  echo -e "\033[91m ${name}:${version}\033[0m"
 }
 
 if [[ "${version}" == "all" ]]; then

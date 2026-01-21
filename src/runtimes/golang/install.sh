@@ -10,7 +10,7 @@ readonly temp_path="${CLIVERMAN_TEMP_PATH}/${name}_${version}.tar.gz"
 initial_verifications() {
   # Verificar se name e version estão vazios
   if [[ -z "${version}" ]]; then
-    echo -e "\033[33m Versão não especificada.\033[0m"
+    echo -e "\033[93m Versão não especificada.\033[0m"
     echo -e "  Nada foi alterado."
     exit 1
   fi
@@ -40,11 +40,11 @@ step_0() {
    "$url")
 
   if [ "$http_code" -ne 200 ]; then
-   echo -e "\033[33mUNAVAILABLE\033[0m"
-   echo -e "\033[31m  Versão não encontrada (HTTP $http_code)\n   Abortando...\033[0m"
+   echo -e "\033[93mUNAVAILABLE\033[0m"
+   echo -e "\033[91m  Versão não encontrada (HTTP $http_code)\n   Abortando...\033[0m"
    exit 1
    else
-     echo -e "\033[32mAVAILABLE\033[0m"
+     echo -e "\033[92mAVAILABLE\033[0m"
   fi
 }
 
@@ -65,13 +65,13 @@ step_2() {
   readonly checksum=$(${CLIVERMAN_RUNTIMES_PATH}/${name}/checksum.sh ${version})
 
   if ! echo "${checksum}  ${temp_path}" | sha256sum -c --status -; then
-   echo -e "\033[31mERROR"
+   echo -e "\033[91mERROR"
     echo -e "\n Checksum inválido. Abortando...\033[0m"
     # Remover arquivos temporarios
     rm -f ${temp_path}
     exit 1
     else
-      echo -e "\033[32mPASS\033[0m" 
+      echo -e "\033[92mPASS\033[0m" 
   fi
 }
 
@@ -87,7 +87,7 @@ step_3() {
   # Remover arquivos temporarios
   rm -f ${temp_path}
 
-  echo -e "\033[32m ${name} v${version} instalado com sucesso!"
+  echo -e "\033[92m ${name} v${version} instalado com sucesso!"
 }
 
 initial_verifications

@@ -6,7 +6,7 @@ readonly input="${1//$'\r'/}"
 
 # Verificar se a informação vem no formato `name:version`
 if [[ "${input}" != *":"* ]]; then
-  echo -e "\033[33m Versão não especificada. Use padrão \`nome:versão\` \033[0m"
+  echo -e "\033[93m Versão não especificada. Use padrão \`nome:versão\` \033[0m"
   echo -e "  Nada foi alterado."
   exit 1
 fi
@@ -19,7 +19,7 @@ readonly alias=$(< ${CLIVERMAN_RUNTIMES_PATH}/${name}/alias.txt)
 # Verificar se a versão solicitada está instalada
 readonly path="${CLIVERMAN_INSTALLS_PATH}/${name}/${version}"
 if [[ ! -d "$path" ]]; then
- echo -e "\033[33m A versão ${version} ainda não foi instalada no sistema" 
+ echo -e "\033[93m A versão ${version} ainda não foi instalada no sistema" 
  echo -e "  Use \`cliverman install ${name}:${version}\` para instalar." 
  exit 1
 fi
@@ -36,4 +36,4 @@ install -D -m 0755 /dev/stdin "${CLIVERMAN_SHIMS_PATH}/${alias}" <<< "$shim_scri
 # Salvar a versão atual em arquivo
 echo "$version" > ${CLIVERMAN_INSTALLS_PATH}/current_versions/${name}
 
-echo -e "\033[32m ${name} v${version}"
+echo -e "\033[92m ${name} v${version}"

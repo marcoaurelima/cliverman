@@ -56,5 +56,5 @@ echo "  cliverman list nodejs"
 echo "  cliverman uninstall nodejs:14.17.0"
 echo "  cliverman remove nodejs:14.17.0"
 echo ""
-echo -e "\033[93m github.com/marcoaurelima/cliverman ✨"
+echo -e "\033[93m github.com/marcoaurelima/✨cliverman✨"
 
