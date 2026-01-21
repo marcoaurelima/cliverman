@@ -12,8 +12,10 @@ uninstall_all() {
     rm -f "${CLIVERMAN_INSTALLS_PATH}/current_versions/${name}.txt"
     
     # Apagar todos os shims relacionados ao runtime especificado
-    rm -f "${CLIVERMAN_SHIMS_PATH}/go"
-    rm -f "${CLIVERMAN_SHIMS_PATH}/gofmt"
+    rm -f "${CLIVERMAN_SHIMS_PATH}/npm"
+    rm -f "${CLIVERMAN_SHIMS_PATH}/npx"
+    rm -f "${CLIVERMAN_SHIMS_PATH}/node"
+    rm -f "${CLIVERMAN_SHIMS_PATH}/corepack"
     
     echo -e "\033[91m ${name}:all\033[0m"
 }
@@ -28,8 +30,10 @@ uninstall_version() {
     
     if [[ "$current_version" == "${version}" ]]; then
         # Apagar todos os shims relacionados ao runtime especificado
-        rm -f "${CLIVERMAN_SHIMS_PATH}/go"
-        rm -f "${CLIVERMAN_SHIMS_PATH}/gofmt"
+        rm -f "${CLIVERMAN_SHIMS_PATH}/npm"
+        rm -f "${CLIVERMAN_SHIMS_PATH}/npx"
+        rm -f "${CLIVERMAN_SHIMS_PATH}/node"
+        rm -f "${CLIVERMAN_SHIMS_PATH}/corepack"
         rm -f "${CLIVERMAN_INSTALLS_PATH}/current_versions/${name}"
     fi
     

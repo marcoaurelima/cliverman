@@ -32,7 +32,7 @@ list_runtime() {
       continue 
     fi
     if [[ ${folder_name} == ${current_version} ]]; then
-      echo -e "\093[0;32m· ${folder##*/} (current)\033[0m" 
+      echo -e "\033[0;92m· ${folder##*/} (current)\033[0m" 
       continue
     fi
     echo "· ${folder##*/}" 

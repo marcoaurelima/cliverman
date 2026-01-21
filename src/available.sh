@@ -5,10 +5,12 @@ name=${1:-"all"}
 
 runtimes=(
   "golang"
+  "nodejs"
 )
 
 icons=(
   ""
+  "󰎙"
 )
 
 list() {

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-get_go_url() {
+get_url() {
   local url_base="https://go.dev/dl/go"
   local version="$1"
   local os="${2:-linux}"
@@ -11,4 +11,4 @@ get_go_url() {
   echo "${url_base}${version}.${os}-${arch}.${format}"
 }
 
-get_go_url $1
+get_url $1
