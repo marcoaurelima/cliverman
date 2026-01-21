@@ -18,6 +18,19 @@ Um gerenciador de runtimes universal inspirado no **[asdf](https://github.com/as
 - **Leve**: Escrito em Bash puro, sem dependências pesadas
 - **Flexível**: Alterne entre versões de runtimes facilmente
 
+## 📋 Runtimes Suportados
+
+#### ✅ Implementados e Disponíveis
+- **`Golang`** - Linguagem de programação Go
+- **`Node.js`** - Runtime JavaScript
+
+#### ⌛ Em Desenvolvimento
+- **`Python`** - Linguagem de programação Python
+- **`Ruby`** - Linguagem de programação Ruby
+- **`Deno`** - Runtime JavaScript/TypeScript seguro
+- **`Rust`** - Linguagem de sistema Rust
+- **`Java`** - Plataforma Java
+
 ## 📦 Instalação
 
 ```bash
