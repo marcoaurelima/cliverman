@@ -5,7 +5,7 @@ NPM_BIN="__INSTALLS_PATH__/nodejs/__VERSION__/node-v__VERSION__-__OS__-__ARCH__/
 
 # Verificar se o binário do NPM existe
 if [[ ! -x "$NPM_BIN" ]]; then
-    echo -e "\033[91m Erro: NPM __VERSION__ não está instalado em $NPM_BIN\033[0m" >&2
+    echo -e "\033[91m Erro: npm não está instalado em $NPM_BIN\033[0m" >&2
     echo -e "  Use \`cliverman install nodejs:__VERSION__\` para instalar."
     exit 1
 fi

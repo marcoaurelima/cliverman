@@ -5,7 +5,7 @@ COREPACK_BIN="__INSTALLS_PATH__/nodejs/__VERSION__/node-v__VERSION__-__OS__-__AR
 
 # Verificar se o binário do Nodejs existe
 if [[ ! -x "$COREPACK_BIN" ]]; then
-    echo -e "\033[91m Erro: Corepack __VERSION__ não está instalado em $COREPACK_BIN\033[0m" >&2
+    echo -e "\033[91m Erro: Corepack não está instalado em $COREPACK_BIN\033[0m" >&2
     echo -e "  Use \`cliverman install nodejs:__VERSION__\` para instalar."
     exit 1
 fi

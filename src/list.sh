@@ -41,6 +41,6 @@ list_runtime() {
 if [[ "$1" == "all" ]]; then
  list_all 
  else
-  list_runtime $1
+  list_runtime "$1"
 fi
 
