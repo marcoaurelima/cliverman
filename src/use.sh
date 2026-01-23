@@ -21,4 +21,4 @@ if [[ ! -d "$path" ]]; then
  exit 1
 fi
 
-${CLIVERMAN_RUNTIMES_PATH}/${name}/use.sh "$name" "$version"
+"${CLIVERMAN_RUNTIMES_PATH}/${name}/use.sh" "$name" "$version"

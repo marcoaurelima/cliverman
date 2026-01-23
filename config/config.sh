@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 set -e
 
-readonly CLIVERMAN_VERSION="1.0.0"
-
 if [[ -z "${CLIVERMAN_PATH}" ]]; then
   export CLIVERMAN_PATH="${HOME}/.cliverman" 
 fi

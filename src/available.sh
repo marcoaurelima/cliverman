@@ -20,7 +20,7 @@ list() {
 }
 
 is_valid() {
-  local item=$1
+  local item="$1"
 
   for r in "${runtimes[@]}"; do
     if [[ "$item" == "$r" ]]; then
@@ -33,6 +33,6 @@ is_valid() {
 if [[ ${name} == "all" ]]; then
   list
   else
-    is_valid $1
+    is_valid "$1"
     exit
 fi

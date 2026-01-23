@@ -14,7 +14,7 @@ install_shim() {
         -e "s#__VERSION__#${version}#g" \
         -e "s#__OS__#${os}#g" \
         -e "s#__ARCH__#${arch}#g" \
-    ${CLIVERMAN_RUNTIMES_PATH}/${name}/shims/${shim_name}.sh)
+    "${CLIVERMAN_RUNTIMES_PATH}/${name}/shims/${shim_name}.sh")
 
     # Criar arquivo de shim com permissão de execução
     install -D -m 0755 /dev/stdin "${CLIVERMAN_SHIMS_PATH}/${shim_name}" <<< "$shim_script"
@@ -26,7 +26,7 @@ install_shim "npx"
 install_shim "corepack"
 
 # Salvar a versão atual em arquivo
-echo "$version" > ${CLIVERMAN_INSTALLS_PATH}/current_versions/${name}
+echo "$version" > "${CLIVERMAN_INSTALLS_PATH}/current_versions/${name}"
 
 echo -e "\033[92m ${name} v${version}"
 

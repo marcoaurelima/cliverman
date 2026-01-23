@@ -20,4 +20,4 @@ if ! "${CLIVERMAN_SRC_PATH}/available.sh" "${name}"; then
   exit 1
 fi
 
-${CLIVERMAN_RUNTIMES_PATH}/${name}/install.sh ${name} ${version}
+"${CLIVERMAN_RUNTIMES_PATH}/${name}/install.sh" "$name" "$version"

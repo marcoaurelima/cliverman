@@ -3,7 +3,9 @@ set -euo pipefail
 
 readonly name="$1"
 readonly version="$2"
-readonly url="$(${CLIVERMAN_RUNTIMES_PATH}/${name}/url.sh ${version})"
+url="$("${CLIVERMAN_RUNTIMES_PATH}/${name}/url.sh" "$version")"
+readonly url
+
 readonly installs_path="${CLIVERMAN_INSTALLS_PATH}/${name}/${version}"
 readonly temp_path="${CLIVERMAN_TEMP_PATH}/${name}_${version}.tar.gz"
 
@@ -62,13 +64,14 @@ step_2() {
   echo -n "[2/3] Verificando checksum "
   
   # Checar o checksum do arquivo baixado
-  readonly checksum=$(${CLIVERMAN_RUNTIMES_PATH}/${name}/checksum.sh ${version})
+  checksum="$("${CLIVERMAN_RUNTIMES_PATH}/${name}/checksum.sh" "${version}")"
+  readonly checksum
 
   if ! echo "${checksum}  ${temp_path}" | sha256sum -c --status -; then
    echo -e "\033[91mERROR"
     echo -e "\n Checksum inválido. Abortando...\033[0m"
     # Remover arquivos temporarios
-    rm -f ${temp_path}
+    rm -f "${temp_path}"
     exit 1
     else
       echo -e "\033[92mPASS\033[0m" 
@@ -79,13 +82,13 @@ step_3() {
   echo "[3/3] Instalando ${name} v${version}"
 
   # Criar pasta para binários da ferramenta
-  mkdir -p ${installs_path}
+  mkdir -p "${installs_path}"
 
   # Descompactar para pasta de binários
-  tar -xzf ${temp_path} -C ${installs_path}
+  tar -xzf "${temp_path}" -C "${installs_path}"
 
   # Remover arquivos temporarios
-  rm -f ${temp_path}
+  rm -f "${temp_path}"
 
   echo -e "\033[92m ${name} v${version} instalado com sucesso!"
 }

@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 set -e
 
-current_versions_path="./installs/current_versions"
-
 list_all() {
   # Iterar sobre os arquivos do path e retirar a extensão do arquivo
   shopt -s nullglob

@@ -1,24 +1,27 @@
 #!/usr/bin/env bash
 set -e
 
+readonly CLIVERMAN_VERSION="1.0.0"
+
 # Carregar variáveis de ambiente do Cliverman
-source ~/.cliverman/config/config.sh
+# shellcheck source=config/config.sh
+source "${HOME}/.cliverman/config/config.sh"
 
 if [[ "$#" -eq 2 ]]; then
     if [[ "$1" == "list" ]]; then
-        ${CLIVERMAN_SRC_PATH}/list.sh "$2"
+        "${CLIVERMAN_SRC_PATH}/list.sh" "$2"
         exit 0
     elif [[ "$1" == "install" ]]; then 
-        ${CLIVERMAN_SRC_PATH}/install.sh "$2"
+        "${CLIVERMAN_SRC_PATH}/install.sh" "$2"
         exit 0
     elif [[ "$1" == "use" ]]; then 
-        ${CLIVERMAN_SRC_PATH}/use.sh "$2"
+        "${CLIVERMAN_SRC_PATH}/use.sh" "$2"
         exit 0
     elif [[ "$1" == "search" ]]; then
-        ${CLIVERMAN_SRC_PATH}/search.sh "$2"
+        "${CLIVERMAN_SRC_PATH}/search.sh" "$2"
         exit 0
     elif [[ "$1" == "uninstall" ]]; then
-        ${CLIVERMAN_SRC_PATH}/uninstall.sh "$2"
+        "${CLIVERMAN_SRC_PATH}/uninstall.sh" "$2"
         exit 0
     fi
 fi

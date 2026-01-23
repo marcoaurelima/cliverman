@@ -13,4 +13,4 @@ get_checksum() {
   awk '{print $1}'
 }
 
-get_checksum $1
+get_checksum "$1"

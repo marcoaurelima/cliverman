@@ -24,4 +24,4 @@ fi
 
 echo -en "\033[0m"
 
-${CLIVERMAN_RUNTIMES_PATH}/${name}/uninstall.sh ${name} ${version}
+"${CLIVERMAN_RUNTIMES_PATH}/${name}/uninstall.sh" "$name" "$version"
