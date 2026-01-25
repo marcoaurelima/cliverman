@@ -23,6 +23,9 @@ if [[ "$#" -eq 2 ]]; then
     elif [[ "$1" == "uninstall" ]]; then
         "${CLIVERMAN_SRC_PATH}/uninstall.sh" "$2"
         exit 0
+    elif [[ "$1" == "reshim" ]]; then
+        "${CLIVERMAN_SRC_PATH}/reshim.sh" "$2"
+        exit 0
     fi
 fi
 

@@ -71,7 +71,7 @@ step_2() {
    echo -e "\033[91mERROR"
     echo -e "\n Checksum inválido. Abortando...\033[0m"
     # Remover arquivos temporarios
-    rm -f "${temp_path}"
+    rm -f "${temp_path:?}"
     exit 1
     else
       echo -e "\033[92mPASS\033[0m" 
@@ -81,14 +81,17 @@ step_2() {
 step_3() {
   echo "[3/3] Instalando ${name} v${version}"
 
+  # Deletar versão anterior, se existir
+  rm -rf "${installs_path:?}"
+  
   # Criar pasta para binários da ferramenta
   mkdir -p "${installs_path}"
 
   # Descompactar para pasta de binários
-  tar -xzf "${temp_path}" -C "${installs_path}"
+  tar -xzf "${temp_path}" -C "${installs_path}" --strip-components=1
 
   # Remover arquivos temporarios
-  rm -f "${temp_path}"
+  rm -f "${temp_path:?}"
 
   echo -e "\033[92m ${name} v${version} instalado com sucesso!"
 }
