@@ -54,7 +54,7 @@ step_1() {
 
   # Baixar para pasta temporaria de downloads
   echo -en "\033[90m"
-  curl -L --progress-bar -o ${temp_path} ${url}
+  curl -L --progress-bar -o "${temp_path}" "${url}"
   echo -en "\033[0m"
 }
 
@@ -62,13 +62,14 @@ step_2() {
   echo -n "[2/3] Verificando checksum "
 
   # Checar o checksum do arquivo baixado
-  readonly checksum=$(${CLIVERMAN_RUNTIMES_PATH}/${name}/checksum.sh ${version})
+  readonly checksum
+  checksum=$("${CLIVERMAN_RUNTIMES_PATH}"/"${name}"/checksum.sh "${version}")
 
   if ! echo "${checksum}  ${temp_path}" | sha256sum -c --status -; then
    echo -e "\033[91mERROR"
     echo -e "\n Checksum inválido. Abortando...\033[0m"
     # Remover arquivos temporarios
-    rm -f ${temp_path}
+    rm -f "${temp_path:?}"
     exit 1
     else
       echo -e "\033[92mPASS\033[0m" 
@@ -78,14 +79,17 @@ step_2() {
 step_3() {
   echo "[3/3] Instalando ${name} v${version}"
 
+  # Remover instalação anterior, se existir
+  rm -rf "${installs_path:?}"
+
   # Criar pasta para binários da ferramenta
-  mkdir -p ${installs_path}
+  mkdir -p "${installs_path}"
 
   # Descompactar para pasta de binários
-  tar -xzf ${temp_path} -C ${installs_path}
+  tar -xzf "${temp_path}" -C "${installs_path}" --strip-components=1
 
   # Remover arquivos temporarios
-  rm -f ${temp_path}
+  rm -f "${temp_path:?}"
 
   echo -e "\033[92m ${name} v${version} instalado com sucesso!"
 }
