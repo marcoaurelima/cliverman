@@ -21,8 +21,8 @@ Um gerenciador de runtimes universal inspirado no **[asdf](https://github.com/as
 ## 📋 Runtimes Suportados
 
 #### ✅ Implementados e Disponíveis
-- **`Golang`** - Linguagem de programação Go
-- **`Node.js`** - Runtime JavaScript
+- **`Golang` (beta)** - Linguagem de programação Go
+- **`Node.js` (beta)** - Runtime JavaScript
 
 #### ⌛ Em Desenvolvimento
 - **`Python`** - Linguagem de programação Python
