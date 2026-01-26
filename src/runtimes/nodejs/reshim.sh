@@ -2,8 +2,10 @@
 
 set -e
 
-readonly runtime_name="$1"
-readonly runtime_version="$2"
+nodejs_curr_version=$(< "${CLIVERMAN_INSTALLS_PATH}/current_versions/nodejs " )
+
+readonly runtime_name="nodejs"
+readonly runtime_version="${nodejs_curr_version}"
 
 reshim() {
     # Array para armazenar os nomes dos binários encontrados na pasta /bin do runtime
@@ -46,6 +48,8 @@ reshim() {
     
     # Atualizar o arquivo .nodejs-shims.list com os nomes atuais dos binários
     printf '%s\n' "${bin_names_list[@]}" > "${CLIVERMAN_SHIMS_PATH}/.nodejs-shims.list"
+    
+    rm -f "${CLIVERMAN_SHIMS_PATH:?}/_RESHIM_NODEJS_"
 }
 
 reshim

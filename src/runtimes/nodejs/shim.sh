@@ -15,6 +15,7 @@ make_shim_nodejs_default() {
 
     sed \
     -e "s#__INSTALLS_PATH__#${CLIVERMAN_INSTALLS_PATH}#g" \
+    -e "s#__SHIMS_PATH__#${CLIVERMAN_SHIMS_PATH}#g" \
     -e "s#__NAME__#${name}#g" \
     -e "s#__VERSION__#${version}#g" \
     -e "s#__OS__#${os}#g" \
@@ -29,6 +30,7 @@ make_shim_package_installs() {
 
     sed \
     -e "s#__INSTALLS_PATH__#${CLIVERMAN_INSTALLS_PATH}#g" \
+    -e "s#__SHIMS_PATH__#${CLIVERMAN_SHIMS_PATH}#g" \
     -e "s#__NAME__#${name}#g" \
     -e "s#__VERSION__#${version}#g" \
     -e "s#__OS__#${os}#g" \

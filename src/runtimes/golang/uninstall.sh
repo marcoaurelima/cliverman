@@ -9,7 +9,7 @@ uninstall_all() {
     rm -rf "${CLIVERMAN_INSTALLS_PATH:?}/${name:?}"
     
     # Apagar o arquivo current version do runtime especificado
-    rm -f "${CLIVERMAN_INSTALLS_PATH:?}/current_versions/${name:?}.txt"
+    rm -f "${CLIVERMAN_INSTALLS_PATH:?}/current_versions/${name:?}"
     
     # Apagar todos os shims relacionados ao runtime especificado
     rm -f "${CLIVERMAN_SHIMS_PATH:?}/go"
