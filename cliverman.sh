@@ -4,7 +4,7 @@ set -e
 readonly CLIVERMAN_VERSION="1.0.0"
 
 # Carregar variáveis de ambiente do Cliverman
-# shellcheck source=config/config.sh
+# shellcheck disable=SC1091
 source "${HOME}/.cliverman/config/config.sh"
 
 if [[ "$#" -eq 2 ]]; then
@@ -23,8 +23,10 @@ if [[ "$#" -eq 2 ]]; then
     elif [[ "$1" == "uninstall" ]]; then
         "${CLIVERMAN_SRC_PATH}/uninstall.sh" "$2"
         exit 0
-    elif [[ "$1" == "reshim" ]]; then
-        "${CLIVERMAN_SRC_PATH}/reshim.sh" "$2"
+    fi
+elif [[ "$#" -eq 1 ]]; then
+    if [[ "$1" == "reshim" ]]; then
+        "${CLIVERMAN_SRC_PATH}/reshim.sh"
         exit 0
     fi
 fi
@@ -52,6 +54,7 @@ echo "    install [\`name:ver\`] - Instala o runtime na versão especificada"
 echo "        use [\`name:ver\`] - Define a versão ativa de um runtime já instalada (globalmente)" 
 echo "  uninstall [\`name\`]     - Desinstala todas as versões instaladas de um runtime" 
 echo "            [\`name:ver\`] - Desinstala uma versão específica de um runtime" 
+echo "     reshim                - Recria os shims para todos os runtimes instalados" 
 echo ""
 echo "Exemplo:"
 echo "  cliverman install nodejs:14.17.0"

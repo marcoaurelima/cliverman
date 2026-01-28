@@ -11,4 +11,4 @@ get_url() {
   echo "${base_url}/v${version}/node-v${version}-${os}-${arch}.${format}"
 }
 
-get_url $1
+get_url "$1"

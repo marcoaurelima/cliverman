@@ -2,9 +2,14 @@
 
 set -e
 
-nodejs_curr_version=$(< "${CLIVERMAN_INSTALLS_PATH}/current_versions/nodejs " )
-
 readonly runtime_name="nodejs"
+
+# Verificar se existe arquivo do nodejs em current_versions
+if [[ ! -f "${CLIVERMAN_INSTALLS_PATH}/current_versions/nodejs" ]]; then
+    exit 0
+fi
+
+nodejs_curr_version=$(< "${CLIVERMAN_INSTALLS_PATH}/current_versions/${runtime_name}")
 readonly runtime_version="${nodejs_curr_version}"
 
 reshim() {
@@ -21,11 +26,12 @@ reshim() {
         
         # Verificar se o shim já existe
         if [[ -f "${CLIVERMAN_SHIMS_PATH}/${name}" ]]; then
-            echo "Shim para ${name} já existe. Pulando..."
+            echo " ${name}"
             continue
         fi
 
-        echo "Recriando shim para ${name}..."
+        echo -e "\033[92m ${name}\033[0m"
+
         # Gerar o script do shim
         local shim_script
         shim_script=$("${CLIVERMAN_RUNTIMES_PATH}/${runtime_name}/shim.sh" "template-package-installs" "$name" "$runtime_version")
@@ -41,15 +47,13 @@ reshim() {
     while read -r shim_name; do
         local corresponding_bin="${CLIVERMAN_INSTALLS_PATH}/${runtime_name}/${runtime_version}/bin/${shim_name}"
         if [[ ! -f "${corresponding_bin}" ]]; then
-            echo "Removendo shim órfão: ${shim_name}"
+            echo -e "\033[91m ${shim_name}\033[0m"
             rm -f "${CLIVERMAN_SHIMS_PATH}/${shim_name}"
         fi
     done < "${CLIVERMAN_SHIMS_PATH}/.nodejs-shims.list"
     
     # Atualizar o arquivo .nodejs-shims.list com os nomes atuais dos binários
     printf '%s\n' "${bin_names_list[@]}" > "${CLIVERMAN_SHIMS_PATH}/.nodejs-shims.list"
-    
-    rm -f "${CLIVERMAN_SHIMS_PATH:?}/_RESHIM_NODEJS_"
 }
 
 reshim
