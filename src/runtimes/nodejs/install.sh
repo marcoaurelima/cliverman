@@ -68,7 +68,7 @@ step_2() {
   readonly checksum
 
   if ! echo "${checksum}  ${temp_path}" | sha256sum -c --status -; then
-   echo -e "\033[91mERROR"
+    echo -e "\033[91mERROR"
     echo -e "\n Checksum inválido. Abortando...\033[0m"
     # Remover arquivos temporarios
     rm -f "${temp_path:?}"

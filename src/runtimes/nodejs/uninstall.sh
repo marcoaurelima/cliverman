@@ -21,7 +21,6 @@ uninstall_all() {
     
     echo "3. ${CLIVERMAN_SHIMS_PATH:?}/.nodejs-shims.list"
     rm -f "${CLIVERMAN_SHIMS_PATH:?}/.nodejs-shims.list"
-    rm -f "${CLIVERMAN_SHIMS_PATH:?}/_RESHIM_NODEJS_"
 
     echo -e "\033[91m ${name}:all\033[0m"
 }
@@ -43,7 +42,6 @@ uninstall_version() {
 
         rm -f "${CLIVERMAN_INSTALLS_PATH:?}/current_versions/${name:?}"
         rm -f "${CLIVERMAN_SHIMS_PATH:?}/.nodejs-shims.list"
-        rm -f "${CLIVERMAN_SHIMS_PATH:?}/._RESHIM_NODEJS_"
     fi
     
     rm -rf "${CLIVERMAN_INSTALLS_PATH:?}/${name:?}/${version:?}"
