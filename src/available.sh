@@ -14,16 +14,14 @@ icons=(
 )
 
 list() {
-  for ((i = 0; i < "${#runtimes[@]}"; i++)); do
+  for i in "${!runtimes[@]}"; do
     echo "${icons[$i]} ${runtimes[$i]}"
   done
 }
 
 is_valid() {
-  local item="$1"
-
-  for r in "${runtimes[@]}"; do
-    if [[ "$item" == "$r" ]]; then
+  for runtime in "${runtimes[@]}"; do
+    if [[ "${name}" == "${runtime}" ]]; then
       return 0 
     fi
   done
@@ -33,6 +31,6 @@ is_valid() {
 if [[ ${name} == "all" ]]; then
   list
   else
-    is_valid "$1"
-    exit
+    is_valid "${name}"
+    exit $?
 fi

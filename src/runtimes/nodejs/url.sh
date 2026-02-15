@@ -2,7 +2,7 @@
 set -e
 
 get_url() {
-  local version="$1"
+  local version="${1}"
   local os="${2:-linux}"
   local arch="${3:-x64}"
   local base_url="https://nodejs.org/dist"
@@ -11,4 +11,4 @@ get_url() {
   echo "${base_url}/v${version}/node-v${version}-${os}-${arch}.${format}"
 }
 
-get_url "$1"
+get_url "${1}"

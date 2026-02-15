@@ -5,24 +5,22 @@ readonly name="$1"
 readonly version="${2:-"all"}"
 
 uninstall_all() {
-    echo "1. ${CLIVERMAN_INSTALLS_PATH:?}/${name:?}"
+    # Deletar shims para cada executável presente em todas as instalações
+    for dir in "${CLIVERMAN_INSTALLS_PATH}/nodejs/"*; do
+        if [[ -d "${dir}" ]]; then
+           for file in "${dir}"/bin/*; do
+                [[ -z "${file}" ]] && continue
+                local bin_name
+                bin_name=$(basename "${file}")
+                rm -f "${CLIVERMAN_SHIMS_PATH:?}/${bin_name:?}"
+            done
+        fi
+    done
+
     # Apagar todos os arquivos de instalação do runtime especificado
-    rm -rf "${CLIVERMAN_INSTALLS_PATH:?}/${name:?}"
-
-    echo "2. ${CLIVERMAN_INSTALLS_PATH:?}/current_versions/${name:?}"
-    # Apagar o arquivo current version do runtime especificado
+    rm -f "${CLIVERMAN_INSTALLS_PATH:?}/${name:?}"
     rm -f "${CLIVERMAN_INSTALLS_PATH:?}/current_versions/${name:?}"
-    
-    # Apagar todos os shims relacionados ao runtime especificado
-    while read -r bin_name; do
-        [[ -z "$version" ]] && continue
-        rm -f "${CLIVERMAN_SHIMS_PATH:?}/${bin_name:?}"
-    done < "${CLIVERMAN_SHIMS_PATH}/.nodejs-shims.list"
-    
-    echo "3. ${CLIVERMAN_SHIMS_PATH:?}/.nodejs-shims.list"
-    rm -f "${CLIVERMAN_SHIMS_PATH:?}/.nodejs-shims.list"
-
-    echo -e "\033[91m ${name}:all\033[0m"
+    echo -e "\033[91m ${name}\033[0m"
 }
 
 uninstall_version() {
@@ -34,24 +32,23 @@ uninstall_version() {
     fi
     
     if [[ "$current_version" == "${version}" ]]; then
-        # Apagar todos os shims relacionados ao runtime especificado
-        while read -r bin_name; do
-            [[ -z "$version" ]] && continue
+        local bin_path="${CLIVERMAN_INSTALLS_PATH}/${name}/${version}/bin"
+        for bin in "${bin_path}"/*; do
+            local bin_name
+            bin_name=$(basename "${bin}")
             rm -f "${CLIVERMAN_SHIMS_PATH:?}/${bin_name:?}"
-        done < "${CLIVERMAN_SHIMS_PATH}/.nodejs-shims.list"
+        done
 
         rm -f "${CLIVERMAN_INSTALLS_PATH:?}/current_versions/${name:?}"
-        rm -f "${CLIVERMAN_SHIMS_PATH:?}/.nodejs-shims.list"
     fi
     
     rm -rf "${CLIVERMAN_INSTALLS_PATH:?}/${name:?}/${version:?}"
-    
     echo -e "\033[91m ${name}:${version}\033[0m"
 }
 
 if [[ "${version}" == "all" ]]; then
-    uninstall_all name
+    uninstall_all
 else
-    uninstall_version name version
+    uninstall_version
 fi
 

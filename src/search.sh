@@ -2,8 +2,8 @@
 set -e
 
 search_runtime() {
-  name="$1"
-  if ! "${CLIVERMAN_SRC_PATH}/available.sh" "$name"; then
+  name="${1}"
+  if ! "${CLIVERMAN_SRC_PATH}/available.sh" "${name}"; then
     echo "Runtime não disponível."
     return 1
   fi
@@ -14,8 +14,8 @@ search_all() {
   "${CLIVERMAN_SRC_PATH}/available.sh"
 }
 
-if [[ "$1" == "all" ]]; then
+if [[ "${1}" == "all" ]]; then
   search_all
 else
-  search_runtime "$1"
+  search_runtime "${1}"
 fi

@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-readonly name="$1"
-readonly version="$2"
-url="$("${CLIVERMAN_RUNTIMES_PATH}/${name}/url.sh" "$version")"
+readonly name="${1}"
+readonly version="${2}"
+url="$("${CLIVERMAN_RUNTIMES_PATH}/${name}/url.sh" "${version}")"
 readonly url
 
 readonly installs_path="${CLIVERMAN_INSTALLS_PATH}/${name}/${version}"
@@ -20,8 +20,8 @@ initial_verifications() {
   # Verificar se a versão requerida já está instalada
   if [[ -d "${installs_path}" ]]; then
     echo -en "\033[96m ${name} v${version} já está instalado. Deseja reinstalar? [s/N] \033[0m"
-    read response
-    if [[ $response != "s" && $response != "S" ]]; then
+    read -r response
+    if [[ "${response}" != "s" && "${response}" != "S" ]]; then
       echo "  Nada foi alterado." 
       exit 1
       else
@@ -39,11 +39,11 @@ step_0() {
    --write-out "%{http_code}" \
    --output /dev/null \
    --max-time 10 \
-   "$url")
+   "${url}")
 
-  if [ "$http_code" -ne 200 ]; then
+  if [ "${http_code}" -ne 200 ]; then
    echo -e "\033[93mUNAVAILABLE\033[0m"
-   echo -e "\033[91m  Versão não encontrada (HTTP $http_code)\n   Abortando...\033[0m"
+   echo -e "\033[91m  Versão não encontrada (HTTP ${http_code})\n   Abortando...\033[0m"
    exit 1
    else
      echo -e "\033[92mAVAILABLE\033[0m"
@@ -56,7 +56,7 @@ step_1() {
 
   # Baixar para pasta temporaria de downloads
   echo -en "\033[90m"
-  curl -L --progress-bar -o ${temp_path} ${url}
+  curl -L --progress-bar -o "${temp_path}" "${url}"
   echo -en "\033[0m"
 }
 
@@ -65,7 +65,6 @@ step_2() {
   
   # Checar o checksum do arquivo baixado
   checksum="$("${CLIVERMAN_RUNTIMES_PATH}/${name}/checksum.sh" "${version}")"
-  readonly checksum
 
   if ! echo "${checksum}  ${temp_path}" | sha256sum -c --status -; then
     echo -e "\033[91mERROR"

@@ -2,7 +2,7 @@
 set -e
 
 get_checksum() {
-  local version="$1"
+  local version="${1}"
   local os="${2:-"linux"}"
   local arch="${3:-"x64"}"
 
