@@ -7,11 +7,11 @@ readonly version="${2:-"all"}"
 uninstall_all() {
     # Deletar shims para cada executável presente em todas as instalações
     for dir in "${CLIVERMAN_INSTALLS_PATH}/nodejs/"*; do
-        if [[ -d "$dir" ]]; then
-           for file in "$dir"/bin/*; do
-                [[ -z "$file" ]] && continue
+        if [[ -d "${dir}" ]]; then
+           for file in "${dir}"/bin/*; do
+                [[ -z "${file}" ]] && continue
                 local bin_name
-                bin_name=$(basename "$file")
+                bin_name=$(basename "${file}")
                 rm -f "${CLIVERMAN_SHIMS_PATH:?}/${bin_name:?}"
             done
         fi
@@ -35,7 +35,7 @@ uninstall_version() {
         local bin_path="${CLIVERMAN_INSTALLS_PATH}/${name}/${version}/bin"
         for bin in "${bin_path}"/*; do
             local bin_name
-            bin_name=$(basename "$bin")
+            bin_name=$(basename "${bin}")
             rm -f "${CLIVERMAN_SHIMS_PATH:?}/${bin_name:?}"
         done
 
@@ -47,8 +47,8 @@ uninstall_version() {
 }
 
 if [[ "${version}" == "all" ]]; then
-    uninstall_all name
+    uninstall_all
 else
-    uninstall_version name version
+    uninstall_version
 fi
 

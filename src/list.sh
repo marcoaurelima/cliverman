@@ -4,12 +4,14 @@ set -e
 list_all() {
   # Iterar sobre os arquivos do path e retirar a extensão do arquivo
   shopt -s nullglob
-  for file in "${CLIVERMAN_CURR_VERSIONS_PATH}"/*; do
+  local dir="${CLIVERMAN_CURR_VERSIONS_PATH}"
+  [[ -d "$dir" ]] || return 0
+
+  for file in "$dir"/*; do
     local name="${file##*/}"
-    if [[ -n ${name} ]]; then
-      echo "· ${name%.*}"
-    fi
+    echo "· ${name%.*}"
   done
+
   shopt -u nullglob
 }
 
@@ -18,7 +20,7 @@ list_runtime() {
   local install_path="${CLIVERMAN_INSTALLS_PATH}/${name}"
   local current_version_path="${CLIVERMAN_CURR_VERSIONS_PATH}/${name}"
   local current_version
-  if [[ -f ${current_version_path} ]]; then
+  if [[ -f "${current_version_path}" ]]; then
     current_version=$(< "${current_version_path}") 
   fi
 
@@ -29,7 +31,7 @@ list_runtime() {
     if [[ -z ${folder_name} ]]; then
       continue 
     fi
-    if [[ ${folder_name} == ${current_version} ]]; then
+    if [[ "${folder_name}" == "${current_version}" ]]; then
       echo -e "\033[0;92m· ${folder##*/} (current)\033[0m" 
       continue
     fi

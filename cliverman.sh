@@ -8,24 +8,24 @@ readonly CLIVERMAN_VERSION="1.0.0"
 source "${HOME}/.cliverman/config/config.sh"
 
 if [[ "$#" -eq 2 ]]; then
-    if [[ "$1" == "list" ]]; then
-        "${CLIVERMAN_SRC_PATH}/list.sh" "$2"
+    if [[ "${1}" == "list" ]]; then
+        "${CLIVERMAN_SRC_PATH}/list.sh" "${2}"
         exit 0
-    elif [[ "$1" == "install" ]]; then 
-        "${CLIVERMAN_SRC_PATH}/install.sh" "$2"
+    elif [[ "${1}" == "install" ]]; then 
+        "${CLIVERMAN_SRC_PATH}/install.sh" "${2}"
         exit 0
-    elif [[ "$1" == "use" ]]; then 
-        "${CLIVERMAN_SRC_PATH}/use.sh" "$2"
+    elif [[ "${1}" == "use" ]]; then 
+        "${CLIVERMAN_SRC_PATH}/use.sh" "${2}"
         exit 0
-    elif [[ "$1" == "search" ]]; then
-        "${CLIVERMAN_SRC_PATH}/search.sh" "$2"
+    elif [[ "${1}" == "search" ]]; then
+        "${CLIVERMAN_SRC_PATH}/search.sh" "${2}"
         exit 0
-    elif [[ "$1" == "uninstall" ]]; then
-        "${CLIVERMAN_SRC_PATH}/uninstall.sh" "$2"
+    elif [[ "${1}" == "uninstall" ]]; then
+        "${CLIVERMAN_SRC_PATH}/uninstall.sh" "${2}"
         exit 0
     fi
 elif [[ "$#" -eq 1 ]]; then
-    if [[ "$1" == "reshim" ]]; then
+    if [[ "${1}" == "reshim" ]]; then
         "${CLIVERMAN_SRC_PATH}/reshim.sh"
         exit 0
     fi

@@ -4,7 +4,7 @@ set -e
 # Sanitizar (remoção de escapes)
 readonly input="${1//$'\r'/}" 
 
-IFS=":" read -r name version <<< "$input"
+IFS=":" read -r name version <<< "${input}"
 
 # Verificar se o runtime solicitado está instaldo no sistema
 readonly path_name="${CLIVERMAN_INSTALLS_PATH}/${name}"
@@ -24,4 +24,4 @@ fi
 
 echo -en "\033[0m"
 
-"${CLIVERMAN_RUNTIMES_PATH}/${name}/uninstall.sh" "$name" "$version"
+"${CLIVERMAN_RUNTIMES_PATH}/${name}/uninstall.sh" "${name}" "${version}"

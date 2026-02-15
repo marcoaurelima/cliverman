@@ -11,7 +11,7 @@ if [[ "${input}" != *":"* ]]; then
   exit 1
 fi
 
-IFS=":" read -r name version <<< "$input"
+IFS=":" read -r name version <<< "${input}"
 
 # Verificar se o name corresponde a um runtime disponível
 if ! "${CLIVERMAN_SRC_PATH}/available.sh" "${name}"; then
@@ -20,4 +20,4 @@ if ! "${CLIVERMAN_SRC_PATH}/available.sh" "${name}"; then
   exit 1
 fi
 
-"${CLIVERMAN_RUNTIMES_PATH}/${name}/install.sh" "$name" "$version"
+"${CLIVERMAN_RUNTIMES_PATH}/${name}/install.sh" "${name}" "${version}"
