@@ -20,7 +20,7 @@ initial_verifications() {
   # Verificar se a versão requerida já está instalada
   if [[ -d "${installs_path}" ]]; then
     echo -en "\033[96m ${name} v${version} já está instalado. Deseja reinstalar? [s/N] \033[0m"
-    read response
+    read -r response
     if [[ $response != "s" && $response != "S" ]]; then
       echo "  Nada foi alterado." 
       exit 1
@@ -56,7 +56,7 @@ step_1() {
 
   # Baixar para pasta temporaria de downloads
   echo -en "\033[90m"
-  curl -L --progress-bar -o ${temp_path} ${url}
+  curl -L --progress-bar -o "${temp_path}" "${url}"
   echo -en "\033[0m"
 }
 

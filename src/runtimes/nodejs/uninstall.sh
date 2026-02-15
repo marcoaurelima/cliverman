@@ -4,24 +4,32 @@ set -e
 readonly name="$1"
 readonly version="${2:-"all"}"
 
+
 uninstall_all() {
     echo "1. ${CLIVERMAN_INSTALLS_PATH:?}/${name:?}"
     # Apagar todos os arquivos de instalação do runtime especificado
     rm -rf "${CLIVERMAN_INSTALLS_PATH:?}/${name:?}"
 
-    echo "2. ${CLIVERMAN_INSTALLS_PATH:?}/current_versions/${name:?}"
-    # Apagar o arquivo current version do runtime especificado
-    rm -f "${CLIVERMAN_INSTALLS_PATH:?}/current_versions/${name:?}"
-    
+    # Verificar se existe arquivo do nodejs em current_versions
+    if [[ ! -f "${CLIVERMAN_INSTALLS_PATH}/current_versions/nodejs" ]]; then
+        exit 0
+    fi
+
+    curr_version=$(< "${CLIVERMAN_INSTALLS_PATH}/current_versions/${name}")
+
     # Apagar todos os shims relacionados ao runtime especificado
     while read -r bin_name; do
         [[ -z "$version" ]] && continue
         rm -f "${CLIVERMAN_SHIMS_PATH:?}/${bin_name:?}"
-    done < "${CLIVERMAN_SHIMS_PATH}/.nodejs-shims.list"
+    done < "${CLIVERMAN_SHIMS_PATH}/lists/nodejs/${curr_version}/shims.list"
     
-    echo "3. ${CLIVERMAN_SHIMS_PATH:?}/.nodejs-shims.list"
-    rm -f "${CLIVERMAN_SHIMS_PATH:?}/.nodejs-shims.list"
-
+    echo "2. ${CLIVERMAN_SHIMS_PATH:?}/lists/nodejs/${curr_version}/shims.list"
+    rm -f "${CLIVERMAN_SHIMS_PATH:?}/lists/nodejs/${curr_version}/shims.list"
+    
+    echo "3. ${CLIVERMAN_INSTALLS_PATH:?}/current_versions/${name:?}"
+    # Apagar o arquivo current version do runtime especificado
+    rm -f "${CLIVERMAN_INSTALLS_PATH:?}/current_versions/${name:?}"
+    
     echo -e "\033[91m ${name}:all\033[0m"
 }
 
@@ -38,10 +46,10 @@ uninstall_version() {
         while read -r bin_name; do
             [[ -z "$version" ]] && continue
             rm -f "${CLIVERMAN_SHIMS_PATH:?}/${bin_name:?}"
-        done < "${CLIVERMAN_SHIMS_PATH}/.nodejs-shims.list"
+        done < "${CLIVERMAN_SHIMS_PATH}/lists/nodejs/${version}/shims.list"
 
         rm -f "${CLIVERMAN_INSTALLS_PATH:?}/current_versions/${name:?}"
-        rm -f "${CLIVERMAN_SHIMS_PATH:?}/.nodejs-shims.list"
+        rm -f "${CLIVERMAN_SHIMS_PATH:?}/lists/nodejs/${version}/shims.list"
     fi
     
     rm -rf "${CLIVERMAN_INSTALLS_PATH:?}/${name:?}/${version:?}"

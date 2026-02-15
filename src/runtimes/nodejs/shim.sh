@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
-
 set -e
 
-readonly shim_type="$1"
-readonly name="$2"
-readonly version="$3"
+readonly name="$1"
+readonly version="$2"
+readonly default=("node" "npm" "npx" "corepack")
 
 # Função para criar o shim do Node.JS e binários pré-instados por padrão
 make_shim_nodejs_default() {
@@ -30,8 +29,15 @@ make_shim_package_installs() {
     <<< "$template"
 }
 
-if [[ "$shim_type" == "template-default" ]]; then
-    make_shim_nodejs_default 
-elif [[ "$shim_type" == "template-package-installs" ]]; then
+is_default=0
+for shim in "${default[@]}"; do
+    if [[ "$name" == "$shim" ]]; then
+        is_default=1
+    fi
+done
+
+if [[ "$is_default" -eq 1 ]]; then
+    make_shim_nodejs_default
+else
     make_shim_package_installs
 fi
