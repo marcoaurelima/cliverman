@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 set -e
 
 readonly runtime_name="nodejs"
