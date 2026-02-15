@@ -8,8 +8,7 @@ if [[ ! -f "${CLIVERMAN_INSTALLS_PATH}/current_versions/nodejs" ]]; then
     exit 0
 fi
 
-nodejs_curr_version=$(< "${CLIVERMAN_INSTALLS_PATH}/current_versions/${runtime_name}")
-readonly runtime_version="${nodejs_curr_version}"
+runtime_version=$(< "${CLIVERMAN_INSTALLS_PATH}/current_versions/${runtime_name}")
 
 step_0()  {
     # Deletar shims existentes para evitar conflitos
@@ -33,11 +32,7 @@ step_1() {
         local bin_name
         bin_name=$(basename "$bin")
 
-        local shim_script
-        shim_script=$("${CLIVERMAN_RUNTIMES_PATH}/${runtime_name}/shim.sh" "$bin_name" "$runtime_version")
-        
-        # Criar o arquivo de shim com permissão de execução
-        install -D -m 0755 /dev/stdin "${CLIVERMAN_SHIMS_PATH}/${bin_name}" <<< "$shim_script" 
+        "${CLIVERMAN_RUNTIMES_PATH}/${runtime_name}/shim.sh" "$bin_name" "$runtime_version"
     done
 }
 
