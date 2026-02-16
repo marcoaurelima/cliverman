@@ -18,7 +18,7 @@ uninstall_all() {
     done
 
     # Apagar todos os arquivos de instalação do runtime especificado
-    rm -f "${CLIVERMAN_INSTALLS_PATH:?}/${name:?}"
+    rm -rf "${CLIVERMAN_INSTALLS_PATH:?}/${name:?}"
     rm -f "${CLIVERMAN_INSTALLS_PATH:?}/current_versions/${name:?}"
     echo -e "\033[91m ${name}\033[0m"
 }
