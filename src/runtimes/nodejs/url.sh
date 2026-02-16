@@ -3,8 +3,10 @@ set -e
 
 get_url() {
   local version="${1}"
-  local os="${2:-linux}"
-  local arch="${3:-x64}"
+  local os
+  os=$("${CLIVERMAN_SRC_PATH}"/system.sh os)
+  local arch
+  arch=$("${CLIVERMAN_SRC_PATH}"/system.sh arch)
   local base_url="https://nodejs.org/dist"
   local format="tar.gz"
 

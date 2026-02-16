@@ -5,7 +5,7 @@ readonly name="${1}"
 readonly version="${2}"
 url="$("${CLIVERMAN_RUNTIMES_PATH}/${name}/url.sh" "${version}")"
 readonly url
-
+echo "URL: ${url}"
 readonly installs_path="${CLIVERMAN_INSTALLS_PATH}/${name}/${version}"
 readonly temp_path="${CLIVERMAN_TEMP_PATH}/${name}_${version}.tar.gz"
 
