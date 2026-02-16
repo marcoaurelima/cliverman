@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-set -e
+set -euo pipefail
+IFS=$'\n\t'
 
 get_all_versions() {
   readonly url_versions="https://nodejs.org/dist/index.json"

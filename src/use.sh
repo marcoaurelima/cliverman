@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-set -e
+set -euo pipefail
+IFS=$'\n\t'
 
 # Sanitizar (remoção de escapes)
 readonly input="${1//$'\r'/}"

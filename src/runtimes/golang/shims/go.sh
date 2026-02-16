@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-set -e
+set -euo pipefail
+IFS=$'\n\t'
 
 GO_BIN="__INSTALLS_PATH__/golang/__VERSION__/go/bin/go"
 

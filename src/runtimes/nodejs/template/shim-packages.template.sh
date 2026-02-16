@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-set -e
+set -euo pipefail
+IFS=$'\n\t'
 
 BIN_PATH="__INSTALLS_PATH__/nodejs/__VERSION__/bin/__NAME__"
 

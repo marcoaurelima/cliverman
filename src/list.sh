@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-set -e
+set -euo pipefail
+IFS=$'\n\t'
 
 list_all() {
   # Iterar sobre os arquivos do path e retirar a extensão do arquivo
@@ -31,7 +32,7 @@ list_runtime() {
     if [[ -z ${folder_name} ]]; then
       continue 
     fi
-    if [[ "${folder_name}" == "${current_version}" ]]; then
+    if [[ "${folder_name}" == "${current_version:-}" ]]; then
       echo -e "\033[0;92m· ${folder##*/} (current)\033[0m" 
       continue
     fi
