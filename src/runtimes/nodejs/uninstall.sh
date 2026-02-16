@@ -7,6 +7,7 @@ readonly version="${2:-"all"}"
 
 uninstall_all() {
     # Deletar shims para cada executável presente em todas as instalações
+    shopt -s nullglob
     for dir in "${CLIVERMAN_INSTALLS_PATH}/nodejs/"*; do
         if [[ -d "${dir}" ]]; then
            for file in "${dir}"/bin/*; do
@@ -17,6 +18,7 @@ uninstall_all() {
             done
         fi
     done
+    shopt -u nullglob
 
     # Apagar todos os arquivos de instalação do runtime especificado
     rm -rf "${CLIVERMAN_INSTALLS_PATH:?}/${name:?}"
@@ -31,7 +33,8 @@ uninstall_version() {
     if [[ -f "${current_version_path}" ]]; then
         current_version=$(< "${current_version_path}")
     fi
-    
+
+    shopt -s nullglob
     if [[ "$current_version" == "${version}" ]]; then
         local bin_path="${CLIVERMAN_INSTALLS_PATH}/${name}/${version}/bin"
         for bin in "${bin_path}"/*; do
@@ -42,6 +45,7 @@ uninstall_version() {
 
         rm -f "${CLIVERMAN_INSTALLS_PATH:?}/current_versions/${name:?}"
     fi
+    shopt -u nullglob
     
     rm -rf "${CLIVERMAN_INSTALLS_PATH:?}/${name:?}/${version:?}"
     echo -e "\033[91m ${name}:${version}\033[0m"

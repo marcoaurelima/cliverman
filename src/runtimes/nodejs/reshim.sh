@@ -13,6 +13,7 @@ runtime_version=$(< "${CLIVERMAN_INSTALLS_PATH}/current_versions/${runtime_name}
 
 step_0()  {
     # Deletar shims existentes para evitar conflitos
+    shopt -s nullglob
     for dir in "${CLIVERMAN_INSTALLS_PATH}/${runtime_name}/"*; do
         if [[ -d "${dir}" ]]; then
            for file in "${dir}"/bin/*; do
@@ -23,11 +24,12 @@ step_0()  {
             done
         fi
     done
-
+    shopt -u nullglob
 }
 
 step_1() {
     # Percorrer uma pasta de /bin do runtime e criar shims para cada executável
+    shopt -s nullglob
     local bin_path="${CLIVERMAN_INSTALLS_PATH}/${runtime_name}/${runtime_version}/bin"
     for bin in "${bin_path}"/*; do
         local bin_name
@@ -35,6 +37,7 @@ step_1() {
 
         "${CLIVERMAN_RUNTIMES_PATH}/${runtime_name}/shim.sh" "${bin_name}" "${runtime_version}"
     done
+    shopt -u nullglob
 }
 
 step_0
