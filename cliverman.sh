@@ -1,12 +1,15 @@
 #!/usr/bin/env bash
-set -euo pipefail
-IFS=$'\n\t'
+# set -euo pipefail
+# IFS=$'\n\t'
 
 readonly CLIVERMAN_VERSION="1.0.0"
 
 # Carregar variáveis de ambiente do Cliverman
 # shellcheck disable=SC1091
-source "${HOME}/.cliverman/config/config.sh"
+# source "${HOME}/.cliverman/config/config.sh"
+
+# Garantir execução do config.sh sempre que o cliverman for chamado
+"${HOME}/.cliverman/config/config.sh"
 
 if [[ "$#" -eq 2 ]]; then
     if [[ "${1}" == "list" ]]; then

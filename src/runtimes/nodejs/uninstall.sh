@@ -6,19 +6,26 @@ readonly name="$1"
 readonly version="${2:-"all"}"
 
 uninstall_all() {
-    # Deletar shims para cada executável presente em todas as instalações
+    # Verificar se existe pasta de /bin do runtime para criar shims dos binários do Node.JS
     shopt -s nullglob
-    for dir in "${CLIVERMAN_INSTALLS_PATH}/nodejs/"*; do
-        if [[ -d "${dir}" ]]; then
-           for file in "${dir}"/bin/*; do
-                [[ -z "${file}" ]] && continue
-                local bin_name
-                bin_name=$(basename "${file}")
-                rm -f "${CLIVERMAN_SHIMS_PATH:?}/${bin_name:?}"
-            done
-        fi
-    done
-    shopt -u nullglob
+    install_path_nodejs="${CLIVERMAN_INSTALLS_PATH}/${name}/"
+    if [[ -d "${install_path_nodejs}" ]]; then
+        for dir in "${install_path_nodejs}"*/ ; do
+            if [[ -d "${dir}" ]]; then
+                # Deletar shims antigos para evitar conflitos [node]
+                bin_path_node="${dir}bin/"
+                "${CLIVERMAN_RUNTIMES_PATH}/${name}/shim.sh" remove "" "${bin_path_node}"
+
+                # Deletar shims antigos para evitar conflitos [yarn]
+                bin_path_yarn="${bin_path_node}.yarn/bin/"
+                "${CLIVERMAN_RUNTIMES_PATH}/${name}/shim.sh" remove "" "${bin_path_yarn}"
+            fi
+        done
+    fi
+
+    # Verificar se existe pasta .yarn/bin para criar shims dos binários do Yarn
+    bin_path_yarn="${CLIVERMAN_INSTALLS_PATH}/${name}/${version}/.yarn/bin/"
+    "${CLIVERMAN_RUNTIMES_PATH}/${name}/shim.sh" remove "" "${bin_path_yarn}"
 
     # Apagar todos os arquivos de instalação do runtime especificado
     rm -rf "${CLIVERMAN_INSTALLS_PATH:?}/${name:?}"
@@ -37,12 +44,7 @@ uninstall_version() {
     shopt -s nullglob
     if [[ "$current_version" == "${version}" ]]; then
         local bin_path="${CLIVERMAN_INSTALLS_PATH}/${name}/${version}/bin"
-        for bin in "${bin_path}"/*; do
-            local bin_name
-            bin_name=$(basename "${bin}")
-            rm -f "${CLIVERMAN_SHIMS_PATH:?}/${bin_name:?}"
-        done
-
+        "${CLIVERMAN_RUNTIMES_PATH}/${name}/shim.sh" remove "" "${bin_path}"
         rm -f "${CLIVERMAN_INSTALLS_PATH:?}/current_versions/${name:?}"
     fi
     shopt -u nullglob

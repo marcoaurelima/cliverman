@@ -1,31 +1,10 @@
 #!/usr/bin/env bash
-set -euo pipefail
-IFS=$'\n\t'
+# Configurações de instalações globais e variáveis de ambiente do Cliverman
 
-if [[ -z "${CLIVERMAN_PATH:-}" ]]; then
-  export CLIVERMAN_PATH="${HOME}/.cliverman" 
+if [[ -f "${CLIVERMAN_CURR_VERSIONS_PATH}/nodejs" ]]; then
+  node_curr_version="$(< "${CLIVERMAN_CURR_VERSIONS_PATH}/nodejs")"
+  if [[ -n "${node_curr_version}" ]]; then
+    yarn config set prefix "${CLIVERMAN_INSTALLS_PATH}/nodejs/${node_curr_version}/bin/.yarn" &> /dev/null
+  fi
 fi
 
-if [[ -z "${CLIVERMAN_SRC_PATH:-}" ]]; then
-  export CLIVERMAN_SRC_PATH="${CLIVERMAN_PATH}/src" 
-fi
-
-if [[ -z "${CLIVERMAN_RUNTIMES_PATH:-}" ]]; then
-  export CLIVERMAN_RUNTIMES_PATH="${CLIVERMAN_SRC_PATH}/runtimes" 
-fi
-
-if [[ -z "${CLIVERMAN_INSTALLS_PATH:-}" ]]; then
-  export CLIVERMAN_INSTALLS_PATH="${CLIVERMAN_PATH}/installs" 
-fi
-
-if [[ -z "${CLIVERMAN_CURR_VERSIONS_PATH:-}" ]]; then
-  export CLIVERMAN_CURR_VERSIONS_PATH="${CLIVERMAN_INSTALLS_PATH}/current_versions" 
-fi
-
-if [[ -z "${CLIVERMAN_SHIMS_PATH:-}" ]]; then
-  export CLIVERMAN_SHIMS_PATH="${CLIVERMAN_PATH}/shims" 
-fi
-
-if [[ -z "${CLIVERMAN_TEMP_PATH:-}" ]]; then
-  export CLIVERMAN_TEMP_PATH="${CLIVERMAN_PATH}/temp" 
-fi
