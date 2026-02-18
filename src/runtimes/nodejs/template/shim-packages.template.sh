@@ -1,6 +1,4 @@
 #!/usr/bin/env bash
-set -euo pipefail
-IFS=$'\n\t'
 
 BIN_PATH="__BIN_PATH__"
 
