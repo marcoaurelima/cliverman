@@ -5,7 +5,7 @@ IFS=$'\n\t'
 search_runtime() {
   name="${1}"
   if ! "${CLIVERMAN_SRC_PATH}/available.sh" "${name}"; then
-    echo "Runtime não disponível."
+    echo "Runtime not available."
     return 1
   fi
   "${CLIVERMAN_RUNTIMES_PATH}/${name}/search.sh"

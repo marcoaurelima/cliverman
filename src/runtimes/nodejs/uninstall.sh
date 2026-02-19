@@ -6,35 +6,35 @@ readonly name="$1"
 readonly version="${2:-"all"}"
 
 uninstall_all() {
-    # Verificar se existe pasta de /bin do runtime para criar shims dos binários do Node.JS
+    # If any installed runtime directories exist, remove old shims to avoid conflicts
     shopt -s nullglob
     install_path_nodejs="${CLIVERMAN_INSTALLS_PATH}/${name}/"
     if [[ -d "${install_path_nodejs}" ]]; then
         for dir in "${install_path_nodejs}"*/ ; do
             if [[ -d "${dir}" ]]; then
-                # Deletar shims antigos para evitar conflitos [node]
+                # Remove old shims to avoid conflicts [node]
                 bin_path_node="${dir}bin/"
                 "${CLIVERMAN_RUNTIMES_PATH}/${name}/shim.sh" remove "" "${bin_path_node}"
 
-                # Deletar shims antigos para evitar conflitos [yarn]
+                # Remove old shims to avoid conflicts [yarn]
                 bin_path_yarn="${bin_path_node}.yarn/bin/"
                 "${CLIVERMAN_RUNTIMES_PATH}/${name}/shim.sh" remove "" "${bin_path_yarn}"
             fi
         done
     fi
 
-    # Verificar se existe pasta .yarn/bin para criar shims dos binários do Yarn
+    # Remove .yarn/bin shims for Yarn binaries
     bin_path_yarn="${CLIVERMAN_INSTALLS_PATH}/${name}/${version}/.yarn/bin/"
     "${CLIVERMAN_RUNTIMES_PATH}/${name}/shim.sh" remove "" "${bin_path_yarn}"
 
-    # Apagar todos os arquivos de instalação do runtime especificado
+    # Remove all installation files for the specified runtime
     rm -rf "${CLIVERMAN_INSTALLS_PATH:?}/${name:?}"
     rm -f "${CLIVERMAN_INSTALLS_PATH:?}/current_versions/${name:?}"
     echo -e "\033[91m ${name}\033[0m"
 }
 
 uninstall_version() {
-    # Verificar se a versão definida é versão atual
+    # Check if the defined version is the current version
     local current_version_path="${CLIVERMAN_INSTALLS_PATH}/current_versions/${name}"
     local current_version
     if [[ -f "${current_version_path}" ]]; then

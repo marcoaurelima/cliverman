@@ -1,22 +1,22 @@
 #!/usr/bin/env bash
 set -e
 
-# Sanitizar (remoção de escapes)
+# Sanitize input (remove CR / carriage returns)
 readonly input="${1//$'\r'/}" 
 
-# Verificar se a informação vem no formato `name:version`
+# Check if the input is in the `name:version` format
 if [[ "${input}" != *":"* ]]; then
-  echo -e "\033[93m Versão não especificada. Use padrão \`nome:versão\` \033[0m"
-  echo -e "  Nada foi alterado."
+  echo -e "\033[93m Version not specified. Use format \`name:version\` \033[0m"
+  echo -e "  No changes made."
   exit 1
 fi
 
 IFS=":" read -r name version <<< "${input}"
 
-# Verificar se o name corresponde a um runtime disponível
+# Check if the name corresponds to an available runtime
 if ! "${CLIVERMAN_SRC_PATH}/available.sh" "${name}"; then
-  echo -e "\033[93m Runtime [${name}] não instalado ou desconhecido.\033[0m"
-  echo -e "  Nada foi alterado."
+  echo -e "\033[93m Runtime [${name}] not installed or unknown.\033[0m"
+  echo -e "  No changes made."
   exit 1
 fi
 

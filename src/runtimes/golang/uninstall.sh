@@ -6,13 +6,13 @@ readonly name="$1"
 readonly version="${2:-"all"}"
 
 uninstall_all() {
-    # Apagar todos os arquivos de instalação do runtime especificado
+    # Remove all installation files for the specified runtime
     rm -rf "${CLIVERMAN_INSTALLS_PATH:?}/${name:?}"
     
-    # Apagar o arquivo current version do runtime especificado
+    # Remove the current version file for the specified runtime
     rm -f "${CLIVERMAN_INSTALLS_PATH:?}/current_versions/${name:?}"
     
-    # Apagar todos os shims relacionados ao runtime especificado
+    # Remove all shims related to the specified runtime
     rm -f "${CLIVERMAN_SHIMS_PATH:?}/go"
     rm -f "${CLIVERMAN_SHIMS_PATH:?}/gofmt"
 
@@ -20,7 +20,7 @@ uninstall_all() {
 }
 
 uninstall_version() {
-    # Verificar se a versão definida é versão atual
+    # Check if the defined version is the current version
     local current_version_path="${CLIVERMAN_INSTALLS_PATH}/current_versions/${name}"
     local current_version
     if [[ -f "${current_version_path}" ]]; then

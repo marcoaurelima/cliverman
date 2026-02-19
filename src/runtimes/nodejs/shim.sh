@@ -22,7 +22,7 @@ make_shim() {
     install -D -m 0755 /dev/stdin "${CLIVERMAN_SHIMS_PATH}/${name}" <<< "${shim}" 
 }
 
-# Função para criar o shim do Node.JS e binários pré-instados por padrão
+ # Function to create the Node.js shim and default pre-installed binaries
 make_shim_default() {
     local bin_path="${1}"
     local template
@@ -30,7 +30,7 @@ make_shim_default() {
     make_shim "${bin_path}" "${template}"
 }
 
-# Função para criar o shim de binários instalados via PM interno (ex: npm, npx, corepack)
+# Function to create shims for binaries installed via the package manager (e.g., npm, npx, corepack)
 make_shim_package() {
     local bin_path="${1}"
     local template
@@ -38,7 +38,7 @@ make_shim_package() {
     make_shim "${bin_path}" "${template}"
 }
 
-# Função para remover os shims de acordo com os binários presentes no diretório de binários do runtime
+# Function to remove shims according to binaries present in the runtime's bin directory
 remove_shims() {
     shopt -s nullglob
     for file in "${bin_path_folder}"*; do
@@ -57,7 +57,7 @@ create_shims() {
         local bin_name
         bin_name=$(basename "${file}")
 
-        # Verificar se o binário é um dos binários pré-instalados por padrão para criar shim específico
+        # Check if the binary is one of the default pre-installed binaries to create a specific shim
         is_default=false
         for shim in "${default[@]}"; do
             if [[ "${bin_name}" == "${shim}" ]]; then

@@ -9,178 +9,180 @@
   \_____|_|_| \_/ \___|_|  |_| |_| |_|\__,_|_| |_|
 ```
 
-Um gerenciador de runtimes universal inspirado no **[asdf](https://github.com/asdf-vm/asdf)**, escrito em Bash. Gerencie múltiplas versões de linguagens de programação e ferramentas de desenvolvimento de forma simples e eficiente.
+A universal runtime manager inspired by **[asdf](https://github.com/asdf-vm/asdf)**, written in Bash. Manage multiple versions of programming languages and developer tools in a simple and efficient way.
 
-## 🚀 Características
+## 🚀 Features
 
-- **Universal**: Gerencie diversos runtimes (Go, Node.js, Python, Ruby, etc.) com uma única ferramenta
-- **Simples**: Interface de linha de comando intuitiva e fácil de usar
-- **Leve**: Escrito em Bash puro, sem dependências pesadas
-- **Flexível**: Alterne entre versões de runtimes facilmente
+- **Universal**: Manage multiple runtimes (Go, Node.js, Python, Ruby, etc.) with a single tool
+- **Simple**: Intuitive and easy-to-use command-line interface
+- **Lightweight**: Written in pure Bash with no heavy dependencies
+- **Flexible**: Easily switch between runtime versions
 
-## 📋 Runtimes Suportados
+## 📋 Supported Runtimes
 
-#### ✅ Implementados e Disponíveis
-- **`Golang` (beta)** - Linguagem de programação Go
-- **`Node.js` (beta)** - Runtime JavaScript
+#### ✅ Implemented and Available
+- **`Node.js` (beta)** - JavaScript runtime
 
-#### ⌛ Em Desenvolvimento
-- **`Python`** - Linguagem de programação Python
-- **`Ruby`** - Linguagem de programação Ruby
-- **`Deno`** - Runtime JavaScript/TypeScript seguro
-- **`Rust`** - Linguagem de sistema Rust
-- **`Java`** - Plataforma Java
+#### ⌛ In Development
+- **`Golang`** - Go programming language
+- **`Python`** - Python programming language
+- **`Ruby`** - Ruby programming language
+- **`Deno`** - Secure JavaScript/TypeScript runtime
+- **`Rust`** - Systems programming language
+- **`Java`** - Java platform
 
-## 📦 Instalação
+## 📦 Installation
 
 ```bash
 git clone https://github.com/marcoaurelima/cliverman.git $HOME/.cliverman && cd $HOME/.cliverman && rm -rf .git
 ```
 
-#### Configure o PATH:
-Adicione a seguinte linha ao seu arquivo de configuração do shell:
+#### Configure your PATH
+Add the following line to your shell configuration file:
+
 ```bash
-export PATH="$HOME/.cliverman/shims:$PATH"
+. "${HOME}/.cliverman/config/env.sh"
+export PATH="${HOME}/.cliverman/shims:${PATH}"
+. "${HOME}/.cliverman/config/config.sh"
 ```
 
-- **Bash:** `~/.bashrc` ou `~/.bash_profile`
+- **Bash:** `~/.bashrc` or `~/.bash_profile`
 - **Zsh:** `~/.zshrc`
 - **Fish:** `~/.config/fish/config.fish`
 
-Após adicionar, recarregue o arquivo:
+After adding, reload the file:
 
 ```bash
-source ~/.bashrc  # ou ~/.zshrc, dependendo do seu shell
+source ~/.bashrc  # or source ~/.zshrc depending on your shell
 ```
 
 
-## 📖 Uso
+## 📖 Usage
 
-### Sintaxe básica
+### Basic syntax
 
 ```bash
-cliverman [comando] [argumentos]
+cliverman [command] [arguments]
 ```
 
-### Comandos disponíveis
+### Available commands
 
-#### `search` - Buscar runtimes disponíveis
+#### `search` - Search available runtimes
 
 ```bash
-# Listar todos os runtimes disponíveis para instalação
+# List all available runtimes for installation
 cliverman search all
 
-# Listar todas as versões de um runtime específico
+# List all versions for a specific runtime
 cliverman search golang
 cliverman search nodejs
 cliverman search python
 ```
 
-#### `list` - Listar runtimes instalados
+#### `list` - List installed runtimes
 
 ```bash
-# Listar todos os runtimes instalados
+# List all installed runtimes
 cliverman list all
 
-# Listar versões instaladas de um runtime específico
+# List installed versions for a specific runtime
 cliverman list golang
 ```
 
-#### `install` - Instalar um runtime
+#### `install` - Install a runtime
 
 ```bash
-# Instalar uma versão específica de um runtime
+# Install a specific version of a runtime
 cliverman install golang:14.17.0
 cliverman install python:3.9.5
 cliverman install ruby:3.0.0
 ```
 
-#### `use` - Definir versão ativa
+#### `use` - Set active version
 
 ```bash
-# Definir a versão global ativa de um runtime
+# Set the global active version for a runtime
 cliverman use golang:14.17.0
 cliverman use python:3.9.5
 ```
 
-#### `uninstall` - Desinstalar runtime
+#### `uninstall` - Uninstall runtime
 
 ```bash
-# Desinstalar todas as versões de um runtime
+# Uninstall all versions of a runtime
 cliverman uninstall golang
 
-# Desinstalar uma versão específica
+# Uninstall a specific version
 cliverman uninstall golang:14.17.0
 ```
 
-## 💡 Exemplos práticos
+## 💡 Practical examples
 
 ```bash
-# 1. Buscar versões disponíveis do Golang
+# 1. Search available Go versions
 cliverman search golang
 
-# 2. Instalar Golang versão 14.17.0
+# 2. Install Go version 14.17.0
 cliverman install golang:14.17.0
 
-# 3. Instalar Golang versão 16.13.0
+# 3. Install Go version 16.13.0
 cliverman install golang:16.13.0
 
-# 4. Listar versões instaladas do Golang
+# 4. List installed Go versions
 cliverman list golang
 
-# 5. Ativar a versão 16.13.0 globalmente
+# 5. Activate version 16.13.0 globally
 cliverman use golang:16.13.0
 
-# 6. Verificar a versão ativa
+# 6. Check active version
 go version
 
-# 7. Desinstalar uma versão específica
+# 7. Uninstall a specific version
 cliverman uninstall golang:14.17.0
 ```
 
-## 🔧 Requisitos
+## 🔧 Requirements
 
-- Bash 4.0 ou superior
+- Bash 4.0 or newer
 - curl
 - jq
-- Permissões de escrita no diretório de instalação
+- [Nerdfont](https://www.nerdfonts.com/)
 
-## 📂 Estrutura de diretórios
+## 📂 Directory structure
 
 ```
 ~/.cliverman/
-├── installs/          # Runtimes instalados
+├── installs/          # Installed runtimes
 │   ├── golang/
 │   ├── python/
 │   └── ruby/
-└── shims/             # Links simbólicos para executáveis ativos
+└── shims/             # Symbolic links to active executables
 ```
 
-## 🤝 Contribuindo
+## 🤝 Contributing
 
-Contribuições são bem-vindas! Sinta-se à vontade para:
+Contributions are welcome! Feel free to:
 
-1. Fazer fork do projeto
-2. Criar uma branch para sua feature (`git checkout -b feature/MinhaFeature`)
-3. Commit suas mudanças (`git commit -m 'Adiciona MinhaFeature'`)
-4. Push para a branch (`git push origin feature/MinhaFeature`)
-5. Abrir um Pull Request
+1. Fork the project
+2. Create a branch for your feature (`git checkout -b feature/MyFeature`)
+3. Commit your changes (`git commit -m 'Add MyFeature'`)
+4. Push to your branch (`git push origin feature/MyFeature`)
+5. Open a Pull Request
 
 ## 📝 Roadmap
 
-- [ ] Suporte a mais runtimes (Deno, Rust, Java, etc.)
-- [ ] Configuração por projeto (.cliverman-version)
-- [ ] Auto-instalação de dependências
+- [ ] Support more runtimes (Deno, Rust, Java, etc.)
+- [ ] Per-project configuration (.cliverman-version)
 - [ ] Shell completion (bash, zsh, fish)
 
 ## 📄 Licença
 
-Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
 
-## 🙏 Agradecimentos
+## 🙏 Acknowledgements
 
-Inspirado pelo excelente projeto [asdf](https://github.com/asdf-vm/asdf).
+Inspired by the excellent project [asdf](https://github.com/asdf-vm/asdf).
 
 ---
 
-Feito com ❤️ em Bash
+Made with ❤️ in Bash

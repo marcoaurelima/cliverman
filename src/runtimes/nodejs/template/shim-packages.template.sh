@@ -3,7 +3,7 @@
 BIN_PATH="__BIN_PATH__"
 
 if [[ ! -x "${BIN_PATH}" ]]; then
-    echo -e "\033[91m Erro: arquivo __NAME__ não encontrado.\033[0m"
+    echo -e "\033[91m Error: file __NAME__ not found.\033[0m"
     exit 1
 fi
 

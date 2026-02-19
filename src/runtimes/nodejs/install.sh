@@ -10,30 +10,30 @@ readonly installs_path="${CLIVERMAN_INSTALLS_PATH}/${name}/${version}"
 readonly temp_path="${CLIVERMAN_TEMP_PATH}/${name}_${version}.tar.gz"
 
 initial_verifications() {
-  # Verificar se name e version estão vazios
+  # Check if name and version are empty
   if [[ -z "${version}" ]]; then
-    echo -e "\033[93m Versão não especificada.\033[0m"
-    echo -e "  Nada foi alterado."
+    echo -e "\033[93m Version not specified.\033[0m"
+    echo -e "  No changes made."
     exit 1
   fi
 
-  # Verificar se a versão requerida já está instalada
+  # Check if the requested version is already installed
   if [[ -d "${installs_path}" ]]; then
-    echo -en "\033[96m ${name} v${version} já está instalado. Deseja reinstalar? [s/N] \033[0m"
+    echo -en "\033[96m ${name} v${version} is already installed. Do you want to reinstall? [y/N] \033[0m"
     read -r response
-    if [[ "${response}" != "s" && "${response}" != "S" ]]; then
-      echo "  Nada foi alterado." 
+    if [[ "${response}" != "y" && "${response}" != "Y" ]]; then
+      echo "  No changes made." 
       exit 1
       else
-        echo "  Reinstalando..."
+        echo "  Reinstalling..."
     fi
   fi
   echo -en "\033[0m"
 }
 
 step_0() {
-   # Verificar se a URL (após redirecionamentos) retorna HTTP 200 OK
-  echo -n "[0/3] Verificando disponibilidade de ${name} v${version} "
+  # Check if the URL (after redirects) returns HTTP 200 OK
+  echo -n "[0/3] Checking availability of ${name} v${version} "
 
   http_code=$(curl --head --silent --location \
    --write-out "%{http_code}" \
@@ -41,9 +41,9 @@ step_0() {
    --max-time 10 \
    "${url}")
 
-  if [ "${http_code}" -ne 200 ]; then
+   if [ "${http_code}" -ne 200 ]; then
    echo -e "\033[93mUNAVAILABLE\033[0m"
-   echo -e "\033[91m  Versão não encontrada (HTTP ${http_code})\n   Abortando...\033[0m"
+   echo -e "\033[91m  Version not found (HTTP ${http_code})\n   Aborting...\033[0m"
    exit 1
    else
      echo -e "\033[92mAVAILABLE\033[0m"
@@ -51,7 +51,7 @@ step_0() {
 }
 
 step_1() {
-  echo "[1/3] Baixando ${name} v${version}"
+  echo "[1/3] Downloading ${name} v${version}"
   echo "      [${url}]"
 
   # Baixar para pasta temporaria de downloads
@@ -61,14 +61,14 @@ step_1() {
 }
 
 step_2() {
-  echo -n "[2/3] Verificando checksum "
+  echo -n "[2/3] Verifying checksum "
   
-  # Checar o checksum do arquivo baixado
+  # Check the checksum of the downloaded file
   checksum="$("${CLIVERMAN_RUNTIMES_PATH}/${name}/checksum.sh" "${version}")"
 
   if ! echo "${checksum}  ${temp_path}" | sha256sum -c --status -; then
     echo -e "\033[91mERROR"
-    echo -e "\n Checksum inválido. Abortando...\033[0m"
+    echo -e "\n Invalid checksum. Aborting...\033[0m"
     # Remover arquivos temporarios
     rm -f "${temp_path:?}"
     exit 1
@@ -78,21 +78,21 @@ step_2() {
 }
 
 step_3() {
-  echo "[3/3] Instalando ${name} v${version}"
+  echo "[3/3] Installing ${name} v${version}"
 
-  # Deletar versão anterior, se existir
+  # Delete previous version, if it exists
   rm -rf "${installs_path:?}"
   
-  # Criar pasta para binários da ferramenta
+  # Create directory for the tool binaries
   mkdir -p "${installs_path}"
 
-  # Descompactar para pasta de binários
+  # Unpack into the installation directory
   tar -xzf "${temp_path}" -C "${installs_path}" --strip-components=1
 
-  # Remover arquivos temporarios
+  # Remove temporary files
   rm -f "${temp_path:?}"
 
-  echo -e "\033[92m ${name} v${version} instalado com sucesso!"
+  echo -e "\033[92m ${name} v${version} installed successfully!"
 }
 
 initial_verifications

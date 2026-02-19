@@ -3,8 +3,8 @@
 BIN_PATH="__BIN_PATH__"
 
 if [[ ! -x "${BIN_PATH}" ]]; then
-    echo -e "\033[91m Erro: nodejs __VERSION__ não está instalado ou instalação pode estar corrompida.\033[0m"
-    echo -e "  Use \`cliverman install nodejs:__VERSION__\` para reinstalar."
+    echo -e "\033[91m Error: nodejs __VERSION__ is not installed or the installation may be corrupted.\033[0m"
+    echo -e "  Use \`cliverman install nodejs:__VERSION__\` to reinstall."
     exit 1
 fi
 

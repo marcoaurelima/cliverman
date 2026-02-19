@@ -4,11 +4,11 @@
 
 readonly CLIVERMAN_VERSION="1.0.0"
 
-# Carregar variáveis de ambiente do Cliverman
+# Load Cliverman environment variables
 # shellcheck disable=SC1091
 # source "${HOME}/.cliverman/config/config.sh"
 
-# Garantir execução do config.sh sempre que o cliverman for chamado
+# Ensure `config.sh` runs whenever cliverman is invoked
 "${HOME}/.cliverman/config/config.sh"
 
 if [[ "$#" -eq 2 ]]; then
@@ -42,25 +42,25 @@ cat <<'ASCII_ART'
  | |    | | \ \ / / _ \ '__| '_ ` _ \ / _` | '_ \ 
  | |____| | |\ V /  __/ |  | | | | | | (_| | | | |
   \_____|_|_| \_/ \___|_|  |_| |_| |_|\__,_|_| |_|  
-               Gerenciador de runtimes universal   
+               Universal runtime manager   
 ASCII_ART
 echo "               v${CLIVERMAN_VERSION}"
 
-echo "Como usar:"
-echo "  cliverman [comando] [argumentos]"
+echo "Usage:"
+echo "  cliverman [command] [arguments]"
 echo ""
-echo "Comandos disponíveis:"
-echo "     search [all]        - Exibe todos os runtimes disponiveis para instalação"
-echo "            [\`name\`]     - Exibe todas as versões disponíveis do runtime especificado" 
-echo "       list [all]        - Exibe todos os runtimes instaladas" 
-echo "            [\`name\`]     - Exibe todas as versões já instaladas deste runtime" 
-echo "    install [\`name:ver\`] - Instala o runtime na versão especificada" 
-echo "        use [\`name:ver\`] - Define a versão ativa de um runtime já instalada (globalmente)" 
-echo "  uninstall [\`name\`]     - Desinstala todas as versões instaladas de um runtime" 
-echo "            [\`name:ver\`] - Desinstala uma versão específica de um runtime" 
-echo "     reshim                - Recria os shims para todos os runtimes instalados" 
+echo "Available commands:"
+echo "     search [all]        - Show all available runtimes for installation"
+echo "            [\`name\`]     - Show all available versions for the specified runtime" 
+echo "       list [all]        - Show all installed runtimes" 
+echo "            [\`name\`]     - Show all versions installed for the specified runtime" 
+echo "    install [\`name:ver\`] - Install the runtime at the specified version" 
+echo "        use [\`name:ver\`] - Set the active version of an already installed runtime (global)" 
+echo "  uninstall [\`name\`]     - Uninstall all installed versions of a runtime" 
+echo "            [\`name:ver\`] - Uninstall a specific version of a runtime" 
+echo "     reshim              - Recreate shims for all installed runtimes" 
 echo ""
-echo "Exemplo:"
+echo "Example:"
 echo "  cliverman install nodejs:14.17.0"
 echo "  cliverman use nodejs:14.17.0"
 echo "  cliverman search"

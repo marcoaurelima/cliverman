@@ -3,7 +3,7 @@ set -euo pipefail
 IFS=$'\n\t'
 
 list_all() {
-  # Iterar sobre os arquivos do path e retirar a extensão do arquivo
+  # Iterate over files in the path and strip the file extension
   shopt -s nullglob
   local dir="${CLIVERMAN_CURR_VERSIONS_PATH}"
   [[ -d "$dir" ]] || return 0
