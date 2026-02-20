@@ -3,21 +3,38 @@ set -euo pipefail
 IFS=$'\n\t'
 
 list_all() {
+  # Check exists any runtime installed
+  if [[ -z "$(find "${CLIVERMAN_INSTALLS_PATH}" \
+        ! -name "current_versions" \
+        ! -name ".gitkeep" \
+          -mindepth 1 -print -quit 2>/dev/null)" ]]; then
+    echo -e "No runtimes installed on the system \033[91mERROR\033[0m"
+    echo -e "Aborting..."
+    exit 1
+  fi
+
   # Iterate over files in the path and strip the file extension
   shopt -s nullglob
-  local dir="${CLIVERMAN_CURR_VERSIONS_PATH}"
-  [[ -d "$dir" ]] || return 0
-
-  for file in "$dir"/*; do
-    local name="${file##*/}"
-    echo "· ${name%.*}"
+  local path="${CLIVERMAN_INSTALLS_PATH}/*"
+  for folder in $path; do
+    local name="${folder##*/}"
+    if [[ -d "${folder}" && "${name}" != "current_versions" ]]; then
+      echo "· ${name}"
+    fi
   done
-
   shopt -u nullglob
 }
 
 list_runtime() {
   local name=$1
+
+  # Check if the requested runtime is installed on the system
+  if [[ ! -d "${CLIVERMAN_INSTALLS_PATH}/${name}" ]]; then
+    echo -e "Runtime [${name}] not installed or unknown \033[91mERROR\033[0m"
+    echo -e "Aborting..."
+    exit 1
+  fi
+
   local install_path="${CLIVERMAN_INSTALLS_PATH}/${name}"
   local current_version_path="${CLIVERMAN_CURR_VERSIONS_PATH}/${name}"
   local current_version
