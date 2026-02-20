@@ -7,8 +7,8 @@ readonly input="${1//$'\r'/}"
 
 # Check if the input is in the `name:version` format
 if [[ "${input}" != *":"* ]]; then
-  echo -e "\033[93m Version not specified. Use format \`name:version\` \033[0m"
-  echo -e "  No changes made."
+  echo -e "Version not specified. Use format \`name:version\` \033[91mERROR\033[0m"
+  echo -e "Aborting..."
   exit 1
 fi
 
@@ -17,8 +17,8 @@ IFS=":" read -r name version <<< "${input}"
 # Check if the requested version is installed
 readonly path="${CLIVERMAN_INSTALLS_PATH}/${name}/${version}"
 if [[ ! -d "${path}" ]]; then
- echo -e "\033[93m Version ${version} is not installed on the system" 
- echo -e "  Use \`cliverman install ${name}:${version}\` to install." 
+ echo -e "Version ${version} is not installed on the system \033[91mERROR\033[0m"
+ echo -e "Aborting..."
  exit 1
 fi
 

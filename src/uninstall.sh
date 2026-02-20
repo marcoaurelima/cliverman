@@ -10,16 +10,16 @@ IFS=":" read -r name version <<< "${input}"
 # Check if the requested runtime is installed on the system
 readonly path_name="${CLIVERMAN_INSTALLS_PATH}/${name}"
 if [[ ! -d "${path_name}" ]]; then
-  echo -e "\033[93m Runtime [${name}] not installed or unknown.\033[0m"
-  echo -e "  No changes made."
+  echo -e "Runtime [${name}] not installed or unknown \033[91mERROR\033[0m"
+  echo -e "Aborting..."
   exit 1
 fi
 
 # Check if the requested runtime version is installed on the system
 readonly path_version="${CLIVERMAN_INSTALLS_PATH}/${name}/${version}"
 if [[ ! -d "${path_version}" ]]; then
-  echo -e "\033[93m Version [${name}:${version}] not installed or unknown.\033[0m"
-  echo -e "  No changes made."
+  echo -e "Version [${name}:${version}] not installed or unknown \033[91mERROR\033[0m"
+  echo -e "Aborting..."
   exit 1
 fi
 
