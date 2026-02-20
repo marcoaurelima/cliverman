@@ -30,27 +30,34 @@ uninstall_all() {
     # Remove all installation files for the specified runtime
     rm -rf "${CLIVERMAN_INSTALLS_PATH:?}/${name:?}"
     rm -f "${CLIVERMAN_INSTALLS_PATH:?}/current_versions/${name:?}"
-    echo -e "\033[91m ${name}\033[0m"
+    echo -e "${name} \033[93mUNINSTALLED\033[0m"
 }
 
 uninstall_version() {
-    # Check if the defined version is the current version
     local current_version_path="${CLIVERMAN_INSTALLS_PATH}/current_versions/${name}"
-    local current_version
     if [[ -f "${current_version_path}" ]]; then
-        current_version=$(< "${current_version_path}")
-    fi
+        # Check if the defined version is the current version
+        local current_version
+        if [[ -f "${current_version_path}" ]]; then
+            current_version=$(< "${current_version_path}")
+        fi
 
-    shopt -s nullglob
-    if [[ "$current_version" == "${version}" ]]; then
-        local bin_path="${CLIVERMAN_INSTALLS_PATH}/${name}/${version}/bin"
-        "${CLIVERMAN_RUNTIMES_PATH}/${name}/shim.sh" remove "" "${bin_path}"
-        rm -f "${CLIVERMAN_INSTALLS_PATH:?}/current_versions/${name:?}"
+        shopt -s nullglob
+        if [[ "${current_version}" == "${version}" ]]; then
+            local bin_path="${CLIVERMAN_INSTALLS_PATH}/${name}/${version}/bin"
+            "${CLIVERMAN_RUNTIMES_PATH}/${name}/shim.sh" remove "" "${bin_path}"
+            rm -f "${CLIVERMAN_INSTALLS_PATH:?}/current_versions/${name:?}"
+        fi
+        shopt -u nullglob
     fi
-    shopt -u nullglob
     
     rm -rf "${CLIVERMAN_INSTALLS_PATH:?}/${name:?}/${version:?}"
-    echo -e "\033[91m ${name}:${version}\033[0m"
+    # If the runtime folder is empty after removing the version, remove it as well
+    local runtime_path="${CLIVERMAN_INSTALLS_PATH}/${name}"
+    if [[ -d "${runtime_path}" && -z "$(ls -A "${runtime_path}")" ]]; then
+        rm -rf "${runtime_path}"
+    fi
+    echo -e "${name} v${version} \033[93mUNINSTALLED\033[0m"
 }
 
 if [[ "${version}" == "all" ]]; then
