@@ -24,6 +24,9 @@ if [[ "$#" -eq 2 ]]; then
     elif [[ "${1}" == "search" ]]; then
         "${CLIVERMAN_SRC_PATH}/search.sh" "${2}"
         exit 0
+    elif [[ "${1}" == "clear" ]]; then
+        "${CLIVERMAN_SRC_PATH}/clear.sh" "${2}"
+        exit 0
     elif [[ "${1}" == "uninstall" ]]; then
         "${CLIVERMAN_SRC_PATH}/uninstall.sh" "${2}"
         exit 0
@@ -56,6 +59,7 @@ echo "       list [all]        - Show all installed runtimes"
 echo "            [\`name\`]     - Show all versions installed for the specified runtime" 
 echo "    install [\`name:ver\`] - Install the runtime at the specified version" 
 echo "        use [\`name:ver\`] - Set the active version of an already installed runtime (global)" 
+echo "      clear [\`name\`]     - Unset the active version of a runtime, reverting to system default" 
 echo "  uninstall [\`name\`]     - Uninstall all installed versions of a runtime" 
 echo "            [\`name:ver\`] - Uninstall a specific version of a runtime" 
 echo "     reshim              - Recreate shims for all installed runtimes" 

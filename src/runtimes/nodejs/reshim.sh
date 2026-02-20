@@ -3,6 +3,8 @@ set -euo pipefail
 IFS=$'\n\t'
 
 readonly runtime_name="nodejs"
+readonly op="${1:-}"
+
  # Check if there's a nodejs entry in current_versions
 if [[ ! -f "${CLIVERMAN_INSTALLS_PATH}/current_versions/${runtime_name}" ]]; then
     exit 0
@@ -26,7 +28,14 @@ if [[ -d "${install_path_nodejs}" ]]; then
         fi
     done
 fi
+shopt -u nullglob
 
+# If the operation is "remove", exit after removing shims without creating new ones
+if [[ "${op}" == "remove" ]]; then
+    exit 0
+fi
+
+shopt -s nullglob
  # Create shims for the active version if bin folders exist
 bin_path_node="${CLIVERMAN_INSTALLS_PATH}/${runtime_name}/${runtime_version}/bin/"
 if [[ -d "${bin_path_node}" ]]; then

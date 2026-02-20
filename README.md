@@ -116,6 +116,15 @@ cliverman uninstall golang
 cliverman uninstall golang:14.17.0
 ```
 
+#### `clear` - Clear runtime shims and cached data
+
+```bash
+# Invoke the runtime-specific clear script to remove shims
+# and any cached/current-version metadata for a runtime
+cliverman clear nodejs
+cliverman clear golang
+```
+
 ## 💡 Practical examples
 
 ```bash
