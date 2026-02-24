@@ -3,13 +3,23 @@ set -euo pipefail
 IFS=$'\n\t'
 
 get_url() {
-  local url_base="https://go.dev/dl/go"
-  local version="$1"
-  local os="${2:-linux}"
-  local arch="${3:-amd64}"
+  local version="${1}"
+  local os
+  os=$("${CLIVERMAN_SRC_PATH}"/system.sh os)
+  local arch
+  arch=$("${CLIVERMAN_SRC_PATH}"/system.sh arch)
+  case "${arch}" in
+    x86_64|x64|amd64) arch="amd64" ;;
+    x86|i386|i686)    arch="386" ;;
+    arm64|aarch64)   arch="arm64" ;;
+    arm)              arch="armv6l" ;;
+    *) ;;
+  esac
+  local base_url="https://go.dev/dl/go"
   local format="tar.gz"
-  
-  echo "${url_base}${version}.${os}-${arch}.${format}"
+
+  echo "${base_url}${version}.${os}-${arch}.${format}"
 }
 
-get_url $1
+get_url "${1}"
+

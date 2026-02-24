@@ -2,25 +2,16 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-readonly name="$1"
-readonly version="$2"
-
-install_shim() {
-    local shim_name="$1"
-    # Install shims
-    shim_script=$(sed \
-        -e "s#__INSTALLS_PATH__#${CLIVERMAN_INSTALLS_PATH}#g" \
-        -e "s#__VERSION__#${version}#g" \
-    "${CLIVERMAN_RUNTIMES_PATH}/${name}/shims/${shim_name}.sh")
-
-    # Create shim file with execute permission
-    install -D -m 0755 /dev/stdin "${CLIVERMAN_SHIMS_PATH}/${shim_name}" <<< "$shim_script"
-}
-
-install_shim "go"
-install_shim "gofmt"
+readonly name="${1}"
+readonly version="${2}"
 
  # Save the current version to a file
 echo "$version" > "${CLIVERMAN_INSTALLS_PATH}/current_versions/${name}"
 
-echo -e "\033[92m ${name} v${version}"
+ # Perform a full reshim to update the runtime shims and related binaries
+"${CLIVERMAN_RUNTIMES_PATH}/${name}/reshim.sh" "${name}" "${version}"
+
+# change enviroment variable to use the installed version
+"${CLIVERMAN_INSTALLS_PATH}/golang/${version}/bin/go" env -w GOBIN="${CLIVERMAN_INSTALLS_PATH}/golang/${version}/bin"
+
+echo -e "${name} v${version} \033[92mUSING\033[0m"

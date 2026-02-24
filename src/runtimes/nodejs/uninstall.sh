@@ -44,7 +44,7 @@ uninstall_version() {
 
         shopt -s nullglob
         if [[ "${current_version}" == "${version}" ]]; then
-            local bin_path="${CLIVERMAN_INSTALLS_PATH}/${name}/${version}/bin"
+            local bin_path="${CLIVERMAN_INSTALLS_PATH}/${name}/${version}/bin/"
             "${CLIVERMAN_RUNTIMES_PATH}/${name}/shim.sh" remove "" "${bin_path}"
             rm -f "${CLIVERMAN_INSTALLS_PATH:?}/current_versions/${name:?}"
         fi
