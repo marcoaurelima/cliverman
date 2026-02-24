@@ -14,6 +14,7 @@ make_shim() {
     name=$(basename "${file}")
 
     shim=$(sed \
+    -e "s#__NPM_PREFIX__#${bin_path%/*}#g" \
     -e "s#__BIN_PATH__#${bin_path}#g" \
     -e "s#__NAME__#${name}#g" \
     -e "s#__VERSION__#${version}#g" \

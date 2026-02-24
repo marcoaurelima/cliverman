@@ -6,10 +6,7 @@ readonly CLIVERMAN_VERSION="1.0.0"
 
 # Load Cliverman environment variables
 # shellcheck disable=SC1091
-# source "${HOME}/.cliverman/config/config.sh"
-
-# Ensure `config.sh` runs whenever cliverman is invoked
-"${HOME}/.cliverman/config/config.sh"
+source "${HOME}/.cliverman/config/env.sh"
 
 if [[ "$#" -eq 2 ]]; then
     if [[ "${1}" == "list" ]]; then

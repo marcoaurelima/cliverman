@@ -1,6 +1,4 @@
 #!/usr/bin/env bash
-# set -euo pipefail
-# IFS=$'\n\t'
 
 if [[ -z "${CLIVERMAN_PATH:-}" ]]; then
   export CLIVERMAN_PATH="${HOME}/.cliverman" 
