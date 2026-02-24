@@ -11,7 +11,4 @@ echo "$version" > "${CLIVERMAN_INSTALLS_PATH}/current_versions/${name}"
  # Perform a full reshim to update the runtime shims and related binaries
 "${CLIVERMAN_RUNTIMES_PATH}/${name}/reshim.sh" "${name}" "${version}"
 
-# change enviroment variable to use the installed version
-"${CLIVERMAN_INSTALLS_PATH}/golang/${version}/bin/go" env -w GOBIN="${CLIVERMAN_INSTALLS_PATH}/golang/${version}/bin"
-
 echo -e "${name} v${version} \033[92mUSING\033[0m"

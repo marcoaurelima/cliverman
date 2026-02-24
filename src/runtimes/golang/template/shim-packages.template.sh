@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+export GOBIN="__GOBIN_PATH__"
+
 BIN_PATH="__BIN_PATH__"
 
 if [[ ! -x "${BIN_PATH}" ]]; then

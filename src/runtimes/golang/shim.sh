@@ -15,6 +15,7 @@ make_shim() {
 
     shim=$(sed \
     -e "s#__BIN_PATH__#${bin_path}#g" \
+    -e "s#__GOBIN_PATH__#${bin_path%/*}#g" \
     -e "s#__NAME__#${name}#g" \
     -e "s#__VERSION__#${version}#g" \
     <<< "$template")
