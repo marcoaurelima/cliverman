@@ -4,8 +4,10 @@ IFS=$'\n\t'
 
 get_checksum() {
   local version="$1"
-  local os="${2:-"linux"}"
-  local arch="${3:-"amd64"}"
+  local os
+  os=$("${CLIVERMAN_SRC_PATH}"/system.sh os)
+  local arch
+  arch=$("${CLIVERMAN_SRC_PATH}"/system.sh arch)
 
   curl -fsSL "https://go.dev/dl/?mode=json&include=all" |  
   jq -r --arg filename "go${version}.${os}-${arch}.tar.gz" \
@@ -14,4 +16,4 @@ get_checksum() {
                         .sha256'
 }
 
-get_checksum $1
+get_checksum "${1}"

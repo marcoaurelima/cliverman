@@ -1,48 +1,59 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-readonly name="$1"
-readonly version="$2"
+readonly name="${1}"
+readonly version="${2}"
+url="$("${CLIVERMAN_RUNTIMES_PATH}/${name}/url.sh" "${version}")"
 readonly url
-url=$("${CLIVERMAN_RUNTIMES_PATH}/${name}/url.sh ${version}")
 readonly installs_path="${CLIVERMAN_INSTALLS_PATH}/${name}/${version}"
 readonly temp_path="${CLIVERMAN_TEMP_PATH}/${name}_${version}.tar.gz"
 
 initial_verifications() {
   # Check if name and version are empty
   if [[ -z "${version}" ]]; then
-    echo -e "\033[93m Version not specified.\033[0m"
-    echo -e "  No changes made."
+    echo -e "\033[93mVersion not specified.\033[0m"
+    echo -e "Aborting..."
     exit 1
   fi
 
   # Check if the requested version is already installed
   if [[ -d "${installs_path}" ]]; then
-    echo -en "\033[96m ${name} v${version} is already installed. Do you want to reinstall? [y/N] \033[0m"
+    echo -en "\033[96m${name} v${version} is already installed. Do you want to reinstall? [y/N] \033[0m"
     read -r response
-    if [[ $response != "y" && $response != "Y" ]]; then
-      echo "  No changes made." 
+    if [[ "${response}" != "y" && "${response}" != "Y" ]]; then
+      echo "Aborting..." 
       exit 1
       else
-        echo "  Reinstalling..."
+        echo -e "\033[96mReinstalling...\033[0m"
     fi
   fi
   echo -en "\033[0m"
 }
 
-step_0() { 
+get_size_mb_from_url_curl() {
+  local target="$1"
+  local size_bytes
+  # Follow redirects and capture the last Content-Length (case-insensitive)
+  size_bytes=$(curl -sS -I -L --max-time 10 "$target" 2>/dev/null \
+    | awk 'BEGIN{IGNORECASE=1} /^Content-Length:/ {val=$0} END{if (val){gsub(/\r/,"",val); split(val,a,":"); v=a[2]; gsub(/^ +| +$/,"",v); print v}}' || true)
+  if [[ -n "${size_bytes}" && "${size_bytes}" =~ ^[0-9]+$ ]]; then
+    awk -v b="${size_bytes}" 'BEGIN{printf "%.2f", b/1024/1024}'
+  fi
+}
+
+step_0() {
   # Check if the URL (after redirects) returns HTTP 200 OK
-  echo -n "[0/3] Checking availability of ${name} v${version} "
+  echo -ne "[0/3] Checking availability of \033[2;97m${name} v${version} \033[0m"
 
   http_code=$(curl --head --silent --location \
    --write-out "%{http_code}" \
    --output /dev/null \
    --max-time 10 \
-   "$url")
+   "${url}")
 
-  if [ "$http_code" -ne 200 ]; then
+   if [ "${http_code}" -ne 200 ]; then
    echo -e "\033[93mUNAVAILABLE\033[0m"
-   echo -e "\033[91m  Version not found (HTTP $http_code)\n   Aborting...\033[0m"
+   echo -e "\033[91mVersion not found (HTTP ${http_code})\nAborting...\033[0m"
    exit 1
    else
      echo -e "\033[92mAVAILABLE\033[0m"
@@ -50,10 +61,17 @@ step_0() {
 }
 
 step_1() {
-  echo "[1/3] Downloading ${name} v${version}"
-  echo "      [${url}]"
+  
+  echo -e "[1/3] Downloading \033[2;97m${name} v${version}\033[0m"
+  echo -n "      [${url}]"
 
-  # Download to temporary downloads folder
+  # Try to get size (MB) via wget; show if available
+  size_mb="$(get_size_mb_from_url_curl "${url}" || true)"
+  if [[ -n "${size_mb}" ]]; then
+    echo -e " \033[90m(${size_mb} MB)\033[0m"
+  fi
+
+  # Baixar para pasta temporaria de downloads
   echo -en "\033[90m"
   curl -L --progress-bar -o "${temp_path}" "${url}"
   echo -en "\033[0m"
@@ -61,15 +79,14 @@ step_1() {
 
 step_2() {
   echo -n "[2/3] Verifying checksum "
-
+  
   # Check the checksum of the downloaded file
-  readonly checksum
-  checksum=$("${CLIVERMAN_RUNTIMES_PATH}"/"${name}"/checksum.sh "${version}")
+  checksum="$("${CLIVERMAN_RUNTIMES_PATH}/${name}/checksum.sh" "${version}")"
 
   if ! echo "${checksum}  ${temp_path}" | sha256sum -c --status -; then
-   echo -e "\033[91mERROR"
-    echo -e "\n Invalid checksum. Aborting...\033[0m"
-    # Remove temporary files
+    echo -e "\033[91mERROR"
+    echo -e "\nInvalid checksum. Aborting...\033[0m"
+    # Remover arquivos temporarios
     rm -f "${temp_path:?}"
     exit 1
     else
@@ -78,11 +95,11 @@ step_2() {
 }
 
 step_3() {
-  echo "[3/3] Installing ${name} v${version}"
+  echo -e "[3/3] Installing \033[2;97m${name} v${version} \033[0m"
 
-  # Remove previous installation, if it exists
+  # Delete previous version, if it exists
   rm -rf "${installs_path:?}"
-
+  
   # Create directory for the tool binaries
   mkdir -p "${installs_path}"
 
@@ -92,7 +109,7 @@ step_3() {
   # Remove temporary files
   rm -f "${temp_path:?}"
 
-  echo -e "\033[92m ${name} v${version} installed successfully!"
+  echo -e "      ${name} v${version} \033[92mINSTALLED\033[0m"
 }
 
 initial_verifications
