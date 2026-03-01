@@ -8,12 +8,12 @@ readonly version="${2:-"all"}"
 uninstall_all() {
     # If any installed runtime directories exist, remove old shims to avoid conflicts
     shopt -s nullglob
-    install_path="${CLIVERMAN_INSTALLS_PATH}/${name}/"
+    local install_path="${CLIVERMAN_INSTALLS_PATH}/${name}/"
     if [[ -d "${install_path}" ]]; then
         for dir in "${install_path}"*/ ; do
             if [[ -d "${dir}" ]]; then
                 # Remove old shims to avoid conflicts [golang]
-                bin_path="${dir}bin/"
+                local bin_path="${dir}bin/"
                 "${CLIVERMAN_RUNTIMES_PATH}/${name}/shim.sh" remove "" "${bin_path}"
             fi
         done
