@@ -65,8 +65,9 @@ step_1() {
   echo -e "\033[2;97m[1/3]\033[0m Downloading \033[2;97m${name} v${version}\033[0m"
   echo -n "      [${url}]"
 
-  # Try to get size (MB) via wget; show if available
-  size_mb="$(get_size_mb_from_url_curl "${url}" || true)"
+  # Try to get size (MB)
+  local size_mb
+  size_mb=$("${CLIVERMAN_SRC_PATH}/webutils.sh" "file-size" "${url}" || true)
   if [[ -n "${size_mb}" ]]; then
     echo -e " \033[90m(${size_mb} MB)\033[0m"
   fi
