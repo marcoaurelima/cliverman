@@ -43,7 +43,7 @@ get_size_mb_from_url_curl() {
 
 step_0() {
   # Check if the URL (after redirects) returns HTTP 200 OK
-  echo -ne "[0/3] Checking availability of \033[2;97m${name} v${version} \033[0m"
+  echo -ne "\033[2;97m[0/3]\033[0m Checking availability of \033[2;97m${name} v${version} \033[0m"
 
   http_code=$(curl --head --silent --location \
    --write-out "%{http_code}" \
@@ -61,7 +61,7 @@ step_0() {
 }
 
 step_1() {
-  echo -e "[1/3] Downloading \033[2;97m${name} v${version}\033[0m"
+  echo -e "\033[2;97m[1/3]\033[0m Downloading \033[2;97m${name} v${version}\033[0m"
   echo -n "      [${url}]"
 
   # Try to get size (MB) via wget; show if available
@@ -77,7 +77,7 @@ step_1() {
 }
 
 step_2() {
-  echo -n "[2/3] Verifying checksum "
+  echo -ne "\033[2;97m[2/3]\033[0m Verifying checksum "
   
   # Check the checksum of the downloaded file
   checksum="$("${CLIVERMAN_RUNTIMES_PATH}/${name}/checksum.sh" "${version}")"
@@ -94,7 +94,7 @@ step_2() {
 }
 
 step_3() {
-  echo -e "[3/3] Installing \033[2;97m${name} v${version}\033[0m"
+  echo -e "\033[2;97m[3/3]\033[0m Installing \033[2;97m${name} v${version}\033[0m"
 
   # Delete previous version, if it exists
   rm -rf "${installs_path:?}"
