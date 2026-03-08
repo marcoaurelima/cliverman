@@ -32,6 +32,9 @@ elif [[ "$#" -eq 1 ]]; then
     if [[ "${1}" == "reshim" ]]; then
         "${CLIVERMAN_SRC_PATH}/reshim.sh"
         exit 0
+    elif [[ "${1}" == "update" ]]; then
+        "${CLIVERMAN_SRC_PATH}/update.sh" "all"
+        exit 0
     fi
 fi
 
