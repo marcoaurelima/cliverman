@@ -21,14 +21,12 @@ A universal runtime manager inspired by **[asdf](https://github.com/asdf-vm/asdf
 ## 📋 Supported Runtimes
 
 #### ✅ Implemented and Available
-- **`Node.js` (beta)** - JavaScript runtime
+- **`Node.js`** - JavaScript runtime
+- **`Golang`** - Go programming language
 
 #### ⌛ In Development
-- **`Golang`** - Go programming language
+- **`Neovim`** - Hyperextensible Vim-based text editor
 - **`Python`** - Python programming language
-- **`Ruby`** - Ruby programming language
-- **`Deno`** - Secure JavaScript/TypeScript runtime
-- **`Rust`** - Systems programming language
 - **`Java`** - Java platform
 
 ## 📦 Installation
@@ -41,9 +39,7 @@ git clone https://github.com/marcoaurelima/cliverman.git $HOME/.cliverman && cd 
 Add the following line to your shell configuration file:
 
 ```bash
-. "${HOME}/.cliverman/config/env.sh"
 export PATH="${HOME}/.cliverman/shims:${PATH}"
-. "${HOME}/.cliverman/config/config.sh"
 ```
 
 - **Bash:** `~/.bashrc` or `~/.bash_profile`
@@ -67,7 +63,7 @@ cliverman [command] [arguments]
 
 ### Available commands
 
-#### `search` - Search available runtimes
+#### `[s]earch` - Search available runtimes
 
 ```bash
 # List all available runtimes for installation
@@ -79,7 +75,7 @@ cliverman search nodejs
 cliverman search python
 ```
 
-#### `list` - List installed runtimes
+#### `[l]ist` - List installed runtimes
 
 ```bash
 # List all installed runtimes
@@ -89,7 +85,7 @@ cliverman list all
 cliverman list golang
 ```
 
-#### `install` - Install a runtime
+#### `[i]nstall` - Install a runtime
 
 ```bash
 # Install a specific version of a runtime
@@ -98,7 +94,7 @@ cliverman install python:3.9.5
 cliverman install ruby:3.0.0
 ```
 
-#### `use` - Set active version
+#### `[u]se` - Set active version
 
 ```bash
 # Set the global active version for a runtime
@@ -106,7 +102,7 @@ cliverman use golang:14.17.0
 cliverman use python:3.9.5
 ```
 
-#### `uninstall` - Uninstall runtime
+#### `[un]install` - Uninstall runtime
 
 ```bash
 # Uninstall all versions of a runtime
@@ -116,7 +112,7 @@ cliverman uninstall golang
 cliverman uninstall golang:14.17.0
 ```
 
-#### `clear` - Clear runtime shims and cached data
+#### `[c]lear` - Clear runtime shims and cached data
 
 ```bash
 # Invoke the runtime-specific clear script to remove shims
@@ -181,7 +177,6 @@ Contributions are welcome! Feel free to:
 ## 📝 Roadmap
 
 - [ ] Support more runtimes (Deno, Rust, Java, etc.)
-- [ ] Per-project configuration (.cliverman-version)
 - [ ] Shell completion (bash, zsh, fish)
 
 ## 📄 Licença
