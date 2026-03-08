@@ -3,8 +3,8 @@ set -euo pipefail
 IFS=$'\n\t'
 
 readonly op="${1}"
-readonly version="${2}"
-readonly bin_path_folder="${3:-}"
+readonly bin_path_folder="${2}"
+readonly version="${3:-}"
 readonly default=("go" "gofmt")
 
 make_shim() {

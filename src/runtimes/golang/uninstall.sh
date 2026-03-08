@@ -14,7 +14,7 @@ uninstall_all() {
             if [[ -d "${dir}" ]]; then
                 # Remove old shims to avoid conflicts [golang]
                 local bin_path="${dir}bin/"
-                "${CLIVERMAN_RUNTIMES_PATH}/${name}/shim.sh" remove "" "${bin_path}"
+                "${CLIVERMAN_RUNTIMES_PATH}/${name}/shim.sh" remove "${bin_path}"
             fi
         done
     fi
@@ -36,7 +36,7 @@ uninstall_version() {
         shopt -s nullglob
         if [[ "${current_version}" == "${version}" ]]; then
             local bin_path="${CLIVERMAN_INSTALLS_PATH}/${name}/${version}/bin/"
-            "${CLIVERMAN_RUNTIMES_PATH}/${name}/shim.sh" remove "" "${bin_path}"
+            "${CLIVERMAN_RUNTIMES_PATH}/${name}/shim.sh" remove "${bin_path}"
             rm -f "${CLIVERMAN_INSTALLS_PATH:?}/current_versions/${name:?}"
         fi
         shopt -u nullglob

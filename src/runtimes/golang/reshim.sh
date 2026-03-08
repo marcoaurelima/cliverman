@@ -20,7 +20,7 @@ if [[ -d "${install_path_golang}" ]]; then
         if [[ -d "${dir}" ]]; then
             # Remove old shims to avoid conflicts [golang]
             bin_path_golang="${dir}bin/"
-            "${CLIVERMAN_RUNTIMES_PATH}/${runtime_name}/shim.sh" remove "" "${bin_path_golang}"
+            "${CLIVERMAN_RUNTIMES_PATH}/${runtime_name}/shim.sh" remove "${bin_path_golang}"
         fi
     done
 fi
@@ -35,7 +35,8 @@ shopt -s nullglob
  # Create shims for the active version if bin folders exist
 bin_path_golang="${CLIVERMAN_INSTALLS_PATH}/${runtime_name}/${runtime_version}/bin/"
 if [[ -d "${bin_path_golang}" ]]; then
-    "${CLIVERMAN_RUNTIMES_PATH}/${runtime_name}/shim.sh" create "${runtime_version}" "${bin_path_golang}"
+    "${CLIVERMAN_RUNTIMES_PATH}/${runtime_name}/shim.sh" create "${bin_path_golang}" "${runtime_version}"
 fi
-
 shopt -u nullglob
+
+#echo -e "Reshim ${runtime_name}:${runtime_version} \033[92mOK\033[0m"

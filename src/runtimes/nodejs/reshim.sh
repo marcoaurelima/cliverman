@@ -20,11 +20,11 @@ if [[ -d "${install_path_nodejs}" ]]; then
         if [[ -d "${dir}" ]]; then
             # Remove old shims to avoid conflicts [node]
             bin_path_node="${dir}bin/"
-            "${CLIVERMAN_RUNTIMES_PATH}/${runtime_name}/shim.sh" remove "" "${bin_path_node}"
+            "${CLIVERMAN_RUNTIMES_PATH}/${runtime_name}/shim.sh" remove "${bin_path_node}"
 
             # Remove old shims to avoid conflicts [yarn]
             bin_path_yarn="${bin_path_node}.yarn/bin/"
-            "${CLIVERMAN_RUNTIMES_PATH}/${runtime_name}/shim.sh" remove "" "${bin_path_yarn}"
+            "${CLIVERMAN_RUNTIMES_PATH}/${runtime_name}/shim.sh" remove "${bin_path_yarn}"
         fi
     done
 fi
@@ -39,13 +39,14 @@ shopt -s nullglob
  # Create shims for the active version if bin folders exist
 bin_path_node="${CLIVERMAN_INSTALLS_PATH}/${runtime_name}/${runtime_version}/bin/"
 if [[ -d "${bin_path_node}" ]]; then
-    "${CLIVERMAN_RUNTIMES_PATH}/${runtime_name}/shim.sh" create "${runtime_version}" "${bin_path_node}"
+    "${CLIVERMAN_RUNTIMES_PATH}/${runtime_name}/shim.sh" create "${bin_path_node}" "${runtime_version}"
 fi
 
  # Check .yarn/bin for Yarn binaries
 bin_path_yarn="${CLIVERMAN_INSTALLS_PATH}/${runtime_name}/${runtime_version}/bin/.yarn/bin/"
 if [[ -d "${bin_path_yarn}" ]]; then
-    "${CLIVERMAN_RUNTIMES_PATH}/${runtime_name}/shim.sh" create "${runtime_version}" "${bin_path_yarn}"
+    "${CLIVERMAN_RUNTIMES_PATH}/${runtime_name}/shim.sh" create "${bin_path_yarn}" "${runtime_version}"
 fi
-
 shopt -u nullglob
+
+#echo -e "Reshim ${runtime_name}:${runtime_version} \033[92mOK\033[0m"

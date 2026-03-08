@@ -14,18 +14,18 @@ uninstall_all() {
             if [[ -d "${dir}" ]]; then
                 # Remove old shims to avoid conflicts [node]
                 local bin_path_node="${dir}bin/"
-                "${CLIVERMAN_RUNTIMES_PATH}/${name}/shim.sh" remove "" "${bin_path_node}"
+                "${CLIVERMAN_RUNTIMES_PATH}/${name}/shim.sh" remove "${bin_path_node}"
 
                 # Remove old shims to avoid conflicts [yarn]
                 local bin_path_yarn="${bin_path_node}.yarn/bin/"
-                "${CLIVERMAN_RUNTIMES_PATH}/${name}/shim.sh" remove "" "${bin_path_yarn}"
+                "${CLIVERMAN_RUNTIMES_PATH}/${name}/shim.sh" remove "${bin_path_yarn}"
             fi
         done
     fi
 
     # Remove .yarn/bin shims for Yarn binaries
     local bin_path_yarn="${CLIVERMAN_INSTALLS_PATH}/${name}/${version}/.yarn/bin/"
-    "${CLIVERMAN_RUNTIMES_PATH}/${name}/shim.sh" remove "" "${bin_path_yarn}"
+    "${CLIVERMAN_RUNTIMES_PATH}/${name}/shim.sh" remove "${bin_path_yarn}"
 
     # Remove all installation files for the specified runtime
     rm -rf "${CLIVERMAN_INSTALLS_PATH:?}/${name:?}"
@@ -46,11 +46,11 @@ uninstall_version() {
         if [[ "${current_version}" == "${version}" ]]; then
             # Remove old shims to avoid conflicts [node]
             local bin_path_node="${CLIVERMAN_INSTALLS_PATH}/${name}/${version}/bin/"
-            "${CLIVERMAN_RUNTIMES_PATH}/${name}/shim.sh" remove "" "${bin_path_node}"
+            "${CLIVERMAN_RUNTIMES_PATH}/${name}/shim.sh" remove "${bin_path_node}"
 
             # Remove old shims to avoid conflicts [yarn]
             local bin_path_yarn="${bin_path_node}.yarn/bin/"
-            "${CLIVERMAN_RUNTIMES_PATH}/${name}/shim.sh" remove "" "${bin_path_yarn}"
+            "${CLIVERMAN_RUNTIMES_PATH}/${name}/shim.sh" remove "${bin_path_yarn}"
             rm -f "${CLIVERMAN_INSTALLS_PATH:?}/current_versions/${name:?}"
         fi
         shopt -u nullglob
