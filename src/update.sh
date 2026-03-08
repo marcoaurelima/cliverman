@@ -12,12 +12,12 @@ update_cliverman() {
     res=$?
     echo -en "\033[0m"
     if [[ ${res} -ne 0 ]]; then
-      echo -e "Failed to update Cliverman \033[31mERROR\033[0m"
+      echo -e "Failed to update Cliverman \033[91mERROR\033[0m"
       exit 1
     fi
-    echo -e "Cliverman updated  \033[32mSUCCESS\033[0m"
+    echo -e "Cliverman updated  \033[92mSUCCESS\033[0m"
   else
-    echo -e "Cliverman directory is not a git repository. Cannot update \033[31mERROR\033[0m"
+    echo -e "Cliverman directory is not a git repository. Cannot update \033[91mERROR\033[0m"
     exit 1
   fi
 }
