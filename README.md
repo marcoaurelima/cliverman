@@ -32,7 +32,7 @@ A universal runtime manager inspired by **[asdf](https://github.com/asdf-vm/asdf
 ## 📦 Installation
 
 ```bash
-git clone https://github.com/marcoaurelima/cliverman.git $HOME/.cliverman && cd $HOME/.cliverman && rm -rf .git
+curl -s https://raw.githubusercontent.com/marcoaurelima/cliverman/refs/heads/main/installer.sh | bash
 ```
 
 #### Configure your PATH
