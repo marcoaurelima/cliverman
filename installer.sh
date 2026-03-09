@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# set -euo pipefail
-# IFS=$'\n\t'
+set -euo pipefail
+IFS=$'\n\t'
 
 cat <<'ASCII_ART'
    _____ _ _                                      
@@ -22,7 +22,7 @@ fi
 echo -e "\033[0;92mSUCCESS\033[0m\n"
 
 echo "  Instructions:"
-echo "  1. Please add the following line to your shell configuration file (e.g., .bashrc, .zshrc):"
-echo -e "\033[0;96m     export PATH=\"\${HOME}/.cliverman/bin:\${PATH}\"\033[0m"
-echo "  2. Then, restart your terminal or run 'source ~/.bashrc' (or 'source ~/.zshrc') to start using Cliverman."       
+echo "  1. Add the following line to your shell configuration (e.g., .bashrc, .zshrc):"
+echo -e "\033[0;96m     export PATH=\"\${HOME}/.cliverman/shims:\${PATH}\"\033[0m"
+echo "  2. Restart your terminal."       
 
