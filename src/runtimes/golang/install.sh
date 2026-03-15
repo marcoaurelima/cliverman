@@ -34,19 +34,32 @@ step_0() {
   # Check if the URL (after redirects) returns HTTP 200 OK
   echo -ne "\033[2;97m[0/3]\033[0m Checking availability of \033[2;97m${name} v${version} \033[0m"
 
+  curl_status=0
   http_code=$(curl --head --silent --location \
    --write-out "%{http_code}" \
    --output /dev/null \
    --max-time 10 \
-   "${url}")
+   "${url}") || curl_status=$?
 
-   if [ "${http_code}" -ne 200 ]; then
-   echo -e "\033[93mUNAVAILABLE\033[0m"
-   echo -e "\033[91mVersion not found (HTTP ${http_code})\nAborting...\033[0m"
-   exit 1
-   else
-     echo -e "\033[92mAVAILABLE\033[0m"
+  if [[ $curl_status -ne 0 ]]; then
+    echo -e "\033[91mERROR\033[0m"
+    echo -e "      Network error (curl exit code: ${curl_status})\n      Aborting..."
+    exit 1
   fi
+
+  if [[ "$http_code" == "000" ]]; then
+    echo -e "\033[91mERROR\033[0m"
+    echo -e "      No HTTP response\n      Aborting..."
+    exit 1
+  fi
+
+  if [ "${http_code}" -ne 200 ]; then
+    echo -e "\033[93mUNAVAILABLE\033[0m"
+    echo -e "\033[91m      Version not found (HTTP ${http_code})\n      Aborting...\033[0m"
+    exit 1
+  fi
+    
+  echo -e "\033[92mAVAILABLE\033[0m" 
 }
 
 step_1() {
