@@ -7,11 +7,13 @@ name=${1:-"all"}
 runtimes=(
   "golang"
   "nodejs"
+  "neovim"
 )
 
 icons=(
   ""
   "󰎙"
+  ""
 )
 
 list() {
