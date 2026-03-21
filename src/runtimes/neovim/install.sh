@@ -1,0 +1,125 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+readonly name="${1}"
+readonly version="${2}"
+url="$("${CLIVERMAN_RUNTIMES_PATH}/${name}/url.sh" "${version}")"
+readonly url
+readonly installs_path="${CLIVERMAN_INSTALLS_PATH}/${name}/${version}"
+readonly temp_path="${CLIVERMAN_TEMP_PATH}/${name}_${version}.tar.gz"
+
+initial_verifications() {
+  echo -e "\033[1mInstalling ${name} v${version}\033[0m"
+  echo "[debug] URL: ${url}"
+
+  # Check if name and version are empty
+  if [[ -z "${version}" ]]; then
+    echo -e "\033[93mVersion not specified.\033[0m"
+    echo -e "Aborting..."
+    exit 1
+  fi
+
+  # Check if the requested version is already installed
+  if [[ -d "${installs_path}" ]]; then
+    echo -en "\033[96m${name} v${version} is already installed. Do you want to reinstall? [y/N] \033[0m"
+    read -r response
+    if [[ "${response}" != "y" && "${response}" != "Y" ]]; then
+      echo "Aborting..." 
+      exit 1
+      else
+        echo -e "\033[96mReinstalling...\033[0m"
+    fi
+  fi
+  echo -en "\033[0m"
+}
+
+step_0() {
+  # Check if the URL (after redirects) returns HTTP 200 OK
+  echo -ne "\033[2;97m[0/3]\033[0m Checking availability of \033[2;97m${name} v${version} \033[0m"
+
+  curl_status=0
+  http_code=$(curl --head --silent --location \
+   --write-out "%{http_code}" \
+   --output /dev/null \
+   --max-time 10 \
+   "${url}") || curl_status=$?
+
+  if [[ $curl_status -ne 0 ]]; then
+    echo -e "\033[91mERROR\033[0m"
+    echo -e "      Network error (curl exit code: ${curl_status})\n      Aborting..."
+    exit 1
+  fi
+
+  if [[ "$http_code" == "000" ]]; then
+    echo -e "\033[91mERROR\033[0m"
+    echo -e "      No HTTP response\n      Aborting..."
+    exit 1
+  fi
+
+  if [ "${http_code}" -ne 200 ]; then
+    echo -e "\033[93mUNAVAILABLE\033[0m"
+    echo -e "\033[91m      Version not found (HTTP ${http_code})\n      Aborting...\033[0m"
+    exit 1
+  fi
+    
+  echo -e "\033[92mAVAILABLE\033[0m" 
+}
+
+step_1() {
+  
+  echo -e "\033[2;97m[1/3]\033[0m Downloading \033[2;97m${name} v${version}\033[0m"
+  echo -n "      [${url}]"
+
+  # Try to get size (MB)
+  local size_mb
+  size_mb=$("${CLIVERMAN_SRC_PATH}/webutils.sh" "file-size" "${url}" || true)
+  if [[ -n "${size_mb}" ]]; then
+    echo -e " \033[90m(${size_mb} MB)\033[0m"
+  fi
+
+  # Baixar para pasta temporaria de downloads
+  echo -en "\033[90m"
+  curl -L --progress-bar -o "${temp_path}" "${url}"
+  echo -en "\033[0m"
+}
+
+step_2() {
+  echo -ne "\033[2;97m[2/3]\033[0m Verifying checksum "
+  
+  # Check the checksum of the downloaded file
+  checksum="$("${CLIVERMAN_RUNTIMES_PATH}/${name}/checksum.sh" "${version}")"
+
+  if ! echo "${checksum}  ${temp_path}" | sha256sum -c --status -; then
+    echo -e "\033[91mERROR"
+    echo -e "\nInvalid checksum. Aborting...\033[0m"
+    # Remover arquivos temporarios
+    rm -f "${temp_path:?}"
+    exit 1
+    else
+      echo -e "\033[92mPASS\033[0m" 
+  fi
+}
+
+step_3() {
+  echo -e "\033[2;97m[3/3]\033[0m Installing \033[2;97m${name} v${version}\033[0m"
+
+  # Delete previous version, if it exists
+  rm -rf "${installs_path:?}"
+  
+  # Create directory for the tool binaries
+  mkdir -p "${installs_path}"
+
+  # Unpack into the installation directory
+  tar -xzf "${temp_path}" -C "${installs_path}" --strip-components=1
+
+  # Remove temporary files
+  rm -f "${temp_path:?}"
+
+  echo -e "      ${name} v${version} \033[92mINSTALLED\033[0m"
+}
+
+initial_verifications
+step_0
+step_1
+step_2
+step_3
