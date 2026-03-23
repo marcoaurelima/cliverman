@@ -10,7 +10,7 @@ readonly temp_path="${CLIVERMAN_TEMP_PATH}/${name}_${version}.tar.gz"
 
 initial_verifications() {
   echo -e "\033[1mInstalling ${name} v${version}\033[0m"
-  echo "[debug] URL: ${url}"
+  #echo "[debug] URL: ${url}"
 
   # Check if name and version are empty
   if [[ -z "${version}" ]]; then
