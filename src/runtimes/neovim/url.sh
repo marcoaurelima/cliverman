@@ -19,8 +19,30 @@ get_url() {
   local base_url="https://github.com/neovim/neovim/releases/download/"
   local format="tar.gz"
 
+  if [[ "$(version_to_int "${version}")" < "$(version_to_int "0.11.0")" ]]; then
+    # For versions before 0.11.0, the nomeclature is linux64
+    if [[ "${os}" == "linux" ]]; then
+      arch="64"
+    fi  
+
+    echo "${base_url}v${version}/nvim-${os}${arch}.${format}"
+    return
+  fi
+
   echo "${base_url}v${version}/nvim-${os}-${arch}.${format}"
 }
+
+version_to_int() {
+    local IFS=.
+    local major minor patch
+    read -r major minor patch <<< "$1"
+
+    printf "%03d%03d%03d\n" \
+        "${major:-0}" \
+        "${minor:-0}" \
+        "${patch:-0}"
+}
+
 
 get_url "${1}"
 
