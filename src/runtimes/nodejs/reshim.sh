@@ -48,5 +48,3 @@ if [[ -d "${bin_path_yarn}" ]]; then
     "${CLIVERMAN_RUNTIMES_PATH}/${runtime_name}/shim.sh" create "${bin_path_yarn}" "${runtime_version}"
 fi
 shopt -u nullglob
-
-#echo -e "Reshim ${runtime_name}:${runtime_version} \033[92mOK\033[0m"
