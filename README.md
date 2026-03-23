@@ -23,9 +23,10 @@ A universal runtime manager inspired by **[asdf](https://github.com/asdf-vm/asdf
 #### ✅ Implemented and Available
 - **`Node.js`** - JavaScript runtime
 - **`Golang`** - Go programming language
+- **`Neovim`** - Hyperextensible Vim-based text editor
 
 #### ⌛ In Development
-- **`Neovim`** - Hyperextensible Vim-based text editor
+- **`Ripgrep`** - A search tool that combines the usability of ag with the raw speed of grep
 - **`Python`** - Python programming language
 - **`Java`** - Java platform
 
