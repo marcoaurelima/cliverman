@@ -14,6 +14,10 @@ fi
 
 IFS=":" read -r name version <<< "${input}"
 
+# Try to resolve possible version alias
+version="$(${CLIVERMAN_RUNTIMES_PATH}/${name}/aliases.sh ${version} resolve)"
+readonly version
+
 # Check if the requested version is installed
 readonly path="${CLIVERMAN_INSTALLS_PATH}/${name}/${version}"
 if [[ ! -d "${path}" ]]; then

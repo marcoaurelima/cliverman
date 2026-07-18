@@ -14,9 +14,17 @@ get_all_versions() {
     if [ -n "${lts}" ]; then
       echo -e "· ${version#v} \033[1;92mLTS \033[0;90m(${lts})\033[0m"
     else
-      echo "· ${version#v}"
+      echo -n "· ${version#v}"
+      if (( i == 0 )); then
+        echo -e " \033[1;92mLATEST\033[0m"
+      else 
+        echo ""
+      fi    
     fi
   done
+
+  aliases="$(${CLIVERMAN_RUNTIMES_PATH}/nodejs/aliases.sh)"
+  echo -e "\n \033[1;32m${aliases} \033[0;90m(aliases)"
 }
 
 get_all_versions

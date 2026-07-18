@@ -2,7 +2,9 @@
 set -euo pipefail
 
 readonly name="${1}"
-readonly version="${2}"
+version="$(${CLIVERMAN_RUNTIMES_PATH}/${name}/aliases.sh ${2} resolve)"
+readonly version
+
 url="$("${CLIVERMAN_RUNTIMES_PATH}/${name}/url.sh" "${version}")"
 readonly url
 readonly installs_path="${CLIVERMAN_INSTALLS_PATH}/${name}/${version}"
@@ -18,7 +20,7 @@ initial_verifications() {
 
   # Check if the requested version is already installed
   if [[ -d "${installs_path}" ]]; then
-    echo -en "\033[96m${name} v${version} is already installed. Do you want to reinstall? [y/N] \033[0m"
+    echo -en "\033[96m${name}:${version} is already installed. Do you want to reinstall? [y/N] \033[0m"
     read -r response
     if [[ "${response}" != "y" && "${response}" != "Y" ]]; then
       echo "Aborting..." 
@@ -32,7 +34,7 @@ initial_verifications() {
 
 step_0() {
   # Check if the URL (after redirects) returns HTTP 200 OK
-  echo -ne "\033[2;97m[0/3]\033[0m Checking availability of \033[2;97m${name} v${version} \033[0m"
+  echo -ne "\033[2;97m[0/4]\033[0m Checking availability of \033[2;97m${name}:${version} \033[0m"
 
   curl_status=0
   http_code=$(curl --head --silent --location \
@@ -63,7 +65,7 @@ step_0() {
 }
 
 step_1() {
-  echo -e "\033[2;97m[1/3]\033[0m Downloading \033[2;97m${name} v${version}\033[0m"
+  echo -e "\033[2;97m[1/4]\033[0m Downloading \033[2;97m${name}:${version}\033[0m"
   echo -n "      [${url}]"
 
   # Try to get size (MB)
@@ -74,13 +76,13 @@ step_1() {
   fi
 
   # Baixar para pasta temporaria de downloads
-  echo -en "\033[90m"
-  curl -L --progress-bar -o "${temp_path}" "${url}"
+  echo -en "\033[90m" 
+  curl -L -# -o "${temp_path}" "${url}"
   echo -en "\033[0m"
 }
 
 step_2() {
-  echo -ne "\033[2;97m[2/3]\033[0m Verifying checksum "
+  echo -ne "\033[2;97m[2/4]\033[0m Verifying checksum "
   
   # Check the checksum of the downloaded file
   checksum="$("${CLIVERMAN_RUNTIMES_PATH}/${name}/checksum.sh" "${version}")"
@@ -97,7 +99,7 @@ step_2() {
 }
 
 step_3() {
-  echo -e "\033[2;97m[3/3]\033[0m Installing \033[2;97m${name} v${version}\033[0m"
+  echo -e "\033[2;97m[3/4]\033[0m Installing \033[2;97m${name}:${version}\033[0m"
 
   # Delete previous version, if it exists
   rm -rf "${installs_path:?}"
@@ -111,7 +113,7 @@ step_3() {
   # Remove temporary files
   rm -f "${temp_path:?}"
 
-  echo -e "      ${name} v${version} \033[92mINSTALLED\033[0m"
+  echo -e "\033[2;97m[4/4]\033[0m \033[2;97m${name} ${version}\033[0m \033[92mINSTALLED\033[0m"
 }
 
 initial_verifications
