@@ -6,19 +6,21 @@ name=${1:-"all"}
 
 runtimes=(
   "golang"
-  "nodejs"
+  "java"
   "neovim"
+  "nodejs"
 )
 
 icons=(
   ""
-  "󰎙"
+  ""
   ""
+  "󰎙"
 )
 
 list() {
   for i in "${!runtimes[@]}"; do
-    echo "${icons[$i]} ${runtimes[$i]}"
+    echo " ${icons[$i]} ${runtimes[$i]}"
   done
 }
 
