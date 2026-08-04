@@ -10,7 +10,6 @@ get_url() {
   arch=$("${CLIVERMAN_SRC_PATH}"/system.sh arch)
   local base_url="https://api.adoptium.net/v3/binary/latest"
   local image_type="jdk"
-  local format="tar.gz"
 
   echo "${base_url}/${version}/ga/${os}/${arch}/${image_type}/hotspot/normal/eclipse"
 }
