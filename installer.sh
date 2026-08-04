@@ -12,7 +12,7 @@ cat <<'ASCII_ART'
 
 ASCII_ART
 
-echo -n "  Installing... "
+echo -n "  Installing. Wait a moment... "
 git clone https://github.com/marcoaurelima/cliverman.git "${HOME}/.cliverman" >> /dev/null 2>&1
 result=$?
 if [[ $result -ne 0 ]]; then
@@ -21,7 +21,7 @@ if [[ $result -ne 0 ]]; then
 fi
 
 # Switch to last version tag
-pushd "${HOME}/.cliverman" || exit 1
+pushd "${HOME}/.cliverman" > /dev/null 2>&1 || exit 1
 git checkout "$(git describe --tags --abbrev=0)" >> /dev/null 2>&1
 result=$?
 if [[ $result -ne 0 ]]; then
