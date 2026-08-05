@@ -1,192 +1,289 @@
 # Cliverman
 
-```
-   _____ _ _                                      
-  / ____| (_)                                     
- | |    | |___   _____ _ __ _ __ ___   __ _ _ __  
- | |    | | \ \ / / _ \ '__| '_ ` _ \ / _` | '_ \ 
+```text
+   _____ _ _
+  / ____| (_)
+ | |    | |___   _____ _ __ _ __ ___   __ _ _ __
+ | |    | | \ \ / / _ \ '__| '_ ` _ \ / _` | '_ \
  | |____| | |\ V /  __/ |  | | | | | | (_| | | | |
   \_____|_|_| \_/ \___|_|  |_| |_| |_|\__,_|_| |_|
 ```
 
-A universal runtime manager inspired by **[asdf](https://github.com/asdf-vm/asdf)**, written in Bash. Manage multiple versions of programming languages and developer tools in a simple and efficient way.
+> **A lightweight runtime manager focused on consistency.**
+>
+> Learn one runtime. Manage them all.
 
-## 🚀 Features
+Cliverman is a universal runtime manager written entirely in Bash. It provides a single, predictable workflow for installing, switching and managing development runtimes without plugins, hidden behavior or runtime-specific commands.
 
-- **Universal**: Manage multiple runtimes (Go, Node.js, Python, Ruby, etc.) with a single tool
-- **Simple**: Intuitive and easy-to-use command-line interface
-- **Lightweight**: Written in pure Bash with no heavy dependencies
-- **Flexible**: Easily switch between runtime versions
+Once a runtime is installed, Cliverman gets out of your way. You simply use `java`, `go`, `node`, `nvim` or any other executable as if it were installed directly on your system.
 
-## 📋 Supported Runtimes
+---
 
-#### Implemented and Available
-- ✅ **`Node.js`** - JavaScript runtime
-- ✅ **`Golang`** - Go programming language
-- ✅ **`Neovim`** - Hyperextensible Vim-based text editor
-- ✅ **`Java`** - Java platform
+# Why Cliverman?
 
-#### In Development
-- ⌛ **`Python`** - Python programming language
+Most runtime managers eventually expose runtime-specific behaviors.
 
-## 📦 Installation
+Cliverman follows a different philosophy:
+
+- **One workflow for every runtime**
+- **One architecture**
+- **One user experience**
+
+If you know how to manage Go, you already know how to manage Java.
+If you know Node.js, you already know Python.
+
+The commands never change.
+
+```bash
+cliverman search
+cliverman install
+cliverman use
+cliverman list
+cliverman uninstall
+```
+
+The runtime is just another parameter.
+
+---
+
+# Philosophy
+
+Cliverman was designed around a few principles.
+
+### Consistency
+
+Every runtime implements exactly the same interface.
+
+Searching, installing, activating and removing versions always behaves the same way.
+
+### Transparency
+
+After selecting a runtime, Cliverman disappears.
+
+You simply execute:
+
+```bash
+java
+go
+node
+nvim
+```
+
+No wrappers.
+No special launch commands.
+
+### Lightweight
+
+- Pure Bash
+- Minimal dependencies
+- No plugin ecosystem
+- Fast startup
+
+### Integrated
+
+Unlike plugin-based runtime managers, every runtime module is part of the project itself.
+
+This provides:
+
+- consistent UX
+- consistent implementation
+- easier maintenance
+- predictable behavior
+
+---
+
+# Features
+
+- Universal runtime management
+- Consistent commands across every runtime
+- Automatic shim generation
+- Runtime aliases (`latest`, `lts`)
+- Download verification using checksums
+- Pure Bash implementation
+- Small footprint
+- Zero runtime-specific commands
+
+---
+
+# Supported runtimes
+
+| Runtime | Status |
+|---------|--------|
+| Java (Temurin) | ✅ |
+| Golang | ✅ |
+| Node.js | ✅ |
+| Neovim | ✅ |
+| Python | ⌛ |
+
+More runtimes will be added over time without changing the user experience.
+
+---
+
+# Installation
 
 ```bash
 curl -s https://raw.githubusercontent.com/marcoaurelima/cliverman/refs/heads/main/installer.sh | bash
 ```
 
-#### Configure your PATH
-Add the following line to your shell configuration file:
+Add shims to your PATH:
 
 ```bash
-export PATH="${HOME}/.cliverman/shims:${PATH}"
+export PATH="$HOME/.cliverman/shims:$PATH"
 ```
 
-- **Bash:** `~/.bashrc` or `~/.bash_profile`
-- **Zsh:** `~/.zshrc`
-- **Fish:** `~/.config/fish/config.fish`
-
-After adding, reload the file:
-
-```bash
-source ~/.bashrc  # or source ~/.zshrc depending on your shell
-```
-
-
-## 📖 Usage
-
-### Basic syntax
-
-```bash
-cliverman [command] [arguments]
-```
-
-### Available commands
-
-#### `[s]earch` - Search available runtimes
-
-```bash
-# List all available runtimes for installation
-cliverman search all
-
-# List all versions for a specific runtime
-cliverman search golang
-cliverman search nodejs
-cliverman search python
-```
-
-#### `[l]ist` - List installed runtimes
-
-```bash
-# List all installed runtimes
-cliverman list all
-
-# List installed versions for a specific runtime
-cliverman list golang
-```
-
-#### `[i]nstall` - Install a runtime
-
-```bash
-# Install a specific version of a runtime
-cliverman install golang:14.17.0
-cliverman install python:3.9.5
-cliverman install ruby:3.0.0
-```
-
-#### `[u]se` - Set active version
-
-```bash
-# Set the global active version for a runtime
-cliverman use golang:14.17.0
-cliverman use python:3.9.5
-```
-
-#### `[un]install` - Uninstall runtime
-
-```bash
-# Uninstall all versions of a runtime
-cliverman uninstall golang
-
-# Uninstall a specific version
-cliverman uninstall golang:14.17.0
-```
-
-#### `[c]lear` - Clear runtime shims and cached data
-
-```bash
-# Invoke the runtime-specific clear script to remove shims
-# and any cached/current-version metadata for a runtime
-cliverman clear nodejs
-cliverman clear golang
-```
-
-## 💡 Practical examples
-
-```bash
-# 1. Search available Go versions
-cliverman search golang
-
-# 2. Install Go version 14.17.0
-cliverman install golang:14.17.0
-
-# 3. Install Go version 16.13.0
-cliverman install golang:16.13.0
-
-# 4. List installed Go versions
-cliverman list golang
-
-# 5. Activate version 16.13.0 globally
-cliverman use golang:16.13.0
-
-# 6. Check active version
-go version
-
-# 7. Uninstall a specific version
-cliverman uninstall golang:14.17.0
-```
-
-## 🔧 Requirements
-
-- Bash 4.0 or newer
-- curl
-- jq
-- [Nerdfont](https://www.nerdfonts.com/)
-
-## 📂 Directory structure
-
-```
-~/.cliverman/
-├── installs/          # Installed runtimes
-│   ├── golang/
-│   ├── python/
-│   └── ruby/
-└── shims/             # Symbolic links to active executables
-```
-
-## 🤝 Contributing
-
-Contributions are welcome! Feel free to:
-
-1. Fork the project
-2. Create a branch for your feature (`git checkout -b feature/MyFeature`)
-3. Commit your changes (`git commit -m 'Add MyFeature'`)
-4. Push to your branch (`git push origin feature/MyFeature`)
-5. Open a Pull Request
-
-## 📝 Roadmap
-
-- [ ] Support more runtimes (Deno, Rust, Java, etc.)
-- [ ] Shell completion (bash, zsh, fish)
-
-## 📄 Licença
-
-This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
-
-## 🙏 Acknowledgements
-
-Inspired by the excellent project [asdf](https://github.com/asdf-vm/asdf).
+Reload your shell.
 
 ---
 
-Made with ❤️ in Bash
+# Usage
+
+Search available versions:
+
+```bash
+cliverman search java
+```
+
+Install a runtime:
+
+```bash
+cliverman install java:21
+```
+
+Install aliases:
+
+```bash
+cliverman install java:lts
+cliverman install java:latest
+```
+
+Activate a version:
+
+```bash
+cliverman use java:21
+```
+
+Use it normally:
+
+```bash
+java -version
+javac
+jar
+```
+
+List installed versions:
+
+```bash
+cliverman list java
+```
+
+Output:
+
+```text
+• 21
+• 25 (current)
+• 26
+```
+
+---
+
+# How it works
+
+Cliverman manages complete runtime installations.
+
+Each runtime lives inside:
+
+```text
+~/.cliverman/installs/
+```
+
+Executables are exposed through generated **shims**:
+
+```text
+~/.cliverman/shims/
+```
+
+A shim is a tiny executable that transparently redirects execution to the currently active runtime.
+
+When you type:
+
+```bash
+java
+```
+
+the shell actually executes:
+
+```text
+~/.cliverman/shims/java
+```
+
+which resolves the active runtime and executes the real binary.
+
+The same mechanism works for every executable contained in a runtime.
+
+For Java, for example, Cliverman automatically generates shims for every executable found inside the JDK `bin/` directory.
+
+---
+
+# Project structure
+
+```text
+src/
+│
+├── install.sh
+├── search.sh
+├── use.sh
+├── list.sh
+├── ...
+│
+└── runtimes/
+    ├── java/
+    ├── golang/
+    ├── nodejs/
+    └── ...
+```
+
+Each runtime implements the same interface.
+
+This architecture allows new runtimes to be added without changing the user experience.
+
+---
+
+# Requirements
+
+- Bash 4+
+- curl
+- jq
+
+---
+
+# Roadmap
+
+- More runtimes
+- Shell completion
+- Windows support
+- Additional Java distributions
+- Automated tests
+
+---
+
+# Contributing
+
+Contributions are welcome.
+
+Please keep the project philosophy in mind:
+
+- simplicity
+- consistency
+- transparency
+
+Every runtime should behave exactly like every other runtime.
+
+---
+
+# License
+
+MIT
+
+---
+
+Inspired by projects like **asdf**, but built around a fully integrated runtime architecture instead of plugins.
