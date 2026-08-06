@@ -9,7 +9,7 @@ IFS=":" read -r name version <<< "${input}"
 
 # If version is non-empty, try to resolve possible version alias
 if [[ -n "${version}" ]]; then
-  version="$(${CLIVERMAN_RUNTIMES_PATH}/${name}/aliases.sh ${version} resolve)"
+  version=$("${CLIVERMAN_RUNTIMES_PATH}/${name}/aliases.sh" "${version}" resolve)
   readonly version
 fi
 
