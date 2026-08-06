@@ -45,6 +45,7 @@ list_runtime() {
   shopt -s nullglob
   mapfile -t folders < <(printf "%s\n" "$install_path"/* | sort -V)
   for folder in "${folders[@]}"; do
+    [[ -L "$folder" ]] && continue
     local folder_name="${folder##*/}"
     if [[ -z ${folder_name} ]]; then
       continue 
