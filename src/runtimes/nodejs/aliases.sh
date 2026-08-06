@@ -28,8 +28,8 @@ resolve_alias() {
     fi
 
     case "${version}" in
-        "${alias_latest}") printf "%s" $(resolve_latest);;
-        "${alias_lts}") printf "%s" $(resolve_lts);;
+        "${alias_latest}") printf "%s" "$(resolve_latest)";;
+        "${alias_lts}") printf "%s" "$(resolve_lts)";;
     esac
 }
 

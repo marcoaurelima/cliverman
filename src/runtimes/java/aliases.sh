@@ -28,12 +28,12 @@ resolve_alias() {
     fi
 
     case "${version}" in
-        "${alias_latest}") printf "%s" $(resolve_latest);;
-        "${alias_lts}") printf "%s" $(resolve_lts);;
+        "${alias_latest}") printf "%s" "$(resolve_latest)";;
+        "${alias_lts}") printf "%s" "$(resolve_lts)";;
     esac
 }
 
-# Return all available nodejs aliases 
+# Return all available java aliases 
 all_aliases() {
     printf "%s %s" "${alias_latest}" "${alias_lts}"
 }

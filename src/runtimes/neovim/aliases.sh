@@ -21,11 +21,11 @@ resolve_alias() {
     fi
 
     case "${version}" in
-        "${alias_latest}") printf "%s" $(resolve_latest);;
+        "${alias_latest}") printf "%s" "$(resolve_latest)";;
     esac
 }
 
-# Return all available nodejs aliases 
+# Return all available neovim aliases 
 all_aliases() {
     printf "%s" "${alias_latest}"
 }
