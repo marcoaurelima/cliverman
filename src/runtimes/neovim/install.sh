@@ -2,7 +2,7 @@
 set -euo pipefail
 
 readonly name="${1}"
-version="$(${CLIVERMAN_RUNTIMES_PATH}/${name}/aliases.sh ${2} resolve)"
+version=$("${CLIVERMAN_RUNTIMES_PATH}/${name}/aliases.sh" "${2}" resolve)
 readonly version
 url="$("${CLIVERMAN_RUNTIMES_PATH}/${name}/url.sh" "${version}")"
 readonly url
