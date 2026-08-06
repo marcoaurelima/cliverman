@@ -1,12 +1,11 @@
 #!/usr/bin/env bash
-# set -euo pipefail
-# IFS=$'\n\t'
 
 # Load Cliverman environment variables
 # shellcheck disable=SC1091
 source "${HOME}/.cliverman/config/env.sh"
 
-readonly CLIVERMAN_VERSION=$(git -C ${CLIVERMAN_PATH} describe --tags --abbrev=0)
+CLIVERMAN_VERSION=$(git -C "${CLIVERMAN_PATH}" describe --tags --abbrev=0)
+readonly CLIVERMAN_VERSION
 
 if [[ "$#" -eq 2 ]]; then
     if [[ "${1}" == "list" || "${1}" == "l" ]]; then
@@ -52,23 +51,23 @@ cat <<'ASCII_ART'
  | |____| | |\ V /  __/ |  | | | | | | (_| | | | |
   \_____|_|_| \_/ \___|_|  |_| |_| |_|\__,_|_| |_| 
 ASCII_ART
-printf "               Universal runtime manager - ${CLIVERMAN_VERSION}\n"
+printf "%b" "               Universal runtime manager - ${CLIVERMAN_VERSION}\n"
 
 printf "\n\
  Usage: \n\
  cliverman [command] [arguments]\n\
 
  Available commands:\n\
-      [s]earch [all]        - Show all available runtimes for installation\n\
-               [\`name\`]     - Show all available versions for the specified runtime\n\
-        [l]ist [all]        - Show all installed runtimes\n\
-               [\`name\`]     - Show all versions installed for the specified runtime\n\
+      [s]earch [all]        - List all supported runtimes for installation\n\
+               [\`name\`]     - List all available versions for the specified runtime\n\
+        [l]ist [all]        - List all installed runtimes\n\
+               [\`name\`]     - List all versions installed for the specified runtime\n\
      [i]nstall [\`name:ver\`] - Install the runtime at the specified version\n\
          [u]se [\`name:ver\`] - Set the active version of an already installed runtime (global)\n\
-       [c]lear [\`name\`]     - Unset the active version of a runtime, reverting to system default\n\
+       [c]lear [\`name\`]     - Clear the active version and use the system runtime\n\
    [un]install [\`name\`]     - Uninstall all installed versions of a runtime\n\
                [\`name:ver\`] - Uninstall a specific version of a runtime\n\
-      [r]eshim              - Recreate shims for all installed runtimes\n\
+      [r]eshim              - Rebuild shims for all installed runtimes\n\
       [up]date              - Update Cliverman to the latest version\n\
 \n\
  Example:\n\
@@ -78,7 +77,6 @@ printf "\n\
    cliverman list\n\
    cliverman list nodejs\n\
    cliverman uninstall nodejs:14.17.0\n\
-   cliverman remove nodejs:14.17.0\n\
 \n\
 \033[93m   github.com/marcoaurelima/cliverman✨\n"
 
