@@ -13,7 +13,7 @@ initial_verifications() {
   # Check if name and version are empty
   if [[ -z "${version}" ]]; then
     echo -e "\033[93mVersion not specified.\033[0m"
-    echo -e "Aborting..."
+    echo -e "Aborted."
     exit 1
   fi
 
@@ -22,7 +22,7 @@ initial_verifications() {
     echo -en "\033[96m${name}:${version} is already installed. Do you want to reinstall? [y/N] \033[0m"
     read -r response
     if [[ "${response}" != "y" && "${response}" != "Y" ]]; then
-      echo "Aborting..." 
+      echo "Aborted."
       exit 1
       else
         echo -e "\033[96mReinstalling...\033[0m"
@@ -89,7 +89,7 @@ step_2() {
 
   if ! echo "${checksum}  ${temp_path}" | sha256sum -c --status -; then
     echo -e "\033[91mERROR"
-    echo -e "\nInvalid checksum. Aborting...\033[0m"
+    echo -e "\nInvalid checksum. Aborted.\033[0m"
     # Remover arquivos temporarios
     rm -f "${temp_path:?}"
     exit 1
