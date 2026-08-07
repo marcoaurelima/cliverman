@@ -7,7 +7,7 @@ readonly input="${1//$'\r'/}"
 # Check if the input is in the `name:version` format
 if [[ "${input}" != *":"* ]]; then
   echo -e "Version not specified. Use format \`name:version\` \033[91mERROR\033[0m"
-  echo -e "Aborting..."
+  echo -e "Aborted."
   exit 1
 fi
 
@@ -15,8 +15,8 @@ IFS=":" read -r name version <<< "${input}"
 
 # Check if the name corresponds to an available runtime
 if ! "${CLIVERMAN_SRC_PATH}/available.sh" "${name}"; then
-  echo -e "Runtime [${name}] not installed or unknown \033[91mERROR\033[0m"
-  echo -e "Aborting.."
+  echo -e "Runtime \033[96m${name}\033[0m is not installed or unknown \033[91mERROR\033[0m"
+  echo -e "Aborted."
   exit 1
 fi
 

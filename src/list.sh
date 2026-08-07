@@ -9,7 +9,7 @@ list_all() {
         ! -name ".gitkeep" \
           -mindepth 1 -print -quit 2>/dev/null)" ]]; then
     echo -e "No runtimes installed on the system \033[91mERROR\033[0m"
-    echo -e "Aborting..."
+    echo -e "Aborted."
     exit 1
   fi
 
@@ -30,8 +30,8 @@ list_runtime() {
 
   # Check if the requested runtime is installed on the system
   if [[ ! -d "${CLIVERMAN_INSTALLS_PATH}/${name}" ]]; then
-    echo -e "Runtime [${name}] not installed or unknown \033[91mERROR\033[0m"
-    echo -e "Aborting..."
+    echo -e "Runtime \033[96m${name}\033[0m is not installed or unknown \033[91mERROR\033[0m"
+    echo -e "Aborted."
     exit 1
   fi
 
