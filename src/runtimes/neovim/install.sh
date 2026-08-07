@@ -56,7 +56,7 @@ step_0() {
 
   if [ "${http_code}" -ne 200 ]; then
     echo -e "\033[91mFAILED\033[0m"
-    echo -e "\033[91m      Version not found (HTTP ${http_code})\n      Aborted.\033[0m"
+    echo -e "      Version not found (HTTP ${http_code})\n      Aborted.\033[0m"
     exit 1
   fi
     

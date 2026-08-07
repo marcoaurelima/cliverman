@@ -16,7 +16,7 @@ fi
 # Check if the requested runtime is installed on the system
 readonly path_name="${CLIVERMAN_INSTALLS_PATH}/${name}"
 if [[ ! -d "${path_name}" ]]; then
-  echo -e "Runtime \033[96m${name}\033[0m not installed or unknown \033[91mERROR\033[0m"
+  echo -e "Runtime \033[96m${name}\033[0m is not installed \033[91mERROR\033[0m"
   echo -e "Aborted."
   exit 1
 fi
@@ -24,7 +24,7 @@ fi
 # Check if the requested runtime version is installed on the system
 readonly path_version="${CLIVERMAN_INSTALLS_PATH}/${name}/${version}"
 if [[ ! -d "${path_version}" ]]; then
-  echo -e "Runtime \033[96m${name}:${version}\033[0m not installed or unknown \033[91mERROR\033[0m"
+  echo -e "Runtime \033[96m${name}:${version}\033[0m is not installed \033[91mERROR\033[0m"
   echo -e "Aborted."
   exit 1
 fi
