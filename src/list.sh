@@ -51,10 +51,10 @@ list_runtime() {
       continue 
     fi
     if [[ "${folder_name}" == "${current_version:-}" ]]; then
-      echo -e "\033[0;92m● ${folder##*/} \033[0m" 
+      echo -e "\033[0;92m› ${folder##*/} \033[0m" 
       continue
     fi
-    echo "◌ ${folder##*/}" 
+    echo "  ${folder##*/}" 
   done
   shopt -u nullglob
 }
