@@ -44,19 +44,19 @@ step_0() {
 
   if [[ $curl_status -ne 0 ]]; then
     echo -e "\033[91mERROR\033[0m"
-    echo -e "      Network error (curl exit code: ${curl_status})\n      Aborting..."
+    echo -e "      Network error (curl exit code: ${curl_status})\n      Aborted."
     exit 1
   fi
 
   if [[ "$http_code" == "000" ]]; then
     echo -e "\033[91mERROR\033[0m"
-    echo -e "      No HTTP response\n      Aborting..."
+    echo -e "      No HTTP response\n      Aborted."
     exit 1
   fi
 
   if [ "${http_code}" -ne 200 ]; then
-    echo -e "\033[93mUNAVAILABLE\033[0m"
-    echo -e "\033[91m      Version not found (HTTP ${http_code})\n      Aborting...\033[0m"
+    echo -e "\033[91mFAILED\033[0m"
+    echo -e "\033[91m      Version not found (HTTP ${http_code})\n      Aborted.\033[0m"
     exit 1
   fi
     
