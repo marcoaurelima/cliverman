@@ -5,7 +5,7 @@ IFS=$'\n\t'
 search_runtime() {
   name="${1}"
   if ! "${CLIVERMAN_SRC_PATH}/available.sh" "${name}"; then
-    echo -e "Runtime not available \033[91mERROR\033[0m"
+    echo -e "Runtime \033[96m${name}\033[0m is not supported \033[91mERROR\033[0m"
     return 1
   fi
   "${CLIVERMAN_RUNTIMES_PATH}/${name}/search.sh"

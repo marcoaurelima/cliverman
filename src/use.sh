@@ -21,7 +21,7 @@ readonly version
 # Check if the requested version is installed
 readonly path="${CLIVERMAN_INSTALLS_PATH}/${name}/${version}"
 if [[ ! -d "${path}" ]]; then
- echo -e "Version \033[96m${version}\033[0m is not installed on the system \033[91mERROR\033[0m"
+ echo -e "Runtime \033[96m${name}:${version}\033[0m is not installed \033[91mERROR\033[0m"
  echo -e "Aborted."
  exit 1
 fi
