@@ -22,7 +22,7 @@ uninstall_all() {
     # Remove all installation files for the specified runtime
     rm -rf "${CLIVERMAN_INSTALLS_PATH:?}/${name:?}"
     rm -f "${CLIVERMAN_INSTALLS_PATH:?}/current_versions/${name:?}"
-    echo -e "${name} \033[93mUNINSTALLED\033[0m"
+    printf "%s \033[93mUNINSTALLED\033[0m\n" "${name}"
 }
 
 uninstall_version() {
@@ -49,7 +49,7 @@ uninstall_version() {
         rm -rf "${runtime_path}"
     fi
 
-    echo -e "${name} v${version} \033[93mUNINSTALLED\033[0m"
+    printf "%s v%s \033[93mUNINSTALLED\033[0m\n" "${name}" "${version}"
 }
 
 if [[ "${version}" == "all" ]]; then

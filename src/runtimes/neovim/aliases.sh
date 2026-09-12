@@ -16,7 +16,7 @@ resolve_latest() {
 resolve_alias() {
     # If the version is not an alias, return the value.
     if [[ "$version" =~ ^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)(-[0-9A-Za-z.-]+)?(\+[0-9A-Za-z.-]+)?$ ]]; then
-        echo "$version"
+        printf "%s" "$version"
         exit 0
     fi
 
