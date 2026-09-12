@@ -5,8 +5,8 @@ export GOBIN="__GOBIN_PATH__"
 BIN_PATH="__BIN_PATH__"
 
 if [[ ! -x "${BIN_PATH}" ]]; then
-    echo -e "\033[91mError: golang __VERSION__ is not installed or the installation may be corrupted.\033[0m"
-    echo -e "  Use \`cliverman install golang:__VERSION__\` to reinstall."
+    printf "\033[91mError: golang %s is not installed or the installation may be corrupted.\033[0m\n" "__VERSION__"
+    printf "  Use \`cliverman install golang:%s\` to reinstall.\n" "__VERSION__"
     exit 1
 fi
 

@@ -18,7 +18,7 @@ get_url() {
   local base_url="https://go.dev/dl/go"
   local format="tar.gz"
 
-  echo "${base_url}${version}.${os}-${arch}.${format}"
+  printf "%s%s.%s-%s.%s" "${base_url}" "${version}" "${os}" "${arch}" "${format}"
 }
 
 get_url "${1}"

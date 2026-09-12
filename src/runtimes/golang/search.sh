@@ -28,24 +28,24 @@ get_all_versions() {
     line="${versions[i]}"
     IFS=$'\t' read -r version stable <<< "${line}"
     if [ "${stable}" = "true" ]; then
-      echo -en "· ${version#v}"
+      printf "· %s" "${version#v}"
       if (( i == latest_version_index )); then
-        echo -e " \033[1;92mLATEST\033[0m"
+        printf " \033[1;92mLATEST\033[0m\n"
       else 
-        echo ""
+        printf "\n"
       fi
     else
-      echo -en "· \033[90m${version#v}\033[0m"
+      printf "· \033[90m%s\033[0m" "${version#v}"
       if (( i == rc_version_index )); then
-        echo -e " \033[1;92mRC\033[0m"
+        printf " \033[1;92mRC\033[0m\n"
       else 
-        echo ""
+        printf "\n"
       fi
     fi
   done
 
   aliases="$(${CLIVERMAN_RUNTIMES_PATH}/golang/aliases.sh)"
-  echo -e "\n \033[1;32m${aliases} \033[0;90m(aliases)"
+  printf "\n \033[1;32m%s \033[0;90m(aliases)\033[0m\n" "${aliases}"
 }
 
 get_all_versions
