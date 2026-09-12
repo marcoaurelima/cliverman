@@ -6,8 +6,8 @@ export YARN_GLOBAL_FOLDER="__NPM_PREFIX__/.yarn"
 BIN_PATH="__BIN_PATH__"
 
 if [[ ! -x "${BIN_PATH}" ]]; then
-    echo -e "\033[91mError: nodejs __VERSION__ is not installed or the installation may be corrupted.\033[0m"
-    echo -e "  Use \`cliverman install nodejs:__VERSION__\` to reinstall."
+    printf "\033[91mError: nodejs %s is not installed or the installation may be corrupted.\033[0m" "__VERSION__"
+    printf "  Use \`cliverman install nodejs:%s\` to reinstall.\n" "__VERSION__"
     exit 1
 fi
 

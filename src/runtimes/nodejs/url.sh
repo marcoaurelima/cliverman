@@ -11,7 +11,7 @@ get_url() {
   local base_url="https://nodejs.org/dist"
   local format="tar.gz"
 
-  echo "${base_url}/v${version}/node-v${version}-${os}-${arch}.${format}"
+  printf "%s/v%s/node-v%s-%s-%s.%s" "${base_url}" "${version}" "${version}" "${os}" "${arch}" "${format}"
 }
 
 get_url "${1}"

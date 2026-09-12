@@ -25,11 +25,11 @@ get_url() {
       arch="64"
     fi  
 
-    echo "${base_url}v${version}/nvim-${os}${arch}.${format}"
+    printf "%s/v%s/nvim-%s%s.%s" "${base_url}" "${version}" "${os}" "${arch}" "${format}"
     return
   fi
 
-  echo "${base_url}v${version}/nvim-${os}-${arch}.${format}"
+  printf "%s/v%s/nvim-%s-%s.%s" "${base_url}" "${version}" "${os}" "${arch}" "${format}"
 }
 
 version_to_int() {

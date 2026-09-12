@@ -12,28 +12,28 @@ readonly temp_path="${CLIVERMAN_TEMP_PATH}/${name}_${version}.tar.gz"
 initial_verifications() {
   # Check if name and version are empty
   if [[ -z "${version}" ]]; then
-    echo -e "\033[93mVersion not specified.\033[0m"
-    echo -e "Aborted."
+    printf "\033[93mVersion not specified.\033[0m\n"
+    printf "Aborted.\n"
     exit 1
   fi
 
   # Check if the requested version is already installed
   if [[ -d "${installs_path}" ]]; then
-    echo -en "\033[96m${name}:${version} is already installed. Do you want to reinstall? [y/N] \033[0m"
+    printf "\033[96m%s:%s is already installed. Do you want to reinstall? [y/N] \033[0m" "${name}" "${version}"
     read -r response
     if [[ "${response}" != "y" && "${response}" != "Y" ]]; then
-      echo "Aborted."
+      printf "Aborted.\n"
       exit 1
       else
-        echo -e "\033[96mReinstalling...\033[0m"
+        printf "\033[96mReinstalling...\033[0m\n"
     fi
   fi
-  echo -en "\033[0m"
+  printf "\033[0m"
 }
 
 step_0() {
   # Check if the URL (after redirects) returns HTTP 200 OK
-  echo -ne "\033[2;97m[0/4]\033[0m Checking availability of \033[2;97m${name} v${version} \033[0m"
+  printf "\033[2;97m[0/4]\033[0m Checking availability of \033[2;97m%s v%s \033[0m" "${name}" "${version}"
 
   curl_status=0
   http_code=$(curl --head --silent --location \
@@ -43,63 +43,63 @@ step_0() {
    "${url}") || curl_status=$?
 
   if [[ $curl_status -ne 0 ]]; then
-    echo -e "\033[91mERROR\033[0m"
-    echo -e "      Network error (curl exit code: ${curl_status})\n      Aborted."
+    printf "\033[91mERROR\033[0m\n"
+    printf "      Network error (curl exit code: %s)\n      Aborted." "${curl_status}"
     exit 1
   fi
 
   if [[ "$http_code" == "000" ]]; then
-    echo -e "\033[91mERROR\033[0m"
-    echo -e "      No HTTP response\n      Aborted."
+    printf "\033[91mERROR\033[0m\n"
+    printf "      No HTTP response\n      Aborted."
     exit 1
   fi
 
   if [ "${http_code}" -ne 200 ]; then
-    echo -e "\033[91mFAILED\033[0m"
-    echo -e "      Version not found (HTTP ${http_code})\n      Aborted.\033[0m"
+    printf "\033[91mFAILED\033[0m\n"
+    printf "      Version not found (HTTP %s)\n      Aborted.\033[0m" "${http_code}"
     exit 1
   fi
     
-  echo -e "\033[92mAVAILABLE\033[0m" 
+  printf "\033[92mAVAILABLE\033[0m\n" 
 }
 
 step_1() {
   
-  echo -e "\033[2;97m[1/4]\033[0m Downloading \033[2;97m${name} v${version}\033[0m"
-  echo -n "      [${url}]"
+  printf "\033[2;97m[1/4]\033[0m Downloading \033[2;97m%s v%s \033[0m\n" "${name}" "${version}"
+  printf "      [%s]" "${url}"
 
   # Try to get size (MB)
   local size_mb
   size_mb=$("${CLIVERMAN_SRC_PATH}/webutils.sh" "file-size" "${url}" || true)
   if [[ -n "${size_mb}" ]]; then
-    echo -e " \033[90m(${size_mb} MB)\033[0m"
+    printf " \033[90m(%s MB)\033[0m\n" "${size_mb}"
   fi
 
   # Baixar para pasta temporaria de downloads
-  echo -en "\033[90m"
+  printf "\033[90m"
   curl -L -# -o "${temp_path}" "${url}"
-  echo -en "\033[0m"
+  printf "\033[0m"
 }
 
 step_2() {
-  echo -ne "\033[2;97m[2/4]\033[0m Verifying checksum "
+  printf "\033[2;97m[2/4]\033[0m Verifying checksum "
   
   # Check the checksum of the downloaded file
   checksum="$("${CLIVERMAN_RUNTIMES_PATH}/${name}/checksum.sh" "${version}")"
 
   if ! echo "${checksum}  ${temp_path}" | sha256sum -c --status -; then
-    echo -e "\033[91mERROR"
-    echo -e "\nInvalid checksum. Aborted.\033[0m"
+    printf "\033[91mERROR\033[0m\n"
+    printf "      Invalid checksum. Aborted.\033[0m\n"
     # Remover arquivos temporarios
     rm -f "${temp_path:?}"
     exit 1
     else
-      echo -e "\033[92mPASS\033[0m" 
+      printf "\033[92mPASS\033[0m\n"
   fi
 }
 
 step_3() {
-  echo -e "\033[2;97m[3/4]\033[0m Installing \033[2;97m${name} v${version}\033[0m"
+  printf "\033[2;97m[3/4]\033[0m Installing \033[2;97m%s v%s \033[0m\n" "${name}" "${version}"
 
   # Delete previous version, if it exists
   rm -rf "${installs_path:?}"
@@ -113,7 +113,7 @@ step_3() {
   # Remove temporary files
   rm -f "${temp_path:?}"
 
-  echo -e "\033[2;97m[4/4]\033[0m \033[2;97m${name} ${version}\033[0m \033[92mINSTALLED\033[0m"
+  printf "\033[2;97m[4/4]\033[0m \033[2;97m%s %s\033[0m \033[92mINSTALLED\033[0m\n" "${name}" "${version}"
 }
 
 initial_verifications

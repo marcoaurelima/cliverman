@@ -23,13 +23,13 @@ get_checksum() {
       arch="64"
     fi
     digests=$(curl -fsSL "https://github.com/neovim/neovim/releases/download/v${version}/nvim-${os}${arch}.${format}.sha256sum")
-    echo "${digests}" | grep "nvim-${os}${arch}.${format}" | awk '{print $1}'
+    printf "%s" "${digests}" | grep "nvim-${os}${arch}.${format}" | awk '{print $1}'
     return   
   fi
 
   if [[ "$(version_to_int "${version}")" < "$(version_to_int "0.11.3")" ]]; then
     digests=$(curl -fsSL "https://github.com/neovim/neovim/releases/download/v${version}/shasum.txt/")
-    echo "${digests}" | grep "nvim-${os}-${arch}.${format}" | awk '{print $1}'
+    printf "%s" "${digests}" | grep "nvim-${os}-${arch}.${format}" | awk '{print $1}'
     return   
   fi
 
