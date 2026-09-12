@@ -15,7 +15,7 @@ get_checksum() {
   "https://api.adoptium.net/v3/assets/latest/${version}/hotspot?os=${os}&architecture=${arch}&image_type=${image_type}" \
   | jq -r '.[0].binary.package.checksum')
 
-  echo "${checksum}"
+  printf "%s" "${checksum}"
 }
 
 get_checksum "$1"
