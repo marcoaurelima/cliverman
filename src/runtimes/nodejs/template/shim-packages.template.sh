@@ -6,7 +6,7 @@ export YARN_GLOBAL_FOLDER="__NPM_PREFIX__/.yarn"
 BIN_PATH="__BIN_PATH__"
 
 if [[ ! -x "${BIN_PATH}" ]]; then
-    echo -e "\033[91mError: file __NAME__ not found.\033[0m"
+    printf "\033[91mError: file %s not found.\033[0m" "__NAME__"
     exit 1
 fi
 
