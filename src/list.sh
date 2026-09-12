@@ -8,8 +8,8 @@ list_all() {
         ! -name "current_versions" \
         ! -name ".gitkeep" \
           -mindepth 1 -print -quit 2>/dev/null)" ]]; then
-    echo -e "No runtimes installed on the system \033[91mERROR\033[0m"
-    echo -e "Aborted."
+    printf "No runtimes installed on the system \033[91mERROR\033[0m\n"
+    printf "Aborted.\n"
     exit 1
   fi
 
@@ -30,8 +30,8 @@ list_runtime() {
 
   # Check if the requested runtime is installed on the system
   if [[ ! -d "${CLIVERMAN_INSTALLS_PATH}/${name}" ]]; then
-    echo -e "Runtime \033[96m${name}\033[0m is not installed or unknown \033[91mERROR\033[0m"
-    echo -e "Aborted."
+    printf "Runtime \033[96m%s\033[0m is not installed or unknown \033[91mERROR\033[0m\n" "${name}"
+    printf "Aborted.\n"
     exit 1
   fi
 
@@ -51,10 +51,10 @@ list_runtime() {
       continue 
     fi
     if [[ "${folder_name}" == "${current_version:-}" ]]; then
-      echo -e "\033[0;92m› ${folder##*/} \033[0m" 
+      printf "\033[0;92m› %s \033[0m\n" "${folder##*/}"
       continue
     fi
-    echo "  ${folder##*/}" 
+    printf "  %s\n" "${folder##*/}" 
   done
   shopt -u nullglob
 }
