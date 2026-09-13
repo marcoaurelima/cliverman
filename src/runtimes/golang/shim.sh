@@ -54,7 +54,7 @@ remove_shims() {
 create_shims() {
     shopt -s nullglob
     for file in "${bin_path_folder}"*; do
-        [[ -z "${file}" ]] && continue
+        [[ -z "${file}" || -d "${file}" ]] && continue
         local bin_name
         bin_name=$(basename "${file}")
 

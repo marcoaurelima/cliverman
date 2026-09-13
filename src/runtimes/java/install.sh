@@ -66,7 +66,7 @@ step_0() {
 
 step_1() {
   printf "\033[2;97m[1/4]\033[0m Downloading \033[2;97m%s:%s\033[0m\n" "${name}" "${version}"
-  printf "      [%s]\n" "${url}"
+  printf "      [%s]" "${url}"
 
   # Try to get size (MB)
   local size_mb

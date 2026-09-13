@@ -43,7 +43,7 @@ remove_shims() {
 create_shims() {
     shopt -s nullglob
     for file in "${bin_path_folder}"*; do
-        [[ -z "${file}" ]] && continue
+        [[ -z "${file}" || -d "${file}" ]] && continue
         make_shim_default "${file}"
     done
     shopt -u nullglob
