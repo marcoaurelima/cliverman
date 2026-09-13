@@ -28,8 +28,9 @@ resolve_latest() {
 }
 
 resolve_alias() {
+    #printf "4444 %s\n" "${version}"
     # If the version is not an alias, return the value.
-    if [[ "$version" =~ ^[1-9][0-9]*$ ]]; then
+    if [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+([.-][0-9A-Za-z.]+)*$ ]]; then
         printf "%s" "$version"
         exit 0
     fi

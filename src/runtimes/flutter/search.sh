@@ -10,13 +10,18 @@ get_all_versions() {
   beta_hash="$(jq -r '.current_release.beta' <<< "$json")"
 
   mapfile -t all_versions < <(
-      jq -r '.releases | reverse | .[] | "\(.version) \(.hash)"' <<< "$json"
+      jq -r '.releases | reverse | .[] | "\(.version) \(.hash) \(.channel)"' <<< "$json"
   )
   
   for ((i=0; i<${#all_versions[@]}; i++)); do
-    IFS=" " read -r version hash <<< "${all_versions[i]}"
-    printf "· %s " "${version}"
+    IFS=" " read -r version hash channel <<< "${all_versions[i]}"
 
+    if [[ "$channel" != "stable" ]]; then
+      printf "· \033[1;90m%s \033[0m" "${version}"
+    else
+      printf "· %s " "${version}"
+    fi
+    
     # stable and latest versions are the same for Flutter
     if [[ "$hash" == "$stable_hash" ]]; then
       printf "\033[1;32mSTABLE LATEST\033[0m"
