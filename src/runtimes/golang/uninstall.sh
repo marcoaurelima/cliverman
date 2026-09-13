@@ -6,6 +6,14 @@ readonly name="$1"
 readonly version="${2:-"all"}"
 
 uninstall_all() {
+    # Confirm uninstallation of all versions
+    printf "\033[96mAre you sure you want to uninstall all versions of %s? [y/N] \033[0m" "${name}"
+    read -r response
+    if [[ "${response}" != "y" && "${response}" != "Y" ]]; then
+        printf "Aborted.\n"
+        exit 1
+    fi
+    
     # If any installed runtime directories exist, remove old shims to avoid conflicts
     shopt -s nullglob
     local install_path="${CLIVERMAN_INSTALLS_PATH}/${name}/"
