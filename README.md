@@ -107,13 +107,14 @@ This provides:
 
 # Supported runtimes
 
-| Runtime | Status |
-|---------|--------|
-| Java (Temurin) | ✅ |
-| Golang | ✅ |
-| Node.js | ✅ |
-| Neovim | ✅ |
-| Python | ⌛ |
+|    | Runtime        | Status       |
+|----|----------------|--------------|
+|`1` | Flutter        | `🟢 OK`      |
+|`2` | Golang         | `🟢 OK`      |
+|`3` | Java (Temurin) | `🟢 OK`      |
+|`4` | Neovim         | `🟢 OK`      |
+|`5` | Node.js        | `🟢 OK`      |
+|`6` | Python         | `🟡 PENDING` |
 
 More runtimes will be added over time without changing the user experience.
 

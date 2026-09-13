@@ -5,6 +5,7 @@ IFS=$'\n\t'
 name=${1:-"all"}
 
 runtimes=(
+  "flutter"
   "golang"
   "java"
   "neovim"
@@ -12,6 +13,7 @@ runtimes=(
 )
 
 icons=(
+  ""
   ""
   ""
   ""
