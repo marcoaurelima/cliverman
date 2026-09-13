@@ -5,7 +5,6 @@ IFS=$'\n\t'
 readonly op="${1}"
 readonly bin_path_folder="${2}"
 readonly version="${3:-}"
-readonly default=("go" "gofmt")
 
 make_shim() {
     local bin_path="${1}"
@@ -21,19 +20,11 @@ make_shim() {
     install -D -m 0755 /dev/stdin "${CLIVERMAN_SHIMS_PATH}/${name}" <<< "${shim}" 
 }
 
- # Function to create the golang shim and default pre-installed binaries
+ # Function to create the java shim and default pre-installed binaries
 make_shim_default() {
     local bin_path="${1}"
     local template
-    template=$(< "${CLIVERMAN_RUNTIMES_PATH}/golang/template/shim-default.template.sh")
-    make_shim "${bin_path}" "${template}"
-}
-
-# Function to create shims for binaries installed via the package manager (e.g., npm, npx, corepack)
-make_shim_package() {
-    local bin_path="${1}"
-    local template
-    template=$(< "${CLIVERMAN_RUNTIMES_PATH}/golang/template/shim-packages.template.sh")
+    template=$(< "${CLIVERMAN_RUNTIMES_PATH}/java/template/shim-default.template.sh")
     make_shim "${bin_path}" "${template}"
 }
 
@@ -53,22 +44,7 @@ create_shims() {
     shopt -s nullglob
     for file in "${bin_path_folder}"*; do
         [[ -z "${file}" ]] && continue
-        local bin_name
-        bin_name=$(basename "${file}")
-
-        # Check if the binary is one of the default pre-installed binaries to create a specific shim
-        is_default=false
-        for shim in "${default[@]}"; do
-            if [[ "${bin_name}" == "${shim}" ]]; then
-                is_default=true
-                break
-            fi
-        done
-        if [[ "${is_default}" == true ]]; then
-            make_shim_default "${file}"
-        else 
-            make_shim_package "${file}"
-        fi
+        make_shim_default "${file}"
     done
     shopt -u nullglob
 }
