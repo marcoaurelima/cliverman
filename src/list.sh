@@ -19,7 +19,12 @@ list_all() {
   for folder in $path; do
     local name="${folder##*/}"
     if [[ -d "${folder}" && "${name}" != "current_versions" ]]; then
-      echo "· ${name}"
+      qtd=$(find "${folder}" -mindepth 1 -maxdepth 1 -type d | wc -l)
+      if [[ "${qtd}" -eq 0 ]]; then
+        printf "· %s\n" "${name}"
+      else
+        printf "· %s \033[3;90m(%s)\033[0m\n" "${name}" "${qtd}"
+      fi
     fi
   done
   shopt -u nullglob
