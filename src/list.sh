@@ -23,6 +23,9 @@ list_all() {
       if [[ "${qtd}" -eq 0 ]]; then
         printf "· %s\n" "${name}"
       else
+        if [[ -f "${CLIVERMAN_CURR_VERSIONS_PATH}/${name}" ]]; then
+          printf "\033[0;92m"
+        fi
         printf "· %s \033[3;90m(%s)\033[0m\n" "${name}" "${qtd}"
       fi
     fi
