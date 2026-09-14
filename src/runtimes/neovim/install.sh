@@ -87,7 +87,7 @@ step_2() {
   # Check the checksum of the downloaded file
   checksum="$("${CLIVERMAN_RUNTIMES_PATH}/${name}/checksum.sh" "${version}")"
 
-  if ! echo "${checksum}  ${temp_path}" | sha256sum -c --status -; then
+  if ! printf "%s  %s" "${checksum}" "${temp_path}" | sha256sum -c --status -; then
     printf "\033[91mERROR\033[0m\n"
     printf "      Invalid checksum. Aborted.\033[0m\n"
     # Remover arquivos temporarios
@@ -108,7 +108,9 @@ step_3() {
   mkdir -p "${installs_path}"
 
   # Unpack into the installation directory
-  tar -xzf "${temp_path}" -C "${installs_path}" --strip-components=1
+  printf "\033[90m" 
+  tar -xzf "${temp_path}" -C "${installs_path}" --strip-components=1 --checkpoint=150 --checkpoint-action='ttyout=%c'
+  printf "\033[A\r\033[K"
 
   # Remove temporary files
   rm -f "${temp_path:?}"

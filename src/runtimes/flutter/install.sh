@@ -34,7 +34,7 @@ initial_verifications() {
 
 step_0() {
   # Check if the URL (after redirects) returns HTTP 200 OK
-  printf "\033[2;97m[0/4]\033[0m Checking availability of \033[2;97m%s:%s \033[0m" "${name}" "${version}"
+  printf "\033[2;97m[0/4]\033[0m Checking availability of \033[2;97m%s v%s \033[0m" "${name}" "${version}"
 
   curl_status=0
   http_code=$(curl --head --silent --location \
@@ -65,7 +65,7 @@ step_0() {
 }
 
 step_1() {
-  printf "\033[2;97m[1/4]\033[0m Downloading \033[2;97m%s:%s\033[0m\n" "${name}" "${version}"
+  printf "\033[2;97m[1/4]\033[0m Downloading \033[2;97m%s v%s\033[0m\n" "${name}" "${version}"
   printf "      [%s]" "${url}"
 
   # Try to get size (MB)
@@ -87,7 +87,7 @@ step_2() {
   # Check the checksum of the downloaded file
   checksum="$("${CLIVERMAN_RUNTIMES_PATH}/${name}/checksum.sh" "${version}")"
   
-  if ! echo "${checksum}  ${temp_path}" | sha256sum -c --status -; then
+  if ! printf "%s  %s" "${checksum}" "${temp_path}" | sha256sum -c --status -; then
     printf "\033[91mERROR\033[0m\n"
     printf "      Invalid checksum. Aborted.\033[0m\n"
     # Remover arquivos temporarios
@@ -99,7 +99,7 @@ step_2() {
 }
 
 step_3() {
-  printf "\033[2;97m[3/4]\033[0m Installing \033[2;97m%s:%s\033[0m\n" "${name}" "${version}"
+  printf "\033[2;97m[3/4]\033[0m Installing \033[2;97m%s v%s\033[0m\n" "${name}" "${version}"
 
   # Delete previous version, if it exists
   rm -rf "${installs_path:?}"
@@ -108,9 +108,9 @@ step_3() {
   mkdir -p "${installs_path}"
 
   # Unpack into the installation directory
-  printf "\033[90m      " 
-  tar -xJf "${temp_path}" -C "${installs_path}" --strip-components=1 --checkpoint=10000 --checkpoint-action='exec=printf "#"'
-  printf "\033[0m\n" 
+  printf "\033[90m" 
+  tar -xJf "${temp_path}" -C "${installs_path}" --strip-components=1 --checkpoint=10000 --checkpoint-action='ttyout=%c'
+  printf "\033[A\r\033[K"
 
   # Remove temporary files
   rm -f "${temp_path:?}"
