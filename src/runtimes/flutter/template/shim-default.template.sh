@@ -8,4 +8,9 @@ if [[ ! -x "${BIN_PATH}" ]]; then
     exit 1
 fi
 
+# Export bin directory to PATH before exec, so that flutter can find its dependencies and 
+# supress warnings about missing dependencies.
+BIN_DIR="$(dirname "${BIN_PATH}")"
+export PATH="${BIN_DIR}:${PATH}"
+
 exec "${BIN_PATH}" "$@"
