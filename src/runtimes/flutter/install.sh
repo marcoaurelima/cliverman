@@ -113,7 +113,7 @@ step_3() {
   printf "\033[A\r\033[K"
 
   # Remove temporary files
-  rm -f "${temp_path:?}"
+  find "${CLIVERMAN_TEMP_PATH:?}" -mindepth 1 ! -name '.gitkeep' -exec rm -rf -- {} +
 
   printf "\033[2;97m[4/4]\033[0m \033[2;97m%s %s\033[0m \033[92mINSTALLED\033[0m\n" "${name}" "${version}"
 }
